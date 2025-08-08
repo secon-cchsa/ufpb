@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<!-- Autor: Judson Praxedes da Silva -->
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gráfico de Rosca</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: transparent;
+        }
+        body {
+            font-family: 'Roboto', sans-serif;
+            display: flex;
+            box-sizing: border-box;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            /* ALTERAÇÃO 1: Padding reduzido para aumentar a área do gráfico */
+            padding: 5px; 
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+    <div class="chart-container">
+        <canvas id="doughnutChart"></canvas>
+    </div>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    function formatCurrency(value) {
+        return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(value);
+    }
+<!-- Autor: Judson Praxedes da Silva -->
+    const doughnutLabels = ["CCHSA - LAB. AVICULTURA", "CCHSA - SECON", "CAVN - DIRECAO DO COLEGIO"];
+    const doughnutData = [218638.24, 35710.31, 8278.28];
+    const backgroundColors = ['#3182bd', '#6baed6', '#9ecae1', '#c6dbef', '#e6f0ff', '#f7fbff'];
+    const textColorSecondary = '#d0d0d0';
+
+    const doughnutCtx = document.getElementById('doughnutChart')?.getContext('2d');
+    if (doughnutCtx) {
+        new Chart(doughnutCtx, {
+            type: 'doughnut',
+            data: {
+                labels: doughnutLabels,
+                datasets: [{
+                    label: 'Valor Total Adquirido',
+                    data: doughnutData,
+                    backgroundColor: backgroundColors,
+                    borderColor: 'rgba(255, 255, 255, 0.1)',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false, cutout: '60%',
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            color: textColorSecondary,
+                            /* ALTERAÇÃO 2: Propriedades da legenda ajustadas */
+                            font: { size: 9 }, 
+                            boxWidth: 12,      
+                            padding: 8          
+                        }
+                    },
+                    tooltip: { callbacks: { label: (c) => ` ${c.label}: ${formatCurrency(c.raw)}` } }
+                }
+            }
+        });
+    }
+});
+</script>
+</body>
+</html>
+<!-- Autor: Judson Praxedes da Silva -->

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Gráfico de Dispersão Alinhado</title>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <style>
+    body {
+        background-color: transparent;
+    }
+    #dashboard_div {
+      width: 800px; 
+      margin: auto;
+    }
+  </style>
+  <script type="text/javascript">
+    google.charts.load('current', {'packages':['corechart', 'controls']});
+    google.charts.setOnLoadCallback(drawDashboard);
+
+    function drawDashboard() {
+
+      var dashboard = new google.visualization.Dashboard(
+          document.getElementById('dashboard_div'));
+
+      var rawData = [
+        // [Data, Valor, 'Num NF', 'Nome da Empresa']
+        [new Date(2024, 8, 13), 2269.16, '042111', 'COPY LINE COMERCIO SERVIÇOS LTDA.'],
+        [new Date(2024, 9, 14), 2383.88, '042453', 'COPY LINE COMERCIO SERVIÇOS LTDA.'],
+        [new Date(2024, 10, 18), 2373.38, '042852', 'COPY LINE COMERCIO SERVIÇOS LTDA.'],
+        [new Date(2024, 11, 12), 2335.26, '043309', 'COPY LINE COMERCIO SERVIÇOS LTDA.'],
+        [new Date(2025, 0, 14), 2267.18, '043579', 'COPY LINE COMERCIO SERVIÇOS LTDA.'],
+        [new Date(2025, 1, 14), 2303.28, '043920', 'COPY LINE COMERCIO SERVIÇOS LTDA.'],
+        [new Date(2025, 2, 17), 2577.20, '044272', 'COPY LINE COMERCIO SERVIÇOS LTDA.'],
+        [new Date(2025, 3, 11), 2389.00, '044667', 'COPY LINE COMERCIO SERVIÇOS LTDA.'],
+        [new Date(2025, 4, 13), 2526.06, '045061', 'COPY LINE COMERCIO SERVIÇOS LTDA.'],
+        [new Date(2025, 5, 16), 2456.90, '045503', 'COPY LINE COMERCIO SERVIÇOS LTDA.'],
+        [new Date(2024, 9, 30), 60607.46, '28648', 'FARELO JP IND. E COM. DE RACOES LTDA'],
+        [new Date(2024, 10, 26), 9911.00, '29154', 'FARELO JP IND. E COM. DE RACOES LTDA'],
+        [new Date(2024, 11, 13), 5000.00, '29481', 'FARELO JP IND. E COM. DE RACOES LTDA'],
+        [new Date(2025, 0, 22), 40014.00, '30241', 'FARELO JP IND. E COM. DE RACOES LTDA'],
+        [new Date(2025, 1, 20), 27608.96, '30733', 'FARELO JP IND. E COM. DE RACOES LTDA'],
+        [new Date(2025, 1, 25), 12996.00, '30815', 'FARELO JP IND. E COM. DE RACOES LTDA'],
+        [new Date(2025, 1, 26), 11595.00, '30839', 'FARELO JP IND. E COM. DE RACOES LTDA'],
+        [new Date(2025, 2, 20), 5000.00, '31203', 'FARELO JP IND. E COM. DE RACOES LTDA'],
+        [new Date(2025, 2, 28), 6394.00, '31335', 'FARELO JP IND. E COM. DE RACOES LTDA'],
+        [new Date(2025, 4, 16), 39511.82, '32011', 'FARELO JP IND. E COM. DE RACOES LTDA'],
+        [new Date(2025, 4, 16), 39511.82, '32011', 'FARELO JP IND. E COM. DE RACOES LTDA'],
+        [new Date(2024, 11, 13), 25783.40, '711', 'PISCIS INDÚSTRIA E COMÉRCIO DE ALIMENTOS LTDA'],
+        [new Date(2025, 0, 3), 18621.90, '714', 'PISCIS INDÚSTRIA E COMÉRCIO DE ALIMENTOS LTDA'],
+        [new Date(2025, 3, 7), 12093.75, '743', 'PISCIS INDÚSTRIA E COMÉRCIO DE ALIMENTOS LTDA'],
+        [new Date(2025, 6, 10), 11829.01, '1721', 'ECOLIFE SAUDE AMBINTAL LTDA'],
+        [new Date(2025, 5, 2), 3955.81, '000.379', 'ASL COMÉRCIO E SERVIÇOS LTDA.']
+      ];
+      
+      var dataTable = new google.visualization.DataTable();
+      dataTable.addColumn('date', 'Período');
+      dataTable.addColumn('number', 'Valor');
+      dataTable.addColumn({'type': 'string', 'role': 'style'});
+      dataTable.addColumn({'type': 'string', 'role': 'tooltip', 'p': {'html': true}});
+      dataTable.addColumn({'type': 'string', 'role': 'style'});
+
+      var minValor = Infinity, maxValor = -Infinity;
+      var minDate = Infinity, maxDate = -Infinity;
+
+      for (var i = 0; i < rawData.length; i++) {
+        var valor = rawData[i][1];
+        var dateTimestamp = rawData[i][0].getTime();
+        if (valor < minValor) minValor = valor;
+        if (valor > maxValor) maxValor = valor;
+        if (dateTimestamp < minDate) minDate = dateTimestamp;
+        if (dateTimestamp > maxDate) maxDate = dateTimestamp;
+      }
+      
+      function hexToRgb(hex) {
+        var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+        return result ? {
+          r: parseInt(result[1], 16),
+          g: parseInt(result[2], 16),
+          b: parseInt(result[3], 16)
+        } : null;
+      }
+function getRgbColor(value, min, max, startHex, endHex) {
+          const startRgb = hexToRgb(startHex);
+          const endRgb = hexToRgb(endHex);
+          if (max === min) return 'point { fill-color: rgb(' + startRgb.r + ',' + startRgb.g + ',' + startRgb.b + '); }';
+          var percent = (value - min) / (max - min);
+          var r = Math.round(startRgb.r + percent * (endRgb.r - startRgb.r));
+          var g = Math.round(startRgb.g + percent * (endRgb.g - startRgb.g));
+          var b = Math.round(startRgb.b + percent * (endRgb.b - startRgb.b));
+          return 'point { fill-color: rgb(' + r + ',' + g + ',' + b + '); }';
+      }
+
+      var colorPalette = { start: '#f744d0', end: '#cc42db' };
+      var dateFormatter = new google.visualization.DateFormat({pattern: 'dd/MM/yyyy'});
+      var gridlineColor = '#355268';
+      var textColor = '#FFFFFF';
+
+      for (var i = 0; i < rawData.length; i++) {
+        var dataPeriodo = rawData[i][0];
+        var valor = rawData[i][1];
+        var numNF = rawData[i][2];
+        var empresa = rawData[i][3];
+        
+        var styleMain = getRgbColor(valor, minValor, maxValor, colorPalette.start, colorPalette.end);
+        var styleFilter = getRgbColor(dataPeriodo.getTime(), minDate, maxDate, colorPalette.start, colorPalette.end);
+        
+        var tooltip = '<div style="padding:10px; background-color:#333; color:white; border-radius:5px;">' +
+                      '<b>Nota fiscal:</b> ' + numNF + '<br>' +
+                      '<b>Empresa:</b> ' + empresa + '<br>' +
+                      '<b>Data NF:</b> ' + dateFormatter.formatValue(dataPeriodo) + '<br>' +
+                      '<b>Valor:</b> ' + valor.toLocaleString('pt-br', {style: 'currency', currency: 'BRL'}) +
+                      '</div>';
+        
+        dataTable.addRow([dataPeriodo, valor, styleMain, tooltip, styleFilter]);
+      }
+      
+      var quarterlyTicks = [];
+      for (var y = 2023; y <= 2025; y++) {
+          for (var q = 0; q < 12; q += 3) {
+              if (y === 2025 && q > 6) continue;
+              quarterlyTicks.push(new Date(y, q, 1));
+          }
+      }
+
+      var slider = new google.visualization.ControlWrapper({
+        'controlType': 'ChartRangeFilter',
+        'containerId': 'filter_div',
+        'options': {
+          'filterColumnIndex': 0,
+          'ui': {
+            'chartType': 'ScatterChart',
+            'chartOptions': {
+              'backgroundColor': 'transparent',
+              'chartArea': {'width': '85%', 'left': 100, 'height': '80%'},
+              'hAxis': {
+                  'baselineColor': 'none', 
+                  'format': 'MMM/yy', 
+                  'textStyle': { 'color': textColor },
+                  'gridlines': { 'color': gridlineColor } 
+              },
+              'vAxis': {'textPosition': 'none', 'gridlines': { 'color': 'transparent' }},
+              'legend': 'none',
+              'pointSize': 6
+            },
+            'chartView': { 'columns': [0, 1, 4] } 
+          }
+        }
+      });
+
+      var scatterChart = new google.visualization.ChartWrapper({
+        'chartType': 'ScatterChart',
+        'containerId': 'chart_div',
+        'view': {'columns': [0, 1, 2, 3]},
+        'options': {
+          'title': 'Dispersão de Notas Fiscais por Trimestres',
+          'titleTextStyle': { 'color': textColor },
+          'backgroundColor': 'transparent',
+          'hAxis': {
+            'title': 'Período',
+            'titleTextStyle': { 'color': textColor },
+            'ticks': quarterlyTicks,
+            'format': 'MMM/yyyy',
+            'textStyle': { 'color': textColor },
+            'gridlines': { 'color': gridlineColor }
+          },
+          'vAxis': {
+            'title': 'Valor',
+            'titleTextStyle': { 'color': textColor },
+            'format': 'R$ #,##0.00',
+            'textStyle': { 'color': textColor },
+            'gridlines': { 'color': 'transparent' }
+          },
+          'legend': 'none',
+          'tooltip': { 'isHtml': true },
+          'chartArea': {'width': '85%', 'left': 100, 'top': 50},
+          'pointSize': 10
+        }
+      });
+      
+      dashboard.bind(slider, scatterChart);
+      dashboard.draw(dataTable);
+    }
+  </script>
+</head>
+<body>
+  <div id="dashboard_div">
+    <div id="chart_div" style="height: 500px;"></div>
+    <div id="filter_div" style="height: 100px;"></div>
+  </div>
+</body>
+</html>

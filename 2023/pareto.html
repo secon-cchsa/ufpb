@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<!-- Autor: Judson Praxedes da Silva -->
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gráfico de Pareto - Análise de Contratações</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: transparent;
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 0; 
+    box-sizing: border-box;
+    margin: 0;
+  }
+
+  .dashboard-panel {
+    background-color: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    border: none;
+    box-shadow: none;
+    border-radius: 12px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; 
+    padding: 25px 10px; 
+    width: 100%;
+    max-width: 900px; 
+    height: 550px; 
+  }
+  
+  .dashboard-panel h3 { 
+    margin-top: 0;
+    font-size: 1.2rem; 
+    color: #f0f0f0;
+    text-align: center;
+    margin-bottom: 20px; 
+  }
+
+  .chart-container { 
+    flex-grow: 1;
+    position: relative;
+    width: 100%; 
+  }
+
+</style>
+</head>
+<body>
+
+<div class="dashboard-panel">
+  <h3>Análise de Pareto por Valor Adquirido</h3>
+  <div class="chart-container">
+    <canvas id="paretoChart"></canvas>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    
+    // Dados da Análise de Pareto
+    const paretoLabels = ['Pregão 05/2023', 'Pregão 04/2023', 'IRP 04/2023', 'IRP 01/2023', 'Pregão 02/2023', 'IRP 06/2023', 'Pregão 01/2023', 'Pregão 12/2023', 'Pregão 09/2023', 'IRP 14/2023', 'IRP 12/2023', 'Pregão 08/2023', 'IRP 16/2023', 'Pregão 06/2023', 'IRP 08/2023', 'IRP 09/2023', 'IRP 05/2023'];
+    const barData = [481800.0, 286439.0, 246699.35, 189132.0, 96949.14, 80003.5, 78431.4, 75529.62, 57529.63, 52557.6, 49347.07, 46358.49, 43587.66, 37682.7, 31428.27, 30129.58, 22842.0];
+    const lineData = [25.28, 40.32, 53.26, 63.19, 68.23, 72.43, 76.54, 80.51, 83.52, 86.28, 88.87, 91.31, 93.59, 95.57, 97.22, 98.8, 100.0];
+
+    const textColor = '#f0f0f0';
+    const gridColor = 'rgba(255, 255, 255, 0.15)';
+    const lineColor = '#f400a1';
+
+    function hexToRgb(hex) {
+        let result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+        return result ? { r: parseInt(result[1], 16), g: parseInt(result[2], 16), b: parseInt(result[3], 16) } : null;
+    }
+    
+    function getGradientColor(value, min, max, startRgb, endRgb) {
+        const percent = (value - min) / (max - min);
+        const r = Math.round(startRgb.r + percent * (endRgb.r - startRgb.r));
+        const g = Math.round(startRgb.g + percent * (endRgb.g - startRgb.g));
+        const b = Math.round(startRgb.b + percent * (endRgb.b - startRgb.b));
+        return `rgb(${r}, ${g}, ${b})`;
+    }
+
+    const minBarVal = Math.min(...barData);
+    const maxBarVal = Math.max(...barData);
+    const startColor = hexToRgb('#c6dbef');
+    const endColor = hexToRgb('#3182bd');
+    
+    const barBackgroundColors = barData.map(value => getGradientColor(value, minBarVal, maxBarVal, startColor, endColor));
+<!-- Autor: Judson Praxedes da Silva -->
+    const paretoCtx = document.getElementById('paretoChart').getContext('2d');
+    if (paretoCtx) {
+        new Chart(paretoCtx, {
+            type: 'bar',
+            data: {
+                labels: paretoLabels,
+                datasets: [
+                    {
+                        label: 'Percentual Acumulado',
+                        data: lineData,
+                        type: 'line',
+                        yAxisID: 'y1',
+                        order: 1, 
+                        borderColor: lineColor,
+                        pointBackgroundColor: lineColor,
+                        fill: true,
+                        backgroundColor: function(context) {
+                            const chart = context.chart;
+                            const { ctx, chartArea } = chart;
+                            if (!chartArea) return null;
+                            const gradient = ctx.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
+                            gradient.addColorStop(0, 'rgba(244, 0, 161, 0.4)');
+                            gradient.addColorStop(1, 'rgba(244, 0, 161, 0)');
+                            return gradient;
+                        },
+                        tension: 0.4,
+                        pointRadius: 3,
+                        pointHoverRadius: 5
+                    },
+                    {
+                        label: 'Valor Adquirido',
+                        data: barData,
+                        backgroundColor: barBackgroundColors,
+                        yAxisID: 'y',
+                        order: 2
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                // ALTERAÇÃO APLICADA AQUI
+                layout: {
+                    padding: {
+                        bottom: 30 // Adiciona preenchimento inferior para não cortar os rótulos
+                    }
+                },
+                plugins: {
+                    tooltip: {
+                        mode: 'index',
+                        intersect: false,
+                        callbacks: {
+                            label: function(context) {
+                                let label = context.dataset.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                if (context.dataset.type === 'line') {
+                                    label += context.parsed.y.toFixed(2) + '%';
+                                } else {
+                                    label += new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(context.parsed.y);
+                                }
+                                return label;
+                            }
+                        }
+                    },
+                    legend: {
+                        labels: {
+                            color: textColor
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        ticks: {
+                            color: textColor,
+                            font: { size: 9 },
+                            maxRotation: 45,
+                            minRotation: 45,
+                        },
+                        grid: {
+                            color: 'transparent'
+                        }
+                    },
+                    y: {
+                        type: 'linear',
+                        position: 'left',
+                        title: { display: true, text: 'Valor Adquirido (R$)', color: textColor },
+                        ticks: { 
+                            color: textColor,
+                            callback: (value) => new Intl.NumberFormat('pt-BR', { notation: "compact" }).format(value)
+                        },
+                        grid: {
+                            color: gridColor
+                        }
+                    },
+                    y1: {
+                        type: 'linear',
+                        position: 'right',
+                        min: 0,
+                        max: 100,
+                        title: { display: true, text: 'Percentual Acumulado (%)', color: textColor },
+                        ticks: {
+                            color: textColor,
+                            callback: (value) => value + '%'
+                        },
+                        grid: {
+                            drawOnChartArea: false
+                        }
+                    }
+                }
+            }
+        });
+    }
+});
+</script>
+
+</body>
+</html>
+<!-- Autor: Judson Praxedes da Silva -->

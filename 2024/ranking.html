@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ranking de Fornecedores 2024</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        html, body {
+            height: 100%; margin: 0; padding: 0; overflow: hidden;
+            background-color: transparent; font-family: 'Roboto', sans-serif;
+        }
+        .chart-container {
+            position: relative; width: 100%; height: 100%;
+            padding: 15px 15px 15px 5px; box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+    <div class="chart-container">
+        <canvas id="topSuppliersChart"></canvas>
+    </div>
+<script>
+    // Dados do Ranking de Fornecedores 2024
+    window.topSuppliersData = [
+        { label: 'FARELO JP IND. E COM. DE RACOES LTDA', data: 218638.24 },
+        { label: 'PISCIS INDÚSTRIA E COMÉRCIO DE ALIMENTOS LTDA', data: 56499.05 },
+        { label: 'COPY LINE COMERCIO SERVIÇOS LTDA.', data: 23881.30 },
+        { label: 'ECOLIFE SAUDE AMBINTAL LTDA', data: 11829.01 },
+        { label: 'ASL COMÉRCIO E SERVIÇOS LTDA.', data: 8278.28 }
+    ];
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Funções e código para desenhar o gráfico
+    function formatCurrency(num) { return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(num); }
+    function hexToRgb(hex) {
+        let result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+        return result ? { r: parseInt(result[1], 16), g: parseInt(result[2], 16), b: parseInt(result[3], 16) } : null;
+    }
+    function getGradientColor(value, min, max, startRgb, endRgb) {
+        if (max === min) return `rgb(${startRgb.r}, ${startRgb.g}, ${startRgb.b})`;
+        const percent = (value - min) / (max - min);
+        const r = Math.round(startRgb.r + percent * (endRgb.r - startRgb.r));
+        const g = Math.round(startRgb.g + percent * (endRgb.g - startRgb.g));
+        const b = Math.round(startRgb.b + percent * (endRgb.b - startRgb.b));
+        return `rgb(${r}, ${g}, ${b})`;
+    }
+// Ordena os dados para o gráfico
+    window.topSuppliersData.sort((a, b) => b.data - a.data);
+    
+    const sortedLabels = window.topSuppliersData.map(item => item.label.substring(0, 30) + (item.label.length > 30 ? '...' : ''));
+    const sortedData = window.topSuppliersData.map(item => item.data);
+    const minVal = Math.min(...sortedData);
+    const maxVal = Math.max(...sortedData);
+    const startColor = hexToRgb('#8b008b');
+    const endColor = hexToRgb('#f400a1');
+    const backgroundColors = sortedData.map(value => getGradientColor(value, minVal, maxVal, startColor, endColor));
+    
+    const topSuppliersCtx = document.getElementById('topSuppliersChart')?.getContext('2d');
+    if(topSuppliersCtx) {
+        new Chart(topSuppliersCtx, { 
+            type: 'bar', 
+            data: { 
+                labels: sortedLabels, 
+                datasets: [{ 
+                    label: 'Valor Adquirido', 
+                    data: sortedData, 
+                    backgroundColor: backgroundColors,
+                    borderColor: 'rgba(255, 255, 255, 0.3)',
+                    borderWidth: 1,
+                }] 
+            }, 
+            options: {
+                responsive: true, maintainAspectRatio: false, indexAxis: 'y',
+                plugins: { 
+                    legend: { display: false }, 
+                    tooltip: { 
+                        callbacks: { 
+                            label: (c) => {
+                                const fullLabel = window.topSuppliersData.find(item => item.data === c.raw).label;
+                                return `${fullLabel}: ${formatCurrency(c.raw)}`;
+                            }
+                        } 
+                    } 
+                },
+                scales: {
+                    y: { ticks: { display: false }, grid: { display: false } },
+                    x: { beginAtZero: true, ticks: { color: '#d0d0d0', font: {size: 10}, callback: (v) => new Intl.NumberFormat('pt-BR', { notation: "compact" }).format(v) }, grid: { color: 'rgba(255, 255, 255, 0.1)' } }
+                }
+            }
+        });
+    }
+});
+</script>
+</body>
+</html>

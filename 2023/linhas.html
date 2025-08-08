@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<!-- Autor: Judson PRAXEDES da Silva -->
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gráfico de Linhas</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: transparent;
+        }
+        body {
+            font-family: 'Roboto', sans-serif;
+            display: flex;
+            box-sizing: border-box;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            padding: 15px;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+    <div class="chart-container">
+        <canvas id="lineChart"></canvas>
+    </div>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const textColorSecondary = '#d0d0d0';
+    const accentColorBlue = '#4dd0e1';
+    const accentColorRed = '#ff6384';
+    const gridBorderColor = 'rgba(255, 255, 255, 0.2)';
+
+    const labels = ['jan/23', 'abr/23', 'jul/23', 'out/23', 'jan/24', 'abr/24', 'jul/24', 'out/24', 'jan/25', 'abr/25', 'jul/25'];
+    const valoresGastos = [0.0, 64303.4, 253069.41, 887376.66, 966023.66, 1269389.34, 1282504.48, 1282504.48, 1282504.48, 1494485.42, 1516795.69];
+    const valorRestante = [1651269.21, 1586965.81, 1398199.8, 763892.55, 685245.55, 381879.87, 368764.73, 368764.73, 368764.73, 156783.79, 134473.52];
+<!-- Autor: Judson PRAXEDES da Silva -->
+    const ctxLine = document.getElementById('lineChart').getContext('2d');
+    new Chart(ctxLine, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [
+                { label: 'Valores Gastos', data: valoresGastos, fill: true, borderColor: accentColorRed, backgroundColor: 'rgba(255, 99, 132, 0.2)', tension: 0.4, pointRadius: 4, pointBackgroundColor: accentColorRed },
+                { label: 'Valor Restante', data: valorRestante, fill: true, borderColor: accentColorBlue, backgroundColor: 'rgba(77, 208, 225, 0.2)', tension: 0.4, pointRadius: 4, pointBackgroundColor: accentColorBlue }
+            ]
+        },
+        options: {
+            responsive: true, maintainAspectRatio: false,
+            plugins: { legend: { labels: { color: textColorSecondary, font: {size: 11} } }, tooltip: { callbacks: { label: (c) => `${c.dataset.label}: ${new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(c.raw)}` } } },
+            scales: {
+                y: { title: { display: false }, grid: { color: gridBorderColor }, ticks: { color: textColorSecondary, callback: (v) => new Intl.NumberFormat('pt-BR', { notation: "compact" }).format(v) } },
+                x: { title: { display: false }, grid: { display: false }, ticks: { color: textColorSecondary, font: {size: 11} } }
+            }
+        }
+    });
+});
+</script>
+</body>
+</html>
+<!-- Autor: Judson PRAXEDES da Silva -->

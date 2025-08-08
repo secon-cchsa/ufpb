@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel de Contratações - CCHSA/UFPB</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --card-bg-color: rgba(255, 255, 255, 0.1); --border-color: rgba(255, 255, 255, 0.2); --text-color-primary: #f0f0f0; --text-color-secondary: #d0d0d0; --cor-sidebar: #1a202c; --cor-sidebar-texto: #e2e8f0; --cor-sidebar-hover: #2d3748; --cor-submenu-fundo: #252f41; --accent-color: #4dd0e1; --largura-sidebar-expandido: 260px; --largura-sidebar-colapsado: 80px;
+        }
+        body {
+            margin: 0; font-family: 'Roboto', sans-serif; background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)), url('background-dashboard.png'); background-size: cover; background-position: center; background-attachment: fixed; min-height: 100vh; color: var(--text-color-primary); box-sizing: border-box;
+        }
+        .sidebar {
+            position: fixed; top: 0; left: 0; height: 100vh; z-index: 1000; width: var(--largura-sidebar-expandido); background-color: var(--cor-sidebar); color: var(--cor-sidebar-texto); display: flex; flex-direction: column; transition: width 0.3s ease; overflow-x: hidden;
+        }
+        .sidebar-header {
+            padding: 0 20px; display: flex; align-items: center; justify-content: space-between; min-height: 64px; box-sizing: border-box; flex-shrink: 0;
+        }
+        .logo {
+            display: flex; align-items: center; font-size: 1.2rem; font-weight: bold; white-space: nowrap; overflow: hidden;
+        }
+        .logo-texto {
+            white-space: nowrap; overflow: hidden; opacity: 1; transition: opacity 0.2s ease, max-width 0.3s ease; max-width: 150px;
+        }
+        .link-texto {
+            white-space: nowrap; overflow: hidden; opacity: 1; transition: opacity 0.2s ease, max-width 0.3s ease; flex-grow: 1;
+        }
+        #menu-toggle {
+            background: none; border: none; color: var(--cor-sidebar-texto); cursor: pointer; padding: 5px; flex-shrink: 0;
+        }
+        #menu-toggle svg { width: 24px; height: 24px; }
+        .sidebar-nav { list-style: none; padding: 0; margin: 0; flex-grow: 1; overflow-y: auto; }
+        .sidebar-nav li { overflow: hidden; }
+        .sidebar-nav a { display: flex; align-items: center; padding: 15px 28px; color: var(--cor-sidebar-texto); text-decoration: none; gap: 18px; white-space: nowrap; transition: background-color 0.2s ease; }
+        .sidebar-nav a:hover { background-color: var(--cor-sidebar-hover); }
+        .sidebar-nav svg { width: 24px; height: 24px; flex-shrink: 0; }
+        .arrow-icon { margin-left: auto; transition: transform 0.3s ease; }
+        .submenu { list-style: none; padding: 0; margin: 0; background-color: var(--cor-submenu-fundo); max-height: 0; overflow: hidden; transition: max-height 0.4s ease-in-out; }
+        .submenu a { padding-left: 74px; }
+        .has-submenu.active > .submenu { max-height: 500px; }
+        .has-submenu.active > a .arrow-icon { transform: rotate(90deg); }
+        .main-content {
+            margin-left: var(--largura-sidebar-expandido); padding: 30px; transition: margin-left 0.3s ease;
+        }
+        body.sidebar-collapsed .sidebar { width: var(--largura-sidebar-colapsado); }
+        body.sidebar-collapsed .main-content { margin-left: var(--largura-sidebar-colapsado); }
+        body.sidebar-collapsed .logo-texto, body.sidebar-collapsed .link-texto, body.sidebar-collapsed .arrow-icon { opacity: 0; max-width: 0; }
+        .main-content h1 {
+            font-size: 2.5rem; text-align: center; margin: 0 0 40px 0; font-weight: 300; text-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+        }
+        .main-content h1 span {
+            font-weight: 700; color: var(--accent-color);
+        }
+        .grid-container {
+            display: grid; margin: 0 auto; width: 100%; /* Ajustado para melhor responsividade */ max-width: 1200px; grid-template-columns: 1fr; /* Alterado para uma única coluna */ gap: 1em;
+        }
+        .card {
+            background: var(--card-bg-color); border-radius: 15px; padding: 25px; border: 1px solid var(--border-color); box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); transition: transform 0.3s ease, border-color 0.3s ease; box-sizing: border-box; display: flex; flex-direction: column; justify-content: flex-start; /* Alterado */
+        }
+        .card:hover { transform: translateY(-5px); border-color: var(--accent-color); }
+        
+        /* Estilos personalizados para o card de boas-vindas */
+        .welcome-card {
+            text-align: left;
+            color: var(--text-color-secondary);
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+        .welcome-card h2 {
+            color: var(--text-color-primary);
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-top: 20px;
+            margin-bottom: 15px;
+            border-left: 4px solid var(--accent-color);
+            padding-left: 15px;
+        }
+        .welcome-card h2:first-child {
+            margin-top: 0;
+        }
+        .welcome-card p {
+            margin-bottom: 20px;
+            padding-left: 19px;
+        }
+        .welcome-card .highlight {
+            color: var(--accent-color);
+            font-weight: 700;
+        }
+        .welcome-card ul {
+            list-style: none;
+            padding-left: 19px;
+        }
+        .welcome-card ul li {
+            padding-left: 30px;
+            position: relative;
+            margin-bottom: 12px;
+        }
+        .welcome-card ul li::before {
+            content: '📊';
+            position: absolute;
+            left: 0;
+            top: 1px;
+            font-size: 1rem;
+        }
+
+        @media(max-width: 920px) {
+            .main-content { padding: 20px; }
+            .main-content h1 { font-size: 2rem; }
+            .welcome-card h2 { font-size: 1.4rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <span class="logo-texto">CCHSA/UFPB</span>
+            </div>
+            <button id="menu-toggle">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M3 4h18v2H3V4zm0 7h18v2H3v-2zm0 7h18v2H3v-2z"/></svg>
+            </button>
+        </div>
+        
+        <ul class="sidebar-nav">
+            <li><a href="inicio.html"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8h5z"/></svg><span class="link-texto">Início</span></a></li>
+            
+            <li><a href="painel-2023.html"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg><span class="link-texto">Painel 2023</span></a></li>
+
+            <li><a href="painel-2024.html"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg><span class="link-texto">Painel 2024</span></a></li>
+
+            <li><a href="painel-2025.html"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg><span class="link-texto">Painel 2025</span></a></li>
+
+            <li class="has-submenu">
+                <a href="#">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+                    <span class="link-texto">Base de Dados</span>
+                    <svg class="arrow-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg>
+                </a>
+                <ul class="submenu">
+                    <li><a href="pregoes.html"><span class="link-texto">Pregões</span></a></li>
+                    <li><a href="irps.html"><span class="link-texto">IRP</span></a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+
+    <main class="main-content">
+        <h1>Bem-vindo ao <span>Setor de Contratos</span> do CCHSA/UFPB</h1>
+        <div class="grid-container">
+            <div class="card">
+                <div class="welcome-card">
+                    <h2>🚀 Boas-vindas ao nosso Painel de Contratações!</h2>
+                    <p>
+                        Este é o painel de contratações da Gestão de Contratos do <strong>CCHSA/UFPB</strong>. Nossa principal missão é assegurar a eficiência, transparência e legalidade em todos os processos de contratação, desde o planejamento até a fiscalização final.
+                    </p>
+                
+                    <h2>💡 Inovação na Gestão Pública</h2>
+                    <p>
+                        Para elevar a qualidade de nossas entregas, adotamos ferramentas de ponta. Através da <span class="highlight">Análise de Dados</span> e do uso de <span class="highlight">Inteligência Artificial</span>, conseguimos extrair insights valiosos, otimizar a alocação de recursos, prever demandas e garantir uma gestão mais proativa e estratégica dos contratos públicos.
+                    </p>
+                
+                    <h2>🗺️ Explore os Recursos</h2>
+                    <p>
+                        Utilize o menu à esquerda para navegar pelos nossos painéis interativos. Cada seção foi projetada para oferecer clareza e acesso rápido às informações:
+                    </p>
+                    <ul>
+                        <li><strong>Painel 2023-2025:</strong> Aqui você encontra os paineis interativos com as informações das contratações (Pregões e IRPs) referentes aos anos de 2023 a 2025.</li>
+                        <li><strong>Base de Dados:</strong> Aqui voce encontra a base de dados estruturada, da qual foram extraídas as informações que serviram como base para a construção dos paineis interativos.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <script>
+        const menuToggleButton = document.getElementById('menu-toggle');
+        menuToggleButton.addEventListener('click', () => { document.body.classList.toggle('sidebar-collapsed'); });
+        const submenuTriggers = document.querySelectorAll('.has-submenu > a');
+        submenuTriggers.forEach(trigger => {
+            trigger.addEventListener('click', (event) => {
+                event.preventDefault();
+                const parentLi = trigger.parentElement;
+                // Fecha outros submenus abertos para evitar sobreposição
+                document.querySelectorAll('.has-submenu').forEach(item => { if (item !== parentLi) { item.classList.remove('active'); } });
+                parentLi.classList.toggle('active');
+            });
+        });
+    </script>
+</body>
+</html>

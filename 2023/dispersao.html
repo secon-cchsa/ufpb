@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<!-- Autor: Judson Praxedes da Silva -->
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Gráfico de Dispersão Alinhado</title>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <style>
+    body {
+        background-color: transparent;
+    }
+    #dashboard_div {
+      width: 800px; 
+      margin: auto;
+    }
+  </style>
+  <script type="text/javascript">
+    google.charts.load('current', {'packages':['corechart', 'controls']});
+    google.charts.setOnLoadCallback(drawDashboard);
+
+    function drawDashboard() {
+
+      var dashboard = new google.visualization.Dashboard(
+          document.getElementById('dashboard_div'));
+
+      var rawData = [
+        // [Data, Valor, 'Num NF', 'Nome da Empresa']
+        [new Date(2024, 0, 19), 36000.00, '3244', 'A.M.S. RIOS FABRICACAO E COMERCIO DE BOLSAS LTDA.'],
+        [new Date(2024, 0, 19), 2400.00, '3244', 'A.M.S. RIOS FABRICACAO E COMERCIO DE BOLSAS LTDA.'],
+        [new Date(2023, 7, 28), 65960.00, '1988', 'BBC COMERCIAL DISTRIBUIDORA E SERVICOS LTDA'],
+        [new Date(2023, 7, 21), 24000.00, '14.759', 'MASTERSUL EQUIPAMENTOS DE SEGURANCA LTDA.'],
+        [new Date(2023, 10, 10), 20950.00, '2.180', 'MALTA INDUSTRIA E COMERCIO DE PRODUTOS LTDA.'],
+        [new Date(2023, 10, 27), 2277.00, '1247', 'SANTA ORANNA INDUSTRIA E COMERCIO LTDA.'],
+        [new Date(2023, 10, 7), 7200.00, '93', 'MOUNT CONFECCAO LTDA.'],
+        [new Date(2024, 2, 4), 2400.00, '135', 'MOUNT CONFECCAO LTDA.'],
+        [new Date(2024, 4, 7), 10500.00, '144', 'MOUNT CONFECCAO LTDA.'],
+        [new Date(2024, 4, 22), 4200.00, '148', 'MOUNT CONFECCAO LTDA.'],
+        [new Date(2024, 5, 10), 9800.00, '153', 'MOUNT CONFECCAO LTDA.'],
+        [new Date(2024, 2, 11), 7040.00, '1.973', 'MARIA DO SOCORRO SANTOS BASILIO'],
+        [new Date(2023, 5, 14), 16250.00, '1.642', 'IMPERIAL CAFE COMERCIO EXPORTACAO E IMPORTACAO LTDA.'],
+        [new Date(2023, 5, 16), 5259.75, '10.575', 'INDUSTRIA E COMERCIO DE PRODUTOS DE LIMPEZA CAMPINENSE LTDA.'],
+        [new Date(2023, 5, 22), 2004.00, '15.746', 'SANIGRAN LTDA.'],
+        [new Date(2023, 5, 13), 10552.40, '3795', 'FORLIMP COMERCIO E DISTRIBUICAO DE PRODUTOS DE PERFUMARIA E LIMPEZA LTDA.'],
+        [new Date(2023, 8, 1), 3204.68, '3931', 'FORLIMP COMERCIO E DISTRIBUICAO DE PRODUTOS DE PERFUMARIA E LIMPEZA LTDA.'],
+        [new Date(2023, 8, 8), 2169.54, '3944', 'FORLIMP COMERCIO E DISTRIBUICAO DE PRODUTOS DE PERFUMARIA E LIMPEZA LTDA.'],
+        [new Date(2023, 8, 18), 1729.96, '3952', 'FORLIMP COMERCIO E DISTRIBUICAO DE PRODUTOS DE PERFUMARIA E LIMPEZA LTDA.'],
+        [new Date(2023, 8, 28), 2063.19, '3972', 'FORLIMP COMERCIO E DISTRIBUICAO DE PRODUTOS DE PERFUMARIA E LIMPEZA LTDA.'],
+        [new Date(2023, 9, 18), 8004.61, '4016', 'FORLIMP COMERCIO E DISTRIBUICAO DE PRODUTOS DE PERFUMARIA E LIMPEZA LTDA.'],
+        [new Date(2023, 10, 6), 5672.00, '4056', 'FORLIMP COMERCIO E DISTRIBUICAO DE PRODUTOS DE PERFUMARIA E LIMPEZA LTDA.'],
+        [new Date(2023, 11, 6), 5672.00, '4147', 'FORLIMP COMERCIO E DISTRIBUICAO DE PRODUTOS DE PERFUMARIA E LIMPEZA LTDA.'],
+        [new Date(2024, 0, 16), 5672.00, '4187', 'FORLIMP COMERCIO E DISTRIBUICAO DE PRODUTOS DE PERFUMARIA E LIMPEZA LTDA.'],
+        [new Date(2024, 1, 23), 5672.00, '4218', 'FORLIMP COMERCIO E DISTRIBUICAO DE PRODUTOS DE PERFUMARIA E LIMPEZA LTDA.'],
+        [new Date(2024, 2, 19), 7090.00, '4258', 'FORLIMP COMERCIO E DISTRIBUICAO DE PRODUTOS DE PERFUMARIA E LIMPEZA LTDA.'],
+        [new Date(2024, 3, 16), 7090.00, '4301', 'FORLIMP COMERCIO E DISTRIBUICAO DE PRODUTOS DE PERFUMARIA E LIMPEZA LTDA.'],
+        [new Date(2024, 4, 16), 12506.76, '4347', 'FORLIMP COMERCIO E DISTRIBUICAO DE PRODUTOS DE PERFUMARIA E LIMPEZA LTDA.'],
+        [new Date(2023, 6, 17), 38408.49, '309', 'HMGK COMERCIO E SERVICOS LTDA.'],
+        [new Date(2024, 3, 29), 7950.00, '418', 'HMGK COMERCIO E SERVICOS LTDA.'],
+        [new Date(2023, 3, 27), 1800.00, '743', 'MAXXI COMERCIAL DE ALIMENTOS LTDA.'],
+        [new Date(2023, 7, 18), 19850.00, '772', 'MAXXI COMERCIAL DE ALIMENTOS LTDA.'],
+        [new Date(2023, 10, 27), 15136.65, '936', 'MAXXI COMERCIAL DE ALIMENTOS LTDA.'],
+        [new Date(2024, 2, 11), 3360.00, '1.087', 'MAXXI COMERCIAL DE ALIMENTOS LTDA.'],
+        [new Date(2024, 3, 2), 22980.00, '1.114', 'MAXXI COMERCIAL DE ALIMENTOS LTDA.'],
+        [new Date(2024, 6, 24), 6600.00, '1.246', 'MAXXI COMERCIAL DE ALIMENTOS LTDA.'],
+        [new Date(2024, 7, 28), 21511.35, '1.296', 'MAXXI COMERCIAL DE ALIMENTOS LTDA.'],
+        [new Date(2023, 4, 17), 5163.63, '68.463', 'GALLUS INDUSTRIA E COMERCIO DE ALIMENTOS LTDA'],
+        [new Date(2023, 4, 17), 47707.21, '68.464', 'GALLUS INDUSTRIA E COMERCIO DE ALIMENTOS LTDA'],
+        [new Date(2023, 7, 22), 16553.31, '69.091', 'GALLUS INDUSTRIA E COMERCIO DE ALIMENTOS LTDA'],
+        [new Date(2023, 8, 1), 12998.70, '69.169', 'GALLUS INDUSTRIA E COMERCIO DE ALIMENTOS LTDA'],
+        [new Date(2023, 9, 6), 4216.00, '69.474', 'GALLUS INDUSTRIA E COMERCIO DE ALIMENTOS LTDA'],
+        [new Date(2023, 9, 6), 30857.00, '69.475', 'GALLUS INDUSTRIA E COMERCIO DE ALIMENTOS LTDA'],
+        [new Date(2023, 10, 8), 10937.71, '69.721', 'GALLUS INDUSTRIA E COMERCIO DE ALIMENTOS LTDA'],
+        [new Date(2024, 1, 7), 51196.00, '70.326', 'GALLUS INDUSTRIA E COMERCIO DE ALIMENTOS LTDA'],
+        [new Date(2024, 1, 7), 5075.18, '70.328', 'GALLUS INDUSTRIA E COMERCIO DE ALIMENTOS LTDA'],
+        [new Date(2024, 1, 26), 3546.37, '70.447', 'GALLUS INDUSTRIA E COMERCIO DE ALIMENTOS LTDA'],
+        [new Date(2024, 4, 21), 39114.14, '71.018', 'GALLUS INDUSTRIA E COMERCIO DE ALIMENTOS LTDA'],
+        [new Date(2024, 7, 9), 19334.10, '71.685', 'GALLUS INDUSTRIA E COMERCIO DE ALIMENTOS LTDA'],
+        [new Date(2023, 5, 26), 26986.30, '28', 'MARIANA MOREIRA ANDRASCHKO LTDA'],
+        [new Date(2023, 10, 9), 84324.14, '75', 'MARIANA MOREIRA ANDRASCHKO LTDA'],
+        [new Date(2023, 7, 4), 11600.00, '3032', 'EDWINEY SEBASTIAO CUPERTINO LTDA'],
+        [new Date(2023, 7, 4), 35400.00, '3033', 'EDWINEY SEBASTIAO CUPERTINO LTDA'],
+        [new Date(2023, 7, 4), 11700.00, '3034', 'EDWINEY SEBASTIAO CUPERTINO LTDA'],
+        [new Date(2023, 7, 4), 2790.00, '3036', 'EDWINEY SEBASTIAO CUPERTINO LTDA'],
+        [new Date(2023, 7, 4), 9000.00, '3037', 'EDWINEY SEBASTIAO CUPERTINO LTDA'],
+        [new Date(2023, 10, 25), 4680.00, '3235', 'EDWINEY SEBASTIAO CUPERTINO LTDA'],
+        [new Date(2023, 10, 25), 11800.00, '3236', 'EDWINEY SEBASTIAO CUPERTINO LTDA'],
+        [new Date(2023, 10, 25), 1395.00, '3237', 'EDWINEY SEBASTIAO CUPERTINO LTDA'],
+        [new Date(2023, 10, 25), 6496.00, '3238', 'EDWINEY SEBASTIAO CUPERTINO LTDA'],
+        [new Date(2023, 10, 25), 4000.00, '3239', 'EDWINEY SEBASTIAO CUPERTINO LTDA'],
+        [new Date(2024, 3, 15), 16704.00, '3509', 'EDWINEY SEBASTIAO CUPERTINO LTDA'],
+        [new Date(2024, 4, 20), 11800.00, '3591', 'EDWINEY SEBASTIAO CUPERTINO LTDA'],
+        [new Date(2024, 5, 6), 23600.00, '3621', 'EDWINEY SEBASTIAO CUPERTINO LTDA'],
+        [new Date(2024, 5, 19), 16704.00, '3645', 'EDWINEY SEBASTIAO CUPERTINO LTDA'],
+        [new Date(2024, 4, 20), 42688.00, '3582', 'EDWINEY SEBASTIAO CUPERTINO LTDA'],
+        [new Date(2024, 4, 20), 14160.00, '3585', 'EDWINEY SEBASTIAO CUPERTINO LTDA'],
+        [new Date(2024, 5, 6), 1298.00, '3622', 'EDWINEY SEBASTIAO CUPERTINO LTDA'],
+        [new Date(2024, 5, 6), 8658.00, '3623', 'EDWINEY SEBASTIAO CUPERTINO LTDA'],
+        [new Date(2024, 5, 6), 155.00, '3628', 'EDWINEY SEBASTIAO CUPERTINO LTDA'],
+        [new Date(2024, 5, 6), 34800.00, '3629', 'EDWINEY SEBASTIAO CUPERTINO LTDA'],
+        [new Date(2024, 3, 5), 2068.50, '12.318', 'INDUSTRIA E COMERCIO DE PRODUTOS CAMPINENSE LTDA'],
+        [new Date(2024, 2, 25), 5249.63, '14.123', 'SUPRIMAIS COMERCIO E SERVICOS DE INFORMATICA LTDA'],
+        [new Date(2024, 3, 29), 8440.00, '14.258', 'SUPRIMAIS COMERCIO E SERVICOS DE INFORMATICA LTDA'],
+        [new Date(2024, 4, 3), 8779.60, '14.266', 'SUPRIMAIS COMERCIO E SERVICOS DE INFORMATICA LTDA'],
+        [new Date(2024, 2, 15), 1192.00, '4.741', 'PABLO LUIS MARTINS'],
+        [new Date(2024, 2, 21), 1443.90, '4.265', 'FORLIMP COMERCIO E DISTRIBUICAO DE PRODUTOS DE PERFUMARIA E LIMPEZA LTDA.'],
+        [new Date(2024, 3, 29), 5660.64, '417', 'HMGK COMERCIO E SERVICOS LTDA.'],
+        [new Date(2024, 2, 8), 1803.50, '147', 'MARIA EFIGENIA ALMEIDA DA SILVA'],
+        [new Date(2024, 4, 23), 7576.80, '9.599', 'N.S.S COMERCIAL E CONSTRUTORA EIRELI'],
+        [new Date(2024, 2, 21), 11295.00, '3.200', 'MEDS COMERCIO DE MEDICAMENTOS, PRODUTOS E EQUIPAMENTOS HOSPITALARES LTDA.'],
+        [new Date(2024, 11, 16), 5786.45, '816', 'JONATHAS DE ARAUJO LEITE ME'],
+        [new Date(2024, 2, 27), 1259.70, '9.705', 'INFANTARIA COMERCIAL EIRELI'],
+        [new Date(2024, 3, 5), 595.68, '4.494', 'SIS COMÉRCIO DE MATERIAIS E EQUIPAMENTOS LTDA.'],
+        [new Date(2025, 2, 26), 659.94, '9.245', 'REY-GLASS COMERCIAL E SERVICOS'],
+        [new Date(2024, 6, 30), 990.00, '7.203', 'LILIANE ALARCAO DIAS CORREA RAMANZINI'],
+        [new Date(2024, 6, 5), 2035.82, '1.125', 'ADONEX COMERCIO DE PRODUTOS PARA LABORATORIO'],
+        [new Date(2024, 7, 21), 1198.99, '11.360', 'OBAH PRODUTOS E SERVICOS ANALITICOS'],
+        [new Date(2024, 10, 6), 2380.10, '538', 'XLABOR TECNOLOGIA LTDA'],
+        [new Date(2024, 5, 7), 244.00, '3.550', 'TPL TAMIS PRODUTOS LABORATORIAIS'],
+        [new Date(2024, 7, 7), 5191.33, '9.593', 'FASTLABOR COMERCIAL LTDA'],
+        [new Date(2024, 8, 4), 2637.41, '3.070', 'LAB VISION - COMERCIO DE PRODUTOS LABORATORIAIS LTDA'],
+        [new Date(2025, 3, 8), 3018.50, '394', 'GUISOTECH COMERCIO DE EQUIPAMENTOS LTDA'],
+        [new Date(2024, 6, 23), 24390.62, '424', 'SA CONSUMIVEIS PRODUTOS DE LABORATORIO LTDA'],
+        [new Date(2025, 4, 8), 10328.94, '12.314', 'OBAH PRODUTOS E SERVICOS ANALITICOS LTDA.'],
+        [new Date(2024, 6, 9), 15003.39, '7.834', 'CALIBRY METROLOGIA COMERCIO E CALIBRACAO LTDA.'],
+        [new Date(2024, 6, 22), 2027.91, '3.511', 'GERAES DIAGNOSTICA LTDA.'],
+        [new Date(2024, 6, 10), 1298.40, '31.272', 'SCIAVICCO COMERCIO INDUSTRIA LTDA.'],
+        [new Date(2024, 5, 28), 13767.02, '1.437', 'M A 2 COMERCIAL LTDA.'],
+        [new Date(2024, 5, 28), 1038.99, '1.438', 'M A 2 COMERCIAL LTDA.'],
+        [new Date(2024, 5, 11), 2000.00, '415', 'FOX SCIENCE COMERCIO & PRODUTOS LTDA.'],
+        [new Date(2024, 4, 29), 19387.90, '490', 'HALOGENN PRODUTOS CIENTIFICOS LTDA.'],
+        [new Date(2024, 5, 10), 850.00, '9.593', 'ORBITAL PRODUTOS PARA LABORATORIOS LTDA.'],
+        [new Date(2024, 8, 30), 24250.00, '558', 'FONTES E ARAUJO LTDA'],
+        [new Date(2024, 8, 20), 6780.00, '12.324', 'K.C.R.S. COMERCIO DE EQUIPAMENTOS LTDA'],
+        [new Date(2024, 8, 4), 57400.00, '503', 'A ECONÔMICA COMÉRCIO LTDA'],
+        [new Date(2024, 9, 9), 7002.20, '5.138', 'BT COMÉRCIO INTELIGENTE LTDA'],
+        [new Date(2025, 0, 4), 8136.48, '12.010', 'REDNOV FERRAMENTAS LTDA'],
+        [new Date(2025, 0, 18), 25507.80, '12.668', 'REDNOV FERRAMENTAS LTDA'],
+        [new Date(2025, 0, 4), 12044.42, '12.011', 'REDNOV FERRAMENTAS LTDA'],
+        [new Date(2025, 0, 18), 35221.20, '12.667', 'REDNOV FERRAMENTAS LTDA'],
+        [new Date(2024, 8, 6), 13997.70, '3.178', 'DANTAS ELETROMOVEIS E EQUIPAMENTOS LTDA'],
+        [new Date(2025, 4, 29), 18210.00, '1.939', 'K J DE M ANDRADE LTDA'],
+        [new Date(2025, 4, 29), 36420.00, '1.938', 'K J DE M ANDRADE LTDA'],
+        [new Date(2024, 9, 10), 37682.70, '2.159', 'AMBARLAB PRODUTOS LABORATORIAIS'],
+        [new Date(2024, 8, 3), 3980.00, '295', 'Noroeste Comércio e Prestação De Serviços ltda.'],
+        [new Date(2024, 10, 21), 6996.00, '11.740', 'OBAH PRODUTOS E SERVICOS ANALITICOS LTDA'],
+        [new Date(2024, 9, 24), 482.28, '13.761', 'Comercial Vanguardeira Eireli'],
+        [new Date(2025, 3, 16), 5908.00, '900', 'F C Nicolau Equipamentos para Laboratório Ltda – ME'],
+        [new Date(2025, 4, 13), 9795.90, '1.672', 'ACARVE COMERCIO E LICITAÇÕES LTDA'],
+        [new Date(2024, 8, 26), 2920.89, '1.757', 'Quartz Indústria e Comércio de Equipamentos Para Laboratório LTDA EPP'],
+        [new Date(2024, 8, 19), 13500.00, '1.677', 'Mundial Científica Ltda'],
+        [new Date(2024, 9, 8), 10036.00, '154', 'PIRES & SANTOS COMERCIO LTDA'],
+        [new Date(2024, 8, 26), 15888.20, '4.103', 'Marte Equipamentos para Laboratório LTDA'],
+        [new Date(2023, 7, 29), 2880.00, '13.608', 'ANDRÉ FELIPE'],
+        [new Date(2023, 11, 14), 3600.00, '14.262', 'ANDRÉ FELIPE'],
+        [new Date(2024, 4, 2), 3600.00, '14.826', 'ANDRÉ FELIPE'],
+        [new Date(2024, 6, 30), 3600.00, '15.207', 'ANDRÉ FELIPE'],
+        [new Date(2024, 9, 17), 3120.00, '15.509', 'ANDRÉ FELIPE'],
+        [new Date(2024, 3, 12), 11258.00, '40.922', 'SOS GÁS LTDA - EPP'],
+        [new Date(2024, 0, 12), 4245.40, '11896', 'SCORPION INFORMÁTICA LTDA'],
+        [new Date(2024, 0, 22), 11138.00, '2.068', 'ELETROQUIP COMÉRCIO E LICITAÇÕES LTDA - ME'],
+        [new Date(2024, 2, 4), 2852.00, '2.200', 'OLIVEIRA & ALMEIDA INFORMÁTICA'],
+        [new Date(2024, 0, 15), 32219.00, '1632', 'REI TECH EIRELI'],
+        [new Date(2024, 1, 9), 809.40, '4.204', 'DF MÁQUINAS E FERRAMENTAS LTDA'],
+        [new Date(2023, 11, 28), 2887.50, '479.875', 'J&A SOLUÇÕES E-COMMERCE LTDA'],
+        [new Date(2024, 0, 18), 548.00, '1.710', 'JEAN ALEXANDRE WENDLER DE MORAIS'],
+        [new Date(2024, 0, 24), 100870.40, '388', 'SERGIO DOMINGUES & CIA LTDA'],
+        [new Date(2024, 1, 1), 88261.60, '391', 'SERGIO DOMINGUES & CIA LTDA'],
+        [new Date(2023, 11, 27), 14320.00, '375', 'A.M. TELECOM E SUPRIMENTOS DE INFORMÁTICA LTDA'],
+        [new Date(2024, 4, 20), 2399.20, '4332', 'HOT DIGITAL COMÉRCIO E SERVIÇO DE IMPRESSÃO LTDA.'],
+        [new Date(2024, 8, 26), 1700.00, '244', 'MULTIMÍDIA IMPRESSÃO E COMÉRCIO DE MATERIAL PUBLICITÁRIO LTDA.'],
+        [new Date(2024, 4, 22), 9890.00, '291', 'SUNSHINE ARTES LTDA'],
+        [new Date(2024, 5, 28), 14790.00, '71', 'JOELSON DA SILVA GONÇALVES'],
+        [new Date(2024, 0, 23), 22190.00, '257', 'TRC COMERCIO E SERVICOS LTDA'],
+        [new Date(2024, 5, 25), 880.00, '7.325', 'CLAVES E NOTAS COMERCIO DE INSTRUMENTOS MUSICAIS LTDA'],
+        [new Date(2024, 3, 18), 4169.00, '1.910', 'R JUAREZ DE ALMEIDA'],
+        [new Date(2024, 4, 2), 677.00, '1.540', 'HS-CPQ TECNOLOGIA LTDA'],
+        [new Date(2024, 10, 19), 3087.66, '974', 'WELCOME SERVIÇOS E EVENTOS LTDA.'],
+        [new Date(2024, 8, 26), 1880.00, '3014', 'ALEXANDRE LAURENTINO DA SILVA LTDA.'],
+        [new Date(2024, 8, 26), 11280.00, '3092', 'ALEXANDRE LAURENTINO DA SILVA LTDA.']
+      ];
+      
+      var dataTable = new google.visualization.DataTable();
+      dataTable.addColumn('date', 'Período');
+      dataTable.addColumn('number', 'Valor');
+      dataTable.addColumn({'type': 'string', 'role': 'style'});
+      dataTable.addColumn({'type': 'string', 'role': 'tooltip', 'p': {'html': true}});
+      dataTable.addColumn({'type': 'string', 'role': 'style'});
+
+      var minValor = Infinity, maxValor = -Infinity;
+      var minDate = Infinity, maxDate = -Infinity;
+
+      for (var i = 0; i < rawData.length; i++) {
+        var valor = rawData[i][1];
+        var dateTimestamp = rawData[i][0].getTime();
+        if (valor < minValor) minValor = valor;
+        if (valor > maxValor) maxValor = valor;
+        if (dateTimestamp < minDate) minDate = dateTimestamp;
+        if (dateTimestamp > maxDate) maxDate = dateTimestamp;
+      }
+      
+      function hexToRgb(hex) {
+        var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+        return result ? {
+          r: parseInt(result[1], 16),
+          g: parseInt(result[2], 16),
+          b: parseInt(result[3], 16)
+        } : null;
+      }
+<!-- Autor: Judson PRAXEDES da Silva -->
+      function getRgbColor(value, min, max, startHex, endHex) {
+          const startRgb = hexToRgb(startHex);
+          const endRgb = hexToRgb(endHex);
+          if (max === min) return 'point { fill-color: rgb(' + startRgb.r + ',' + startRgb.g + ',' + startRgb.b + '); }';
+          var percent = (value - min) / (max - min);
+          var r = Math.round(startRgb.r + percent * (endRgb.r - startRgb.r));
+          var g = Math.round(startRgb.g + percent * (endRgb.g - startRgb.g));
+          var b = Math.round(startRgb.b + percent * (endRgb.b - startRgb.b));
+          return 'point { fill-color: rgb(' + r + ',' + g + ',' + b + '); }';
+      }
+
+      var colorPalette = { start: '#f744d0', end: '#cc42db' };
+      var dateFormatter = new google.visualization.DateFormat({pattern: 'dd/MM/yyyy'});
+      var gridlineColor = '#355268';
+      var textColor = '#FFFFFF';
+
+      for (var i = 0; i < rawData.length; i++) {
+        var dataPeriodo = rawData[i][0];
+        var valor = rawData[i][1];
+        var numNF = rawData[i][2];
+        var empresa = rawData[i][3];
+        
+        var styleMain = getRgbColor(valor, minValor, maxValor, colorPalette.start, colorPalette.end);
+        var styleFilter = getRgbColor(dataPeriodo.getTime(), minDate, maxDate, colorPalette.start, colorPalette.end);
+        
+        var tooltip = '<div style="padding:10px; background-color:#333; color:white; border-radius:5px;">' +
+                      '<b>Nota fiscal:</b> ' + numNF + '<br>' +
+                      '<b>Empresa:</b> ' + empresa + '<br>' +
+                      '<b>Data NF:</b> ' + dateFormatter.formatValue(dataPeriodo) + '<br>' +
+                      '<b>Valor:</b> ' + valor.toLocaleString('pt-br', {style: 'currency', currency: 'BRL'}) +
+                      '</div>';
+        
+        dataTable.addRow([dataPeriodo, valor, styleMain, tooltip, styleFilter]);
+      }
+      
+      var quarterlyTicks = [];
+      for (var y = 2023; y <= 2025; y++) {
+          for (var q = 0; q < 12; q += 3) {
+              if (y === 2025 && q > 6) continue;
+              quarterlyTicks.push(new Date(y, q, 1));
+          }
+      }
+
+      var slider = new google.visualization.ControlWrapper({
+        'controlType': 'ChartRangeFilter',
+        'containerId': 'filter_div',
+        'options': {
+          'filterColumnIndex': 0,
+          'ui': {
+            'chartType': 'ScatterChart',
+            'chartOptions': {
+              'backgroundColor': 'transparent',
+              'chartArea': {'width': '85%', 'left': 100, 'height': '80%'},
+              'hAxis': {
+                  'baselineColor': 'none', 
+                  'format': 'MMM/yy', 
+                  'textStyle': { 'color': textColor },
+                  'gridlines': { 'color': gridlineColor } 
+              },
+              'vAxis': {'textPosition': 'none', 'gridlines': { 'color': 'transparent' }},
+              'legend': 'none',
+              'pointSize': 6
+            },
+            'chartView': { 'columns': [0, 1, 4] } 
+          }
+        }
+      });
+
+      var scatterChart = new google.visualization.ChartWrapper({
+        'chartType': 'ScatterChart',
+        'containerId': 'chart_div',
+        'view': {'columns': [0, 1, 2, 3]},
+        'options': {
+          'title': 'Dispersão de Notas Fiscais por Trimestres',
+          'titleTextStyle': { 'color': textColor },
+          'backgroundColor': 'transparent',
+          'hAxis': {
+            'title': 'Período',
+            'titleTextStyle': { 'color': textColor },
+            'ticks': quarterlyTicks,
+            'format': 'MMM/yyyy',
+            'textStyle': { 'color': textColor },
+            'gridlines': { 'color': gridlineColor }
+          },
+          'vAxis': {
+            'title': 'Valor',
+            'titleTextStyle': { 'color': textColor },
+            'format': 'R$ #,##0.00',
+            'textStyle': { 'color': textColor },
+            'gridlines': { 'color': 'transparent' }
+          },
+          'legend': 'none',
+          'tooltip': { 'isHtml': true },
+          'chartArea': {'width': '85%', 'left': 100, 'top': 50},
+          'pointSize': 10
+        }
+      });
+      
+      dashboard.bind(slider, scatterChart);
+      dashboard.draw(dataTable);
+    }
+  </script>
+</head>
+<body>
+  <div id="dashboard_div">
+    <div id="chart_div" style="height: 500px;"></div>
+    <div id="filter_div" style="height: 100px;"></div>
+  </div>
+</body>
+</html>
+<!-- Autor: Judson PRAXEDES da Silva -->

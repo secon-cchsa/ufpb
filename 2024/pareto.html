@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gráfico de Pareto - Análise de Contratações 2024</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: transparent;
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 0; 
+    box-sizing: border-box;
+    margin: 0;
+  }
+
+  .dashboard-panel {
+    background-color: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    border: none;
+    box-shadow: none;
+    border-radius: 12px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; 
+    padding: 25px 10px; 
+    width: 100%;
+    max-width: 900px; 
+    height: 550px; 
+  }
+  
+  .dashboard-panel h3 { 
+    margin-top: 0;
+    font-size: 1.2rem; 
+    color: #f0f0f0;
+    text-align: center;
+    margin-bottom: 20px; 
+  }
+
+  .chart-container { 
+    flex-grow: 1;
+    position: relative;
+    width: 100%; 
+  }
+
+</style>
+</head>
+<body>
+
+<div class="dashboard-panel">
+  <h3>Análise de Pareto por Valor Adquirido - 2024</h3>
+  <div class="chart-container">
+    <canvas id="paretoChart"></canvas>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    
+    // Dados da Análise de Pareto 2024 (CORRIGIDO)
+    const paretoLabels = ['Pregão 02/2024', 'Pregão 01/2024', 'Pregão 03/2024', 'IRP 01/2024'];
+    const barData = [275137.29, 23881.3, 11829.01, 8278.28];
+    const lineData = [86.22, 93.7, 97.41, 100.0];
+
+    const textColor = '#f0f0f0';
+    const gridColor = 'rgba(255, 255, 255, 0.15)';
+    const lineColor = '#f400a1';
+
+    function hexToRgb(hex) {
+        let result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+        return result ? { r: parseInt(result[1], 16), g: parseInt(result[2], 16), b: parseInt(result[3], 16) } : null;
+    }
+    
+    function getGradientColor(value, min, max, startRgb, endRgb) {
+        const percent = (value - min) / (max - min);
+        const r = Math.round(startRgb.r + percent * (endRgb.r - startRgb.r));
+        const g = Math.round(startRgb.g + percent * (endRgb.g - startRgb.g));
+        const b = Math.round(startRgb.b + percent * (endRgb.b - startRgb.b));
+        return `rgb(${r}, ${g}, ${b})`;
+    }
+
+    const minBarVal = Math.min(...barData);
+    const maxBarVal = Math.max(...barData);
+    const startColor = hexToRgb('#c6dbef');
+    const endColor = hexToRgb('#3182bd');
+    
+    const barBackgroundColors = barData.map(value => getGradientColor(value, minBarVal, maxBarVal, startColor, endColor));
+
+    const paretoCtx = document.getElementById('paretoChart').getContext('2d');
+    if (paretoCtx) {
+        new Chart(paretoCtx, {
+            type: 'bar',
+            data: {
+                labels: paretoLabels,
+                datasets: [
+                    {
+                        label: 'Percentual Acumulado',
+                        data: lineData,
+                        type: 'line',
+                        yAxisID: 'y1',
+                        order: 1, 
+                        borderColor: lineColor,
+                        pointBackgroundColor: lineColor,
+                        fill: true,
+                        backgroundColor: function(context) {
+                            const chart = context.chart;
+                            const { ctx, chartArea } = chart;
+                            if (!chartArea) return null;
+                            const gradient = ctx.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
+                            gradient.addColorStop(0, 'rgba(244, 0, 161, 0.4)');
+                            gradient.addColorStop(1, 'rgba(244, 0, 161, 0)');
+                            return gradient;
+                        },
+                        tension: 0.4,
+                        pointRadius: 3,
+                        pointHoverRadius: 5
+                    },
+                    {
+                        label: 'Valor Adquirido',
+                        data: barData,
+                        backgroundColor: barBackgroundColors,
+                        yAxisID: 'y',
+                        order: 2
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                layout: {
+                    padding: {
+                        bottom: 30 
+                    }
+                },
+                plugins: {
+                    tooltip: {
+                        mode: 'index',
+                        intersect: false,
+                        callbacks: {
+                            label: function(context) {
+                                let label = context.dataset.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                if (context.dataset.type === 'line') {
+                                    label += context.parsed.y.toFixed(2) + '%';
+                                } else {
+                                    label += new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(context.parsed.y);
+                                }
+                                return label;
+                            }
+                        }
+                    },
+                    legend: {
+                        labels: {
+                            color: textColor
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        ticks: {
+                            color: textColor,
+                            font: { size: 12 },
+                            maxRotation: 45,
+                            minRotation: 45,
+                        },
+                        grid: {
+                            color: 'transparent'
+                        }
+                    },
+                    y: {
+                        type: 'linear',
+                        position: 'left',
+                        title: { display: true, text: 'Valor Adquirido (R$)', color: textColor },
+                        ticks: { 
+                            color: textColor,
+                            callback: (value) => new Intl.NumberFormat('pt-BR', { notation: "compact" }).format(value)
+                        },
+                        grid: {
+                            color: gridColor
+                        }
+                    },
+                    y1: {
+                        type: 'linear',
+                        position: 'right',
+                        min: 0,
+                        max: 100,
+                        title: { display: true, text: 'Percentual Acumulado (%)', color: textColor },
+                        ticks: {
+                            color: textColor,
+                            callback: (value) => value + '%'
+                        },
+                        grid: {
+                            drawOnChartArea: false
+                        }
+                    }
+                }
+            }
+        });
+    }
+});
+</script>
+
+</body>
+</html>

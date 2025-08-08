@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Análise de Pareto - Pregões e IRPs</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #003399;
+        }
+        .data-table {
+            width: 100%;
+            max-width: 900px;
+            margin: 20px auto;
+            border-collapse: collapse;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            background-color: white;
+        }
+        .data-table th, .data-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        .data-table th {
+            background-color: #003399;
+            color: #ffffff;
+            font-weight: bold;
+        }
+        .data-table tr:nth-of-type(even) {
+            background-color: #f9f9f9;
+        }
+        .data-table tr:hover {
+            background-color: #f1f1f1;
+        }
+        .pareto-80 {
+            font-weight: bold;
+            color: #c00000;
+        }
+    </style>
+</head>
+<body>
+    <h1>Análise de Pareto por Valor Adquirido (Pregões e IRPs)</h1>
+    <table border="0" class="dataframe data-table">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Processo</th>
+      <th>Valor Total Adquirido</th>
+      <th>Soma Acumulada</th>
+      <th>Porcentagem Acumulada</th>
+      <th>Classificação</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Pregão 05/2023</td>
+      <td>R$ 481.800,00</td>
+      <td>R$ 481.800,00</td>
+      <td>23.92%</td>
+      <td class="pareto-80">80%</td>
+    </tr>
+    <tr>
+      <td>Pregão 04/2023</td>
+      <td>R$ 286.439,00</td>
+      <td>R$ 768.239,00</td>
+      <td>38.14%</td>
+      <td class="pareto-80">80%</td>
+    </tr>
+    <tr>
+      <td>IRP 04/2023</td>
+      <td>R$ 246.699,35</td>
+      <td>R$ 1.014.938,35</td>
+      <td>50.39%</td>
+      <td class="pareto-80">80%</td>
+    </tr>
+    <tr>
+      <td>IRP 01/2023</td>
+      <td>R$ 189.132,00</td>
+      <td>R$ 1.204.070,35</td>
+      <td>59.78%</td>
+      <td class="pareto-80">80%</td>
+    </tr>
+    <tr>
+      <td>Pregão 02/2023</td>
+      <td>R$ 96.949,14</td>
+      <td>R$ 1.301.019,49</td>
+      <td>64.59%</td>
+      <td class="pareto-80">80%</td>
+    </tr>
+    <tr>
+      <td>IRP 06/2023</td>
+      <td>R$ 80.003,50</td>
+      <td>R$ 1.381.022,99</td>
+      <td>68.57%</td>
+      <td class="pareto-80">80%</td>
+    </tr>
+    <tr>
+      <td>Pregão 01/2023</td>
+      <td>R$ 78.431,40</td>
+      <td>R$ 1.459.454,39</td>
+      <td>72.46%</td>
+      <td class="pareto-80">80%</td>
+    </tr>
+    <tr>
+      <td>Pregão 12/2023</td>
+      <td>R$ 75.529,62</td>
+      <td>R$ 1.534.984,01</td>
+      <td>76.21%</td>
+      <td class="pareto-80">80%</td>
+    </tr>
+    <tr>
+      <td>Pregão 09/2023</td>
+      <td>R$ 57.529,63</td>
+      <td>R$ 1.592.513,64</td>
+      <td>79.07%</td>
+      <td class="pareto-80">80%</td>
+    </tr>
+    <tr>
+      <td>IRP 14/2023</td>
+      <td>R$ 52.557,60</td>
+      <td>R$ 1.645.071,24</td>
+      <td>81.68%</td>
+      <td>20%</td>
+    </tr>
+    <tr>
+      <td>IRP 12/2023</td>
+      <td>R$ 49.347,07</td>
+      <td>R$ 1.694.418,31</td>
+      <td>84.13%</td>
+      <td>20%</td>
+    </tr>
+    <tr>
+      <td>Pregão 08/2023</td>
+      <td>R$ 46.358,49</td>
+      <td>R$ 1.740.776,80</td>
+      <td>86.43%</td>
+      <td>20%</td>
+    </tr>
+    <tr>
+      <td>IRP 16/2023</td>
+      <td>R$ 43.587,66</td>
+      <td>R$ 1.784.364,46</td>
+      <td>88.59%</td>
+      <td>20%</td>
+    </tr>
+    <tr>
+      <td>Pregão 06/2023</td>
+      <td>R$ 37.682,70</td>
+      <td>R$ 1.822.047,16</td>
+      <td>90.46%</td>
+      <td>20%</td>
+    </tr>
+    <tr>
+      <td>IRP 08/2023</td>
+      <td>R$ 31.428,27</td>
+      <td>R$ 1.853.475,43</td>
+      <td>92.02%</td>
+      <td>20%</td>
+    </tr>
+    <tr>
+      <td>IRP 09/2023</td>
+      <td>R$ 30.129,58</td>
+      <td>R$ 1.883.605,01</td>
+      <td>93.52%</td>
+      <td>20%</td>
+    </tr>
+    <tr>
+      <td>IRP 05/2023</td>
+      <td>R$ 22.842,00</td>
+      <td>R$ 1.906.447,01</td>
+      <td>94.65%</td>
+      <td>20%</td>
+    </tr>
+    <tr>
+      <td>IRP 07/2023</td>
+      <td>R$ 21.042,47</td>
+      <td>R$ 1.927.489,48</td>
+      <td>95.70%</td>
+      <td>20%</td>
+    </tr>
+    <tr>
+      <td>IRP 15/2023</td>
+      <td>R$ 16.500,00</td>
+      <td>R$ 1.943.989,48</td>
+      <td>96.52%</td>
+      <td>20%</td>
+    </tr>
+    <tr>
+      <td>Pregão 07/2023</td>
+      <td>R$ 15.462,47</td>
+      <td>R$ 1.959.451,95</td>
+      <td>97.28%</td>
+      <td>20%</td>
+    </tr>
+    <tr>
+      <td>IRP 10/2023</td>
+      <td>R$ 14.806,01</td>
+      <td>R$ 1.974.257,96</td>
+      <td>98.02%</td>
+      <td>20%</td>
+    </tr>
+    <tr>
+      <td>IRP 02/2023</td>
+      <td>R$ 13.568,15</td>
+      <td>R$ 1.987.826,11</td>
+      <td>98.69%</td>
+      <td>20%</td>
+    </tr>
+    <tr>
+      <td>IRP 00/2023</td>
+      <td>R$ 11.258,00</td>
+      <td>R$ 1.999.084,11</td>
+      <td>99.25%</td>
+      <td>20%</td>
+    </tr>
+    <tr>
+      <td>IRP 11/2023</td>
+      <td>R$ 9.357,50</td>
+      <td>R$ 2.008.441,61</td>
+      <td>99.72%</td>
+      <td>20%</td>
+    </tr>
+    <tr>
+      <td>IRP 13/2023</td>
+      <td>R$ 5.113,89</td>
+      <td>R$ 2.013.555,50</td>
+      <td>99.97%</td>
+      <td>20%</td>
+    </tr>
+    <tr>
+      <td>Pregão 03/2023</td>
+      <td>R$ 583,44</td>
+      <td>R$ 2.014.138,94</td>
+      <td>100.00%</td>
+      <td>20%</td>
+    </tr>
+  </tbody>
+</table>
+</body>
+</html>

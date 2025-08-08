@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gráfico de Barras Empilhadas</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        html, body { height: 100%; margin: 0; padding: 0; overflow: hidden; }
+        body { font-family: 'Roboto', sans-serif; background-color: transparent; display: flex; }
+        .chart-container { position: relative; width: 100%; height: 100%; padding: 15px; box-sizing: border-box; }
+    </style>
+</head>
+<body>
+    <div class="chart-container">
+        <canvas id="stackedBarChart"></canvas>
+    </div>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    function formatNumber(num, compact = false) { 
+        if (compact) { 
+            return new Intl.NumberFormat('pt-BR', { notation: "compact", compactDisplay: "short", style: 'currency', currency: 'BRL', minimumFractionDigits: 2 }).format(num); 
+        }
+        return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(num);
+    }
+const textColorSecondary = '#d0d0d0';
+    const gridBorderColor = 'rgba(255, 255, 255, 0.1)';
+
+    const valorAdquirido = 319125.88;
+    const valorEmpenhado = 555722.41;
+    const valorTotalARP = 939150.17;
+    const saldoDoEmpenho = valorEmpenhado - valorAdquirido;
+    const saldoDaARP = valorTotalARP - valorEmpenhado;
+
+    const stackedCtx = document.getElementById('stackedBarChart')?.getContext('2d');
+    if (stackedCtx) {
+        new Chart(stackedCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Balanço Total da ARP'],
+                datasets: [
+                    { label: 'Valor Adquirido', data: [valorAdquirido], backgroundColor: '#bdd7e7' },
+                    { label: 'Saldo do Empenho', data: [saldoDoEmpenho], backgroundColor: '#6baed6' },
+                    { label: 'Saldo da ARP', data: [saldoDaARP], backgroundColor: '#3182bd' }
+                ]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false, indexAxis: 'y',
+                plugins: { legend: { position: 'top', labels: { color: textColorSecondary, boxWidth: 15, font: { size: 11 } } }, tooltip: { callbacks: { label: (c) => `${c.dataset.label}: ${formatNumber(c.raw)}` } } },
+                scales: {
+                    y: { stacked: true, ticks: { display: false }, grid: { display: false } },
+                    x: { stacked: true, ticks: { color: textColorSecondary, font: { size: 10 }, callback: (v) => formatNumber(v, true), maxTicksLimit: 6 }, grid: { color: gridBorderColor } }
+                }
+            }
+        });
+    }
+});
+</script>
+</body>
+</html>
