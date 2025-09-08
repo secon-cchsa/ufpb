@@ -1,0 +1,3229 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Mapa Mental - Fornecedores</title>
+  <style>
+    /* Estilos atualizados para se adequar ao dashboard principal */
+    :root {
+      --bg: transparent; /* Fundo transparente */
+      --card: transparent; /* Fundo do card 100% transparente */
+      --accent: #4dd0e1; /* Cor de destaque do seu dashboard */
+      --text-color: #f0f0f0; /* Cor do texto principal (branco) */
+      --muted: #d0d0d0; /* Cor de texto secundário */
+    }
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: var(--bg);
+      margin: 24px;
+      color: var(--text-color);
+    }
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .card {
+      background: var(--card);
+      border-radius: 12px;
+      padding: 18px;
+      box-shadow: none; /* Remove a sombra */
+      border: none; /* Remove a borda */
+      /* Remove o filtro de desfoque */
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+    }
+    h1 {
+      font-size: 20px;
+      margin: 0 0 8px;
+      color: var(--text-color);
+    }
+    p.small {
+      color: var(--muted);
+      margin: 0 0 16px;
+    }
+    .search-container {
+      margin-bottom: 20px;
+      display: flex;
+      gap: 10px;
+    }
+    .search-container input[type="text"] {
+      flex-grow: 1;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid var(--muted);
+      background: transparent;
+      color: var(--text-color);
+    }
+    .search-container button {
+      padding: 10px 15px;
+      border-radius: 8px;
+      border: 1px solid var(--accent);
+      background: var(--accent);
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .tree {
+      margin-top: 12px;
+      max-height: 400px; /* Define uma altura máxima */
+      overflow-y: auto; /* Adiciona a barra de rolagem vertical */
+    }
+    ul.tree-list {
+      list-style: none;
+      padding-left: 20px;
+      margin: 0;
+    }
+    .node {
+      padding: 6px 10px;
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      color: var(--text-color);
+    }
+    .node:hover {
+      background: rgba(77, 208, 225, 0.2); /* Cor de destaque semi-transparente no hover */
+    }
+    .toggle {
+      width: 14px;
+      height: 14px;
+      display: inline-grid;
+      place-items: center;
+      border-radius: 3px;
+      background: rgba(77, 208, 225, 0.5);
+      color: var(--text-color);
+      font-weight: 700;
+      font-size: 11px;
+    }
+    .meta {
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .value {
+      font-weight: 600;
+      color: var(--accent);
+    }
+    .supplier-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .right {
+      margin-left: auto;
+      text-align: right;
+    }
+    .summary {
+      margin-top: 14px;
+      border-top: 1px dashed var(--muted);
+      padding-top: 12px;
+      display: flex;
+      gap: 18px;
+      align-items: center;
+      color: var(--text-color);
+    }
+    .chip {
+      background: var(--accent);
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-weight: 600;
+      color: var(--text-color);
+    }
+    .note-row {
+      margin-left: 24px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .nf-row {
+      margin-left: 48px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .hidden {
+      display: none;
+    }
+    @media (max-width: 600px) {
+      .container {
+        margin: 12px;
+      }
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <h1>Mapa mental: Fornecedores → Notas de Empenho → Notas Fiscais</h1>
+      <p class="small">Clique em um nó para expandir/contrair.</p>
+
+      <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Pesquisar por fornecedor, NE ou NF...">
+        <button onclick="filterTree()">Pesquisar</button>
+      </div>
+
+      <div id="tree" class="tree"></div>
+      <div id="summary" class="summary"></div>
+    </div>
+  </div>
+
+  <script>
+    const data = [
+      {
+        "nome": "A ECONÔMICA COMÉRCIO LTDA",
+        "notas": [
+          {
+            "id": "2023NE000182",
+            "valor": 57400.0,
+            "notasFiscais": [
+              {
+                "id": "000.503",
+                "valor": 57400.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "A.M. TELECOM E SUPRIMENTOS DE INFORMÁTICA LTDA",
+        "notas": [
+          {
+            "id": "2023NE000128",
+            "valor": 14320.0,
+            "notasFiscais": [
+              {
+                "id": "000.375",
+                "valor": 14320.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "A.M.S. RIOS FABRICACAO E COMERCIO DE BOLSAS LTDA.",
+        "notas": [
+          {
+            "id": "2023NE000048",
+            "valor": 36000.0,
+            "notasFiscais": [
+              {
+                "id": "3244",
+                "valor": 36000.0
+              }
+            ]
+          },
+          {
+            "id": "2023NE000150",
+            "valor": 2400.0,
+            "notasFiscais": [
+              {
+                "id": "3244",
+                "valor": 2400.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "A.N.D CAPELLI LTDA",
+        "notas": [
+          {
+            "id": "2024NE000089",
+            "valor": 52218.0,
+            "notasFiscais": [
+              {
+                "id": "N/A",
+                "valor": 0.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "ACARVE COMERCIO E LICITAÇÕES LTDA",
+        "notas": [
+          {
+            "id": "2024NE000077",
+            "valor": 9795.9,
+            "notasFiscais": [
+              {
+                "id": "001.672",
+                "valor": 9795.9
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "ADONEX COMERCIO DE PRODUTOS PARA LABORATORIO",
+        "notas": [
+          {
+            "id": "2024NE000039",
+            "valor": 2035.82,
+            "notasFiscais": [
+              {
+                "id": "001.125",
+                "valor": 2035.82
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "ADRIANO HALAMA",
+        "notas": [
+          {
+            "id": "2023NE000125",
+            "valor": 670.0,
+            "notasFiscais": [
+              {
+                "id": "163",
+                "valor": 670.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "ADVANCED COMERCIO DE EQUIPAMENTOS LTDA",
+        "notas": [
+          {
+            "id": "N/A",
+            "valor": 0.0,
+            "notasFiscais": [
+              {
+                "id": "N/A",
+                "valor": 0.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "ALEXANDRE LAURENTINO DA SILVA LTDA.",
+        "notas": [
+          {
+            "id": "2024NE000034",
+            "valor": 13160.0,
+            "notasFiscais": [
+              {
+                "id": "3092",
+                "valor": 11280.0
+              },
+              {
+                "id": "3014",
+                "valor": 1880.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "ALL IN - SOLUCOES TECNOLOGICAS",
+        "notas": [
+          {
+            "id": "N/A",
+            "valor": 0.0,
+            "notasFiscais": [
+              {
+                "id": "N/A",
+                "valor": 0.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "AMBARLAB PRODUTOS LABORATORIAIS",
+        "notas": [
+          {
+            "id": "2023NE000179",
+            "valor": 37682.7,
+            "notasFiscais": [
+              {
+                "id": "002.159",
+                "valor": 37682.7
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "ANDRÉ AUGUSTO TRUTA FELIPE",
+        "notas": [
+          {
+            "id": "2024NE000145",
+            "valor": 40908.0,
+            "notasFiscais": [
+              {
+                "id": "003.222",
+                "valor": 2659.5
+              },
+              {
+                "id": "003.377",
+                "valor": 2561.0
+              },
+              {
+                "id": "003.544",
+                "valor": 2265.5
+              },
+              {
+                "id": "003.789",
+                "valor": 1871.5
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "ANDRÉ FELIPE",
+        "notas": [
+          {
+            "id": "2023NE000095",
+            "valor": 16800.0,
+            "notasFiscais": [
+              {
+                "id": "013.608",
+                "valor": 2880.0
+              },
+              {
+                "id": "014.262",
+                "valor": 3600.0
+              },
+              {
+                "id": "014.826",
+                "valor": 3600.0
+              },
+              {
+                "id": "015.207",
+                "valor": 3600.0
+              },
+              {
+                "id": "015.509",
+                "valor": 3120.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "AR6 LICITAÇÕES LTDA",
+        "notas": [
+          {
+            "id": "2023NE000110",
+            "valor": 23241.4,
+            "notasFiscais": [
+              {
+                "id": "797",
+                "valor": 23241.4
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "ARKHAGGELOS COMERCIO LTDA",
+        "notas": [
+          {
+            "id": "N/A",
+            "valor": 0.0,
+            "notasFiscais": [
+              {
+                "id": "N/A",
+                "valor": 0.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "BACKUP MANUTENÇÃO E DISTRIBUICAO DE PRODUTOS DE INFORMÁTICA LTDA",
+        "notas": [
+          {
+            "id": "2023NE000127",
+            "valor": 300.0,
+            "notasFiscais": [
+              {
+                "id": "N/A",
+                "valor": 0.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "BBC COMERCIAL DISTRIBUIDORA E SERVICOS LTDA",
+        "notas": [
+          {
+            "id": "2023NE000040",
+            "valor": 65960.0,
+            "notasFiscais": [
+              {
+                "id": "1988",
+                "valor": 65960.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "Betaquimica Equipamentos para Laboratório LTDA",
+        "notas": [
+          {
+            "id": "2024NE000073",
+            "valor": 41561.02,
+            "notasFiscais": [
+              {
+                "id": "000.493",
+                "valor": 41561.02
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "BT COMÉRCIO INTELIGENTE LTDA",
+        "notas": [
+          {
+            "id": "2023NE000177",
+            "valor": 7002.2,
+            "notasFiscais": [
+              {
+                "id": "005.138",
+                "valor": 7002.2
+              }
+            ]
+          },
+          {
+            "id": "N/A",
+            "valor": 0.0,
+            "notasFiscais": [
+              {
+                "id": "N/A",
+                "valor": 0.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "CALIBRY METROLOGIA COMERCIO E CALIBRACAO LTDA.",
+        "notas": [
+          {
+            "id": "2023NE000145",
+            "valor": 15003.39,
+            "notasFiscais": [
+              {
+                "id": "007.834",
+                "valor": 15003.39
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "CITASP DISTRIBUIDOR DE EQUIPAMENTOS SOCIEDADE UNIPESSOAL LTDA",
+        "notas": [
+          {
+            "id": "N/A",
+            "valor": 0.0,
+            "notasFiscais": [
+              {
+                "id": "N/A",
+                "valor": 0.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "CLAVES E NOTAS COMERCIO DE INSTRUMENTOS MUSICAIS LTDA",
+        "notas": [
+          {
+            "id": "2023NE000157",
+            "valor": 880.0,
+            "notasFiscais": [
+              {
+                "id": "007.325",
+                "valor": 880.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "Comercial Vanguardeira Eireli",
+        "notas": [
+          {
+            "id": "2024NE000082",
+            "valor": 482.28,
+            "notasFiscais": [
+              {
+                "id": "013.761",
+                "valor": 482.28
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "DANTAS ELETROMOVEIS E EQUIPAMENTOS LTDA",
+        "notas": [
+          {
+            "id": "2023NE000178",
+            "valor": 13997.7,
+            "notasFiscais": [
+              {
+                "id": "003.178",
+                "valor": 13997.7
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "DF MÁQUINAS E FERRAMENTAS LTDA",
+        "notas": [
+          {
+            "id": "2023NE000151",
+            "valor": 809.4,
+            "notasFiscais": [
+              {
+                "id": "004.204",
+                "valor": 809.4
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "DISTRIBUIDORA PHG LTDA.",
+        "notas": [
+          {
+            "id": "N/A",
+            "valor": 0.0,
+            "notasFiscais": [
+              {
+                "id": "N/A",
+                "valor": 0.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "DLB COMÉRCIO DE PRODUTOS DE INFORMÁTICA LTDA",
+        "notas": [
+          {
+            "id": "2023NE000126",
+            "valor": 14138.7,
+            "notasFiscais": [
+              {
+                "id": "001.350",
+                "valor": 14138.7
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "EDELSON MILTON DE SOUZA",
+        "notas": [
+          {
+            "id": "N/A",
+            "valor": 0.0,
+            "notasFiscais": [
+              {
+                "id": "N/A",
+                "valor": 0.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "EDIR SUSSEL & CIA LTDA",
+        "notas": [
+          {
+            "id": "N/A",
+            "valor": 0.0,
+            "notasFiscais": [
+              {
+                "id": "N/A",
+                "valor": 0.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "EDWINEY SEBASTIAO CUPERTINO LTDA",
+        "notas": [
+          {
+            "id": "2023NE000049",
+            "valor": 70490.0,
+            "notasFiscais": [
+              {
+                "id": "3032",
+                "valor": 11600.0
+              },
+              {
+                "id": "3033",
+                "valor": 35400.0
+              },
+              {
+                "id": "3034",
+                "valor": 11700.0
+              },
+              {
+                "id": "3036",
+                "valor": 2790.0
+              },
+              {
+                "id": "3037",
+                "valor": 9000.0
+              }
+            ]
+          },
+          {
+            "id": "2023NE000122",
+            "valor": 83090.0,
+            "notasFiscais": [
+              {
+                "id": "3235",
+                "valor": 4680.0
+              },
+              {
+                "id": "3236",
+                "valor": 11800.0
+              },
+              {
+                "id": "3237",
+                "valor": 1395.0
+              },
+              {
+                "id": "3238",
+                "valor": 6496.0
+              },
+              {
+                "id": "3239",
+                "valor": 4000.0
+              }
+            ]
+          },
+          {
+            "id": "2023NE000153",
+            "valor": 78371.0,
+            "notasFiscais": [
+              {
+                "id": "3585",
+                "valor": 14160.0
+              },
+              {
+                "id": "3591",
+                "valor": 11800.0
+              },
+              {
+                "id": "3621",
+                "valor": 23600.0
+              },
+              {
+                "id": "3622",
+                "valor": 1298.0
+              },
+              {
+                "id": "3623",
+                "valor": 8658.0
+              },
+              {
+                "id": "3628",
+                "valor": 155.0
+              },
+              {
+                "id": "3629",
+                "valor": 34800.0
+              }
+            ]
+          },
+          {
+            "id": "2023NE000171",
+            "valor": 54719.0,
+            "notasFiscais": [
+              {
+                "id": "3509",
+                "valor": 16704.0
+              },
+              {
+                "id": "3591",
+                "valor": 11800.0
+              },
+              {
+                "id": "3621",
+                "valor": 23600.0
+              },
+              {
+                "id": "3645",
+                "valor": 16704.0
+              }
+            ]
+          },
+          {
+            "id": "2024NE000020",
+            "valor": 42688.0,
+            "notasFiscais": [
+              {
+                "id": "3582",
+                "valor": 42688.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "ELETROQUIP COMÉRCIO E LICITAÇÕES LTDA",
+        "notas": [
+          {
+            "id": "N/A",
+            "valor": 0.0,
+            "notasFiscais": [
+              {
+                "id": "N/A",
+                "valor": 0.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "ELETROQUIP COMÉRCIO E LICITAÇÕES LTDA - ME",
+        "notas": [
+          {
+            "id": "2023NE000124",
+            "valor": 11138.0,
+            "notasFiscais": [
+              {
+                "id": "002.068",
+                "valor": 11138.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "ELITE TECH SUPRIMENTOS LTDA",
+        "notas": [
+          {
+            "id": "N/A",
+            "valor": 0.0,
+            "notasFiscais": [
+              {
+                "id": "N/A",
+                "valor": 0.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "EMGESA - EMPRESA DE GERENCIAMENTO DE SOBRESSALENTES",
+        "notas": [
+          {
+            "id": "N/A",
+            "valor": 0.0,
+            "notasFiscais": [
+              {
+                "id": "N/A",
+                "valor": 0.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "ERIKA BARBERINO MARTINS BORGES",
+        "notas": [
+          {
+            "id": "N/A",
+            "valor": 0.0,
+            "notasFiscais": [
+              {
+                "id": "N/A",
+                "valor": 0.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "F C Nicolau Equipamentos para Laboratório Ltda – ME",
+        "notas": [
+          {
+            "id": "2024NE000088",
+            "valor": 5908.0,
+            "notasFiscais": [
+              {
+                "id": "000.900",
+                "valor": 5908.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "FASTLABOR COMERCIAL LTDA",
+        "notas": [
+          {
+            "id": "2024NE000045",
+            "valor": 5191.33,
+            "notasFiscais": [
+              {
+                "id": "009.593",
+                "valor": 5191.33
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "FLEXIBASE INDUSTRIA E COMERCIO DE MOVEIS, IMPORTACAO E EXPORTACAO LTDA",
+        "notas": [
+          {
+            "id": "N/A",
+            "valor": 0.0,
+            "notasFiscais": [
+              {
+                "id": "N/A",
+                "valor": 0.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "FONTES E ARAUJO LTDA",
+        "notas": [
+          {
+            "id": "2023NE000173",
+            "valor": 24250.0,
+            "notasFiscais": [
+              {
+                "id": "000.558",
+                "valor": 24250.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "FORLIMP COMERCIO E DISTRIBUICAO DE PRODUTOS DE PERFUMARIA E LIMPEZA LTDA.",
+        "notas": [
+          {
+            "id": "2023NE000024",
+            "valor": 10552.4,
+            "notasFiscais": [
+              {
+                "id": "3795",
+                "valor": 10552.4
+              }
+            ]
+          },
+          {
+            "id": "2023NE000054",
+            "valor": 66546.74,
+            "notasFiscais": [
+              {
+                "id": "3931",
+                "valor": 3204.68
+              },
+              {
+                "id": "3944",
+                "valor": 2169.54
+              },
+              {
+                "id": "3952",
+                "valor": 1729.96
+              },
+              {
+                "id": "3972",
+                "valor": 2063.19
+              },
+              {
+                "id": "4016",
+                "valor": 8004.61
+              },
+              {
+                "id": "4056",
+                "valor": 5672.0
+              },
+              {
+                "id": "4147",
+                "valor": 5672.0
+              },
+              {
+                "id": "4187",
+                "valor": 5672.0
+              },
+              {
+                "id": "4218",
+                "valor": 5672.0
+              },
+              {
+                "id": "4258",
+                "valor": 7090.0
+              },
+              {
+                "id": "4301",
+                "valor": 7090.0
+              },
+              {
+                "id": "4347",
+                "valor": 12506.76
+              }
+            ]
+          },
+          {
+            "id": "2023NE000099",
+            "valor": 1443.9,
+            "notasFiscais": [
+              {
+                "id": "004.265",
+                "valor": 1443.9
+              }
+            ]
+          },
+          {
+            "id": "N/A",
+            "valor": 0.0,
+            "notasFiscais": [
+              {
+                "id": "N/A",
+                "valor": 0.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "FORMATO DIGITAL COMÉRCIO & COMUNICAÇÃO MULTIMÍDIA LTDA",
+        "notas": [
+          {
+            "id": "N/A",
+            "valor": 0.0,
+            "notasFiscais": [
+              {
+                "id": "N/A",
+                "valor": 0.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "FORMATO DIGITAL COMÉRCIO & COMUNICAÇÃO MULTIMÍDIA LTDA.",
+        "notas": [
+          {
+            "id": "2024NE000132",
+            "valor": 19646.0,
+            "notasFiscais": [
+              {
+                "id": "470",
+                "valor": 19646.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "FOX SCIENCE COMERCIO & PRODUTOS LTDA.",
+        "notas": [
+          {
+            "id": "2023NE000141",
+            "valor": 2000.0,
+            "notasFiscais": [
+              {
+                "id": "000.415",
+                "valor": 2000.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "GALLUS INDUSTRIA E COMERCIO DE ALIMENTOS LTDA",
+        "notas": [
+          {
+            "id": "2023NE000019",
+            "valor": 5163.63,
+            "notasFiscais": [
+              {
+                "id": "68.463",
+                "valor": 5163.63
+              }
+            ]
+          },
+          {
+            "id": "2023NE000020",
+            "valor": 47707.21,
+            "notasFiscais": [
+              {
+                "id": "68.464",
+                "valor": 47707.21
+              }
+            ]
+          },
+          {
+            "id": "2023NE000052",
+            "valor": 29552.01,
+            "notasFiscais": [
+              {
+                "id": "69.091",
+                "valor": 16553.31
+              },
+              {
+                "id": "69.169",
+                "valor": 12998.7
+              }
+            ]
+          },
+          {
+            "id": "2023NE000087",
+            "valor": 35073.0,
+            "notasFiscais": [
+              {
+                "id": "69.474",
+                "valor": 4216.0
+              },
+              {
+                "id": "69.475",
+                "valor": 30857.0
+              }
+            ]
+          },
+          {
+            "id": "2023NE000093",
+            "valor": 10937.71,
+            "notasFiscais": [
+              {
+                "id": "69.721",
+                "valor": 10937.71
+              }
+            ]
+          },
+          {
+            "id": "2023NE000137",
+            "valor": 51196.0,
+            "notasFiscais": [
+              {
+                "id": "70.326",
+                "valor": 51196.0
+              }
+            ]
+          },
+          {
+            "id": "2023NE000160",
+            "valor": 27039.52,
+            "notasFiscais": [
+              {
+                "id": "70.328",
+                "valor": 5075.18
+              },
+              {
+                "id": "70.447",
+                "valor": 3546.37
+              }
+            ]
+          },
+          {
+            "id": "2024NE000019",
+            "valor": 58448.24,
+            "notasFiscais": [
+              {
+                "id": "71.018",
+                "valor": 39114.14
+              },
+              {
+                "id": "71.685",
+                "valor": 19334.1
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "G2B COMERCIO E REPRESENTACOES LTDA",
+        "notas": [
+          {
+            "id": "N/A",
+            "valor": 0.0,
+            "notasFiscais": [
+              {
+                "id": "N/A",
+                "valor": 0.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "GERAES DIAGNOSTICA LTDA.",
+        "notas": [
+          {
+            "id": "2023NE000144",
+            "valor": 2027.91,
+            "notasFiscais": [
+              {
+                "id": "003.511",
+                "valor": 2027.91
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "GRAFICA BORGES DE CAMPO GRANDE LTDA",
+        "notas": [
+          {
+            "id": "2024NE000106",
+            "valor": 6780.0,
+            "notasFiscais": [
+              {
+                "id": "N/A",
+                "valor": 0.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "GUISOTECH COMERCIO DE EQUIPAMENTOS LTDA",
+        "notas": [
+          {
+            "id": "2024NE000036",
+            "valor": 3018.5,
+            "notasFiscais": [
+              {
+                "id": "000.394",
+                "valor": 3018.5
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "GWC INDUSTRIA, IMPORTACAO E DISTRIBUICAO DE ELETRONICOS LTDA",
+        "notas": [
+          {
+            "id": "2023NE000174",
+            "valor": 16914.2,
+            "notasFiscais": [
+              {
+                "id": "N/A",
+                "valor": 0.0
+              }
+            ]
+          },
+          {
+            "id": "2024NE000065",
+            "valor": 19494.5,
+            "notasFiscais": [
+              {
+                "id": "N/A",
+                "valor": 0.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "HALOGENN PRODUTOS CIENTIFICOS LTDA.",
+        "notas": [
+          {
+            "id": "2023NE000139",
+            "valor": 19387.9,
+            "notasFiscais": [
+              {
+                "id": "000.490",
+                "valor": 19387.9
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "HMGK COMERCIO E SERVICOS LTDA.",
+        "notas": [
+          {
+            "id": "2023NE000009",
+            "valor": 7950.0,
+            "notasFiscais": [
+              {
+                "id": "000.418",
+                "valor": 7950.0
+              }
+            ]
+          },
+          {
+            "id": "2023NE000025",
+            "valor": 38408.49,
+            "notasFiscais": [
+              {
+                "id": "000.309",
+                "valor": 38408.49
+              }
+            ]
+          },
+          {
+            "id": "2023NE000102",
+            "valor": 8660.64,
+            "notasFiscais": [
+              {
+                "id": "000.417",
+                "valor": 5660.64
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "HOT DIGITAL COMÉRCIO E SERVIÇO DE IMPRESSÃO LTDA.",
+        "notas": [
+          {
+            "id": "2023NE000149",
+            "valor": 2399.2,
+            "notasFiscais": [
+              {
+                "id": "4332",
+                "valor": 2399.2
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "HS-CPQ TECNOLOGIA LTDA",
+        "notas": [
+          {
+            "id": "2023NE000159",
+            "valor": 677.0,
+            "notasFiscais": [
+              {
+                "id": "001.540",
+                "valor": 677.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "IMPERIAL CAFE COMERCIO EXPORTACAO E IMPORTACAO LTDA.",
+        "notas": [
+          {
+            "id": "2023NE000021",
+            "valor": 16250.0,
+            "notasFiscais": [
+              {
+                "id": "001.642",
+                "valor": 16250.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "IMPRESSOART EDITORA GRAFICA LTDA",
+        "notas": [
+          {
+            "id": "N/A",
+            "valor": 0.0,
+            "notasFiscais": [
+              {
+                "id": "N/A",
+                "valor": 0.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "INDUSTRIA E COMERCIO DE PRODUTOS CAMPINENSE LTDA",
+        "notas": [
+          {
+            "id": "2023NE000096",
+            "valor": 2068.5,
+            "notasFiscais": [
+              {
+                "id": "012.318",
+                "valor": 2068.5
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "INDUSTRIA E COMERCIO DE PRODUTOS DE LIMPEZA CAMPINENSE LTDA.",
+        "notas": [
+          {
+            "id": "2023NE000022",
+            "valor": 5259.75,
+            "notasFiscais": [
+              {
+                "id": "010.575",
+                "valor": 5259.75
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "INFANTARIA COMERCIAL EIRELI",
+        "notas": [
+          {
+            "id": "2023NE000109",
+            "valor": 1259.7,
+            "notasFiscais": [
+              {
+                "id": "009.705",
+                "valor": 1259.7
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "INFRAEASY SOLUÇÕES LTDA",
+        "notas": [
+          {
+            "id": "N/A",
+            "valor": 0.0,
+            "notasFiscais": [
+              {
+                "id": "N/A",
+                "valor": 0.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "ISALTEC COMERCIO DE INSTRUMENTOS DE MEDICAO LTDA",
+        "notas": [
+          {
+            "id": "2023NE000156",
+            "valor": 3437.47,
+            "notasFiscais": [
+              {
+                "id": "002.014",
+                "valor": 3437.47
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "J A F DORNELLES FILHO COMÉRCIO DE INFORMÁTICA",
+        "notas": [
+          {
+            "id": "N/A",
+            "valor": 0.0,
+            "notasFiscais": [
+              {
+                "id": "N/A",
+                "valor": 0.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "J & L – PROMOÇÃO DE VENDAS EM INFORMÁTICA LTDA.",
+        "notas": [
+          {
+            "id": "2024NE003526",
+            "valor": 5040.0,
+            "notasFiscais": [
+              {
+                "id": "285",
+                "valor": 5040.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "J&A SOLUÇÕES E-COMMERCE LTDA",
+        "notas": [
+          {
+            "id": "2023NE000131",
+            "valor": 2887.5,
+            "notasFiscais": [
+              {
+                "id": "479.875",
+                "valor": 2887.5
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "JEAN ALEXANDRE WENDLER DE MORAIS",
+        "notas": [
+          {
+            "id": "2023NE000130",
+            "valor": 548.0,
+            "notasFiscais": [
+              {
+                "id": "001.710",
+                "valor": 548.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "JOELSON DA SILVA GONÇALVES",
+        "notas": [
+          {
+            "id": "2024NE000012",
+            "valor": 14790.0,
+            "notasFiscais": [
+              {
+                "id": "000071",
+                "valor": 14790.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "JONATHAS DE ARAUJO LEITE ME",
+        "notas": [
+          {
+            "id": "2023NE000103",
+            "valor": 5786.45,
+            "notasFiscais": [
+              {
+                "id": "000.816",
+                "valor": 5786.45
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "JP Comércio e Serviços",
+        "notas": [
+          {
+            "id": "N/A",
+            "valor": 0.0,
+            "notasFiscais": [
+              {
+                "id": "N/A",
+                "valor": 0.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "JRB COMERCIO, LOCACOES E SERVICOS DE IMPRESSAO LTDA",
+        "notas": [
+          {
+            "id": "N/A",
+            "valor": 0.0,
+            "notasFiscais": [
+              {
+                "id": "N/A",
+                "valor": 0.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "K J DE M ANDRADE LTDA",
+        "notas": [
+          {
+            "id": "2023NE000181",
+            "valor": 18210.0,
+            "notasFiscais": [
+              {
+                "id": "001.939",
+                "valor": 18210.0
+              }
+            ]
+          },
+          {
+            "id": "2024NE000064",
+            "valor": 36420.0,
+            "notasFiscais": [
+              {
+                "id": "001.938",
+                "valor": 36420.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "K.C.R.S. COMERCIO DE EQUIPAMENTOS LTDA",
+        "notas": [
+          {
+            "id": "2023NE000176",
+            "valor": 6780.0,
+            "notasFiscais": [
+              {
+                "id": "012.324",
+                "valor": 6780.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "LAB VISION - COMERCIO DE PRODUT,OS LABORATORIAIS LTDA",
+        "notas": [
+          {
+            "id": "2024NE000041",
+            "valor": 2637.41,
+            "notasFiscais": [
+              {
+                "id": "003.070",
+                "valor": 2637.41
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "LILIANE ALARCAO DIAS CORREA RAMANZINI",
+        "notas": [
+          {
+            "id": "2024NE000043",
+            "valor": 990.0,
+            "notasFiscais": [
+              {
+                "id": "007.203",
+                "valor": 990.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "LRF DISTRIBUIDORA LTDA.",
+        "notas": [
+          {
+            "id": "N/A",
+            "valor": 0.0,
+            "notasFiscais": [
+              {
+                "id": "N/A",
+                "valor": 0.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "LUGATH COMÉRCIO LTDA.",
+        "notas": [
+          {
+            "id": "N/A",
+            "valor": 0.0,
+            "notasFiscais": [
+              {
+                "id": "N/A",
+                "valor": 0.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "LUXPLACAS INDÚSTRIA, COMÉRCIO E SERVIÇOS LTDA.",
+        "notas": [
+          {
+            "id": "2024NE000011",
+            "valor": 2562.08,
+            "notasFiscais": [
+              {
+                "id": "N/A",
+                "valor": 0.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "M A 2 COMERCIAL LTDA.",
+        "notas": [
+          {
+            "id": "2023NE000142",
+            "valor": 14806.01,
+            "notasFiscais": [
+              {
+                "id": "001.437",
+                "valor": 13767.02
+              },
+              {
+                "id": "001.438",
+                "valor": 1038.99
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "M. A. DISTRIBUIDORA COMÉRCIO E SERVIÇO LTDA.",
+        "notas": [
+          {
+            "id": "2024NE000129",
+            "valor": 71383.0,
+            "notasFiscais": [
+              {
+                "id": "849",
+                "valor": 71383.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "MA COMERCIO DE REFRIGERACAO LTDA",
+        "notas": [
+          {
+            "id": "N/A",
+            "valor": 0.0,
+            "notasFiscais": [
+              {
+                "id": "N/A",
+                "valor": 0.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "MALTA INDUSTRIA E COMERCIO DE PRODUTOS LTDA.",
+        "notas": [
+          {
+            "id": "2023NE000044",
+            "valor": 20950.0,
+            "notasFiscais": [
+              {
+                "id": "002.180",
+                "valor": 20950.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "MARIA DO SOCORRO SANTOS BASILIO",
+        "notas": [
+          {
+            "id": "2023NE000055",
+            "valor": 7040.0,
+            "notasFiscais": [
+              {
+                "id": "001.973",
+                "valor": 7040.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "MARIA EFIGENIA ALMEIDA DA SILVA",
+        "notas": [
+          {
+            "id": "2023NE000104",
+            "valor": 1803.5,
+            "notasFiscais": [
+              {
+                "id": "000.147",
+                "valor": 1803.5
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "MARIANA MOREIRA ANDRASCHKO LTDA",
+        "notas": [
+          {
+            "id": "2023NE000028",
+            "valor": 26986.3,
+            "notasFiscais": [
+              {
+                "id": "000.028",
+                "valor": 26986.3
+              }
+            ]
+          },
+          {
+            "id": "2023NE000094",
+            "valor": 84324.14,
+            "notasFiscais": [
+              {
+                "id": "000.075",
+                "valor": 84324.14
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "Marte Equipamentos para Laboratório LTDA",
+        "notas": [
+          {
+            "id": "2024NE000079",
+            "valor": 15888.2,
+            "notasFiscais": [
+              {
+                "id": "004.103",
+                "valor": 15888.2
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "MASTERSUL EQUIPAMENTOS DE SEGURANCA LTDA.",
+        "notas": [
+          {
+            "id": "2023NE000041",
+            "valor": 24000.0,
+            "notasFiscais": [
+              {
+                "id": "014.759",
+                "valor": 24000.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "MÁRCIO SANDRO MALLET PEZARIM",
+        "notas": [
+          {
+            "id": "N/A",
+            "valor": 0.0,
+            "notasFiscais": [
+              {
+                "id": "N/A",
+                "valor": 0.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "MAXXI COMERCIAL DE ALIMENTOS LTDA.",
+        "notas": [
+          {
+            "id": "2023NE000026",
+            "valor": 91238.0,
+            "notasFiscais": [
+              {
+                "id": "000.743",
+                "valor": 1800.0
+              },
+              {
+                "id": "000.772",
+                "valor": 19850.0
+              },
+              {
+                "id": "000.936",
+                "valor": 15136.65
+              },
+              {
+                "id": "001.087",
+                "valor": 3360.0
+              },
+              {
+                "id": "001.114",
+                "valor": 22980.0
+              },
+              {
+                "id": "001.246",
+                "valor": 6600.0
+              },
+              {
+                "id": "001.296",
+                "valor": 21511.35
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "MAXXI LAGO COMERCIAL E SERVICOS LTDA",
+        "notas": [
+          {
+            "id": "N/A",
+            "valor": 0.0,
+            "notasFiscais": [
+              {
+                "id": "N/A",
+                "valor": 0.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "MC LINS SERVICOS, DISTRIBUICAO E COMERCIO LTDA.",
+        "notas": [
+          {
+            "id": "2023NE000042",
+            "valor": 42588.0,
+            "notasFiscais": [
+              {
+                "id": "N/A",
+                "valor": 0.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "MEDS COMERCIO DE MEDICAMENTOS, PRODUTOS E EQUIPAMENTOS HOSPITALARES LTDA.",
+        "notas": [
+          {
+            "id": "2023NE000111",
+            "valor": 11295.0,
+            "notasFiscais": [
+              {
+                "id": "003.200",
+                "valor": 11295.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "MEL DISTRIBUIDORA LTDA.",
+        "notas": [
+          {
+            "id": "2024NE000072",
+            "valor": 96626.4,
+            "notasFiscais": [
+              {
+                "id": "000.990",
+                "valor": 9780.0
+              },
+              {
+                "id": "001.198",
+                "valor": 9780.0
+              },
+              {
+                "id": "001.538",
+                "valor": 9780.0
+              },
+              {
+                "id": "001.777",
+                "valor": 9780.0
+              },
+              {
+                "id": "002.453",
+                "valor": 9780.0
+              },
+              {
+                "id": "002.532",
+                "valor": 9780.0
+              },
+              {
+                "id": "003.094",
+                "valor": 17604.0
+              }
+            ]
+          },
+          {
+            "id": "N/A",
+            "valor": 0.0,
+            "notasFiscais": [
+              {
+                "id": "N/A",
+                "valor": 0.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "MELI SHOP LTDA",
+        "notas": [
+          {
+            "id": "2024NE000078",
+            "valor": 3000.0,
+            "notasFiscais": [
+              {
+                "id": "000.193",
+                "valor": 3000.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "META EMPREEDIMENTOS E SERVIÇOS LTDA",
+        "notas": [
+          {
+            "id": "2024NE000108",
+            "valor": 53601.0,
+            "notasFiscais": [
+              {
+                "id": "501",
+                "valor": 3611.2
+              }
+            ]
+          },
+          {
+            "id": "2024NE000109",
+            "valor": 59293.0,
+            "notasFiscais": [
+              {
+                "id": "N/A",
+                "valor": 0.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "MOUNT CONFECÇÃO LTDA.",
+        "notas": [
+          {
+            "id": "2023NE000043",
+            "valor": 58700.0,
+            "notasFiscais": [
+              {
+                "id": "000.093",
+                "valor": 7200.0
+              },
+              {
+                "id": "000.135",
+                "valor": 2400.0
+              },
+              {
+                "id": "000.144",
+                "valor": 10500.0
+              },
+              {
+                "id": "000.148",
+                "valor": 4200.0
+              },
+              {
+                "id": "000.153",
+                "valor": 9800.0
+              }
+            ]
+          },
+          {
+            "id": "2023NE000183",
+            "valor": 1896.0,
+            "notasFiscais": [
+              {
+                "id": "N/A",
+                "valor": 0.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "MULTFLUXO COMERCIO DE MATERIAIS ISOLAMENTOS LTDA",
+        "notas": [
+          {
+            "id": "2024NE000110",
+            "valor": 6410.0,
+            "notasFiscais": [
+              {
+                "id": "011.669",
+                "valor": 6410.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "MULTIMÍDIA IMPRESSÃO E COMÉRCIO DE MATERIAL PUBLICITÁRIO LTDA.",
+        "notas": [
+          {
+            "id": "2024NE000014",
+            "valor": 1700.0,
+            "notasFiscais": [
+              {
+                "id": "244",
+                "valor": 1700.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "Mundial Científica Ltda",
+        "notas": [
+          {
+            "id": "2024NE000076",
+            "valor": 13500.0,
+            "notasFiscais": [
+              {
+                "id": "001.677",
+                "valor": 13500.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "N.S.S COMERCIAL E CONSTRUTORA EIRELI",
+        "notas": [
+          {
+            "id": "2023NE000112",
+            "valor": 10853.52,
+            "notasFiscais": [
+              {
+                "id": "009.599",
+                "valor": 7576.8
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "Não informado",
+        "notas": [
+          {
+            "id": "N/A",
+            "valor": 0.0,
+            "notasFiscais": [
+              {
+                "id": "N/A",
+                "valor": 0.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "Nova Mix Ltda",
+        "notas": [
+          {
+            "id": "2024NE000067",
+            "valor": 13987.32,
+            "notasFiscais": [
+              {
+                "id": "000.906",
+                "valor": 13987.32
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "NOVA ERA TECNOLOGIA LTDA",
+        "notas": [
+          {
+            "id": "2023NE000123",
+            "valor": 14460.0,
+            "notasFiscais": [
+              {
+                "id": "000.653",
+                "valor": 14460.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "Noroeste Comércio e Prestação De Serviços ltda.",
+        "notas": [
+          {
+            "id": "2024NE000075",
+            "valor": 3980.0,
+            "notasFiscais": [
+              {
+                "id": "000.295",
+                "valor": 3980.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "OBAH PRODUTOS E SERVICOS ANALITICOS",
+        "notas": [
+          {
+            "id": "2024NE000046",
+            "valor": 1198.99,
+            "notasFiscais": [
+              {
+                "id": "011.360",
+                "valor": 1198.99
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "OBAH PRODUTOS E SERVICOS ANALITICOS LTDA.",
+        "notas": [
+          {
+            "id": "2023NE000147",
+            "valor": 10328.94,
+            "notasFiscais": [
+              {
+                "id": "012.314",
+                "valor": 10328.94
+              }
+            ]
+          },
+          {
+            "id": "2024NE000083",
+            "valor": 6996.0,
+            "notasFiscais": [
+              {
+                "id": "011.740",
+                "valor": 6996.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "OLIVEIRA & ALMEIDA INFORMÁTICA",
+        "notas": [
+          {
+            "id": "2023NE000133",
+            "valor": 2852.0,
+            "notasFiscais": [
+              {
+                "id": "002.200",
+                "valor": 2852.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "ORBITAL PRODUTOS PARA LABORATORIOS LTDA.",
+        "notas": [
+          {
+            "id": "2023NE000140",
+            "valor": 850.0,
+            "notasFiscais": [
+              {
+                "id": "009.593",
+                "valor": 850.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "PABLO LUIS MARTINS",
+        "notas": [
+          {
+            "id": "2023NE000098",
+            "valor": 1192.0,
+            "notasFiscais": [
+              {
+                "id": "004.741",
+                "valor": 1192.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "PACIFIC FLOWERS INDUSTRIA E COMERCIO LTDA",
+        "notas": [
+          {
+            "id": "N/A",
+            "valor": 0.0,
+            "notasFiscais": [
+              {
+                "id": "N/A",
+                "valor": 0.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "PADARIA PONTES LTDA.",
+        "notas": [
+          {
+            "id": "2024NE000054",
+            "valor": 116900.0,
+            "notasFiscais": [
+              {
+                "id": "1000704",
+                "valor": 68788.0
+              },
+              {
+                "id": "1000705",
+                "valor": 4140.0
+              },
+              {
+                "id": "1000763",
+                "valor": 24052.8
+              },
+              {
+                "id": "1000704",
+                "valor": 10080.9
+              }
+            ]
+          },
+          {
+            "id": "2024NE000086",
+            "valor": 5950.0,
+            "notasFiscais": [
+              {
+                "id": "N/A",
+                "valor": 0.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "PIRES & SANTOS COMERCIO LTDA",
+        "notas": [
+          {
+            "id": "2024NE000063",
+            "valor": 10036.0,
+            "notasFiscais": [
+              {
+                "id": "000.154",
+                "valor": 10036.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "PLANEJE TECNOLOGIA E SERVIÇOS LTDA.",
+        "notas": [
+          {
+            "id": "2024NE003395",
+            "valor": 130500.0,
+            "notasFiscais": [
+              {
+                "id": "N/A",
+                "valor": 0.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "PLUGNET COMÉRCIO E REPRESENTAÇÕES LTDA",
+        "notas": [
+          {
+            "id": "N/A",
+            "valor": 0.0,
+            "notasFiscais": [
+              {
+                "id": "N/A",
+                "valor": 0.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "PRATICA EDITORA GRAFICA LTDA",
+        "notas": [
+          {
+            "id": "N/A",
+            "valor": 0.0,
+            "notasFiscais": [
+              {
+                "id": "N/A",
+                "valor": 0.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "PREMIER COMERCIO LTDA",
+        "notas": [
+          {
+            "id": "2023NE000148",
+            "valor": 481800.0,
+            "notasFiscais": [
+              {
+                "id": "000.052",
+                "valor": 481800.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "PRENSAR MOVEIS LTDA EPP",
+        "notas": [
+          {
+            "id": "2024NE000090",
+            "valor": 16500.0,
+            "notasFiscais": [
+              {
+                "id": "012919",
+                "valor": 16500.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "Produtos Salinas LTDA",
+        "notas": [
+          {
+            "id": "N/A",
+            "valor": 0.0,
+            "notasFiscais": [
+              {
+                "id": "N/A",
+                "valor": 0.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "Quartz Indústria e Comércio de Equipamentos Para Laboratório LTDA EPP",
+        "notas": [
+          {
+            "id": "2024NE000074",
+            "valor": 2920.89,
+            "notasFiscais": [
+              {
+                "id": "001.757",
+                "valor": 2920.89
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "R JUAREZ DE ALMEIDA",
+        "notas": [
+          {
+            "id": "2023NE000169",
+            "valor": 4169.0,
+            "notasFiscais": [
+              {
+                "id": "001.910",
+                "valor": 4169.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "R. JUAREZ DE ALMEIDA",
+        "notas": [
+          {
+            "id": "2024NE000138",
+            "valor": 1500.0,
+            "notasFiscais": [
+              {
+                "id": "002.562",
+                "valor": 1500.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "RAUL MUELLER SCHRAMM",
+        "notas": [
+          {
+            "id": "N/A",
+            "valor": 0.0,
+            "notasFiscais": [
+              {
+                "id": "N/A",
+                "valor": 0.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "RB FLEXO LTDA",
+        "notas": [
+          {
+            "id": "N/A",
+            "valor": 0.0,
+            "notasFiscais": [
+              {
+                "id": "N/A",
+                "valor": 0.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "RC RAMOS COMERCIO LTDA",
+        "notas": [
+          {
+            "id": "2024NE000111",
+            "valor": 11345.0,
+            "notasFiscais": [
+              {
+                "id": "017.516",
+                "valor": 11345.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "REDNOV FERRAMENTAS LTDA",
+        "notas": [
+          {
+            "id": "2023NE000180",
+            "valor": 33644.28,
+            "notasFiscais": [
+              {
+                "id": "012.010",
+                "valor": 8136.48
+              },
+              {
+                "id": "012.668",
+                "valor": 25507.8
+              }
+            ]
+          },
+          {
+            "id": "2024NE000066",
+            "valor": 47265.62,
+            "notasFiscais": [
+              {
+                "id": "012.011",
+                "valor": 12044.42
+              },
+              {
+                "id": "012.667",
+                "valor": 35221.2
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "REI TECH EIRELI",
+        "notas": [
+          {
+            "id": "2023NE000132",
+            "valor": 32219.0,
+            "notasFiscais": [
+              {
+                "id": "1632",
+                "valor": 32219.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "REPREMIG - REPRESENTAÇÃO E COMÉRCIO DE MINAS GERAIS LTDA",
+        "notas": [
+          {
+            "id": "N/A",
+            "valor": 0.0,
+            "notasFiscais": [
+              {
+                "id": "N/A",
+                "valor": 0.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "REY-GLASS COMERCIAL E SERVICOS",
+        "notas": [
+          {
+            "id": "2024NE000044",
+            "valor": 659.94,
+            "notasFiscais": [
+              {
+                "id": "009.245",
+                "valor": 659.94
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "RUBENS DANTAS NETO",
+        "notas": [
+          {
+            "id": "2024NE000107",
+            "valor": 117500.0,
+            "notasFiscais": [
+              {
+                "id": "2516",
+                "valor": 9600.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "SA CONSUMIVEIS PRODUTOS DE LABORATORIO LTDA",
+        "notas": [
+          {
+            "id": "2024NE000037",
+            "valor": 24390.62,
+            "notasFiscais": [
+              {
+                "id": "000.424",
+                "valor": 24390.62
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "SANIGRAN LTDA.",
+        "notas": [
+          {
+            "id": "2023NE000023",
+            "valor": 2004.0,
+            "notasFiscais": [
+              {
+                "id": "015.746",
+                "valor": 2004.0
+              }
+            ]
+          },
+          {
+            "id": "2023NE000107",
+            "valor": 13470.96,
+            "notasFiscais": [
+              {
+                "id": "018.627",
+                "valor": 13470.96
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "SANTA ORANNA INDUSTRIA E COMERCIO LTDA.",
+        "notas": [
+          {
+            "id": "2023NE000105",
+            "valor": 2277.0,
+            "notasFiscais": [
+              {
+                "id": "1247",
+                "valor": 2277.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "SCIAVICCO COMERCIO INDUSTRIA LTDA.",
+        "notas": [
+          {
+            "id": "2023NE000143",
+            "valor": 1298.4,
+            "notasFiscais": [
+              {
+                "id": "031.272",
+                "valor": 1298.4
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "SCORPION INFORMÁTICA LTDA",
+        "notas": [
+          {
+            "id": "2023NE000116",
+            "valor": 4245.4,
+            "notasFiscais": [
+              {
+                "id": "11896",
+                "valor": 4245.4
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "SERGIO DOMINGUES & CIA LTDA",
+        "notas": [
+          {
+            "id": "2023NE000129",
+            "valor": 189132.0,
+            "notasFiscais": [
+              {
+                "id": "388",
+                "valor": 100870.4
+              },
+              {
+                "id": "391",
+                "valor": 88261.6
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "Shine Soluções",
+        "notas": [
+          {
+            "id": "N/A",
+            "valor": 0.0,
+            "notasFiscais": [
+              {
+                "id": "N/A",
+                "valor": 0.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "SIS COMÉRCIO DE MATERIAIS E EQUIPAMENTOS LTDA.",
+        "notas": [
+          {
+            "id": "2023NE000108",
+            "valor": 595.68,
+            "notasFiscais": [
+              {
+                "id": "004.494",
+                "valor": 595.68
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "SORELLE COMERCIO DE ELETROS E EQUIPAMENTOS LTDA",
+        "notas": [
+          {
+            "id": "N/A",
+            "valor": 0.0,
+            "notasFiscais": [
+              {
+                "id": "N/A",
+                "valor": 0.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "SOS GÁS LTDA - EPP",
+        "notas": [
+          {
+            "id": "2023NE000121",
+            "valor": 25980.0,
+            "notasFiscais": [
+              {
+                "id": "040.922",
+                "valor": 11258.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "SOS GÁS LTDA.",
+        "notas": [
+          {
+            "id": "N/A",
+            "valor": 0.0,
+            "notasFiscais": [
+              {
+                "id": "N/A",
+                "valor": 0.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "SUARES DISTRIBUIDORA DE PRODUTOS DE LIMPEZA LTDA.",
+        "notas": [
+          {
+            "id": "2023NE000106",
+            "valor": 4822.56,
+            "notasFiscais": [
+              {
+                "id": "001.825",
+                "valor": 4822.56
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "SUL AGUA EQUIPAMENTOS LTDA",
+        "notas": [
+          {
+            "id": "N/A",
+            "valor": 0.0,
+            "notasFiscais": [
+              {
+                "id": "N/A",
+                "valor": 0.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "SUNSHINE ARTES LTDA",
+        "notas": [
+          {
+            "id": "2024NE000013",
+            "valor": 9890.0,
+            "notasFiscais": [
+              {
+                "id": "000.291",
+                "valor": 9890.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "SUPRIMAIS COMERCIO E SERVICOS DE INFORMATICA LTDA",
+        "notas": [
+          {
+            "id": "2023NE000097",
+            "valor": 22469.23,
+            "notasFiscais": [
+              {
+                "id": "014.123",
+                "valor": 5249.63
+              },
+              {
+                "id": "014.258",
+                "valor": 8440.0
+              },
+              {
+                "id": "014.266",
+                "valor": 8779.6
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "TPL TAMIS PRODUTOS LABORATORIAIS",
+        "notas": [
+          {
+            "id": "2024NE000038",
+            "valor": 244.0,
+            "notasFiscais": [
+              {
+                "id": "003.550",
+                "valor": 244.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "TRC COMERCIO E SERVICOS LTDA",
+        "notas": [
+          {
+            "id": "2023NE000155",
+            "valor": 22190.0,
+            "notasFiscais": [
+              {
+                "id": "000.257",
+                "valor": 22190.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "VALNEIDES ARAUJO DA COSTA",
+        "notas": [
+          {
+            "id": "N/A",
+            "valor": 0.0,
+            "notasFiscais": [
+              {
+                "id": "N/A",
+                "valor": 0.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "Vale Comercio de Materiais Ltda",
+        "notas": [
+          {
+            "id": "N/A",
+            "valor": 0.0,
+            "notasFiscais": [
+              {
+                "id": "N/A",
+                "valor": 0.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "VENDGO LTDA.",
+        "notas": [
+          {
+            "id": "N/A",
+            "valor": 0.0,
+            "notasFiscais": [
+              {
+                "id": "N/A",
+                "valor": 0.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "VINCITA - Comércio de Implementos Agrícolas LTDA - EPP",
+        "notas": [
+          {
+            "id": "2024NE000080",
+            "valor": 17000.0,
+            "notasFiscais": [
+              {
+                "id": "000.259",
+                "valor": 17000.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "WELCOME SERVIÇOS E EVENTOS LTDA.",
+        "notas": [
+          {
+            "id": "2024NE000032",
+            "valor": 48700.0,
+            "notasFiscais": [
+              {
+                "id": "754",
+                "valor": 5600.0
+              },
+              {
+                "id": "769",
+                "valor": 3050.0
+              },
+              {
+                "id": "798",
+                "valor": 25350.0
+              },
+              {
+                "id": "799",
+                "valor": 6500.0
+              }
+            ]
+          },
+          {
+            "id": "2024NE003897",
+            "valor": 4631.49,
+            "notasFiscais": [
+              {
+                "id": "974",
+                "valor": 3087.66
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "X-OFFICE SERVI LTDA-ME",
+        "notas": [
+          {
+            "id": "N/A",
+            "valor": 0.0,
+            "notasFiscais": [
+              {
+                "id": "N/A",
+                "valor": 0.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "XD CONSTRUCOES LTDA",
+        "notas": [
+          {
+            "id": "N/A",
+            "valor": 0.0,
+            "notasFiscais": [
+              {
+                "id": "N/A",
+                "valor": 0.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "XLABOR TECNOLOGIA LTDA",
+        "notas": [
+          {
+            "id": "2024NE000035",
+            "valor": 2380.1,
+            "notasFiscais": [
+              {
+                "id": "000.538",
+                "valor": 2380.1
+              }
+            ]
+          }
+        ]
+      }
+    ];
+
+    const fmt = v => v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+
+    const treeEl = document.getElementById('tree');
+    const summaryEl = document.getElementById('summary');
+    const searchInput = document.getElementById('searchInput');
+    let originalData = [];
+
+    function buildTree(dataset) {
+      originalData = JSON.parse(JSON.stringify(dataset)); // Salva uma cópia dos dados originais
+      renderTree(dataset);
+    }
+    
+    function renderTree(dataset) {
+      treeEl.innerHTML = '';
+      const ul = document.createElement('ul');
+      ul.className = 'tree-list';
+
+      let grandTotal = 0;
+      let totalNotes = 0;
+      let totalNFs = 0;
+
+      dataset.forEach(fornec => {
+        const supplierTotal = fornec.notas.reduce((s, n) => s + (Number(n.valor) || 0), 0);
+        grandTotal += supplierTotal;
+        totalNotes += fornec.notas.length;
+        
+        const li = document.createElement('li');
+        li.dataset.fornecedor = fornec.nome.toLowerCase();
+        
+        const supplierRow = document.createElement('div');
+        supplierRow.className = 'supplier-row node';
+        
+        const toggleSupplier = document.createElement('span');
+        toggleSupplier.className = 'toggle';
+        toggleSupplier.textContent = fornec.notas.length > 0 ? '+' : '';
+        supplierRow.appendChild(toggleSupplier);
+
+        const name = document.createElement('div');
+        name.innerHTML = `<strong>${fornec.nome}</strong> <div class="meta">${fornec.notas.length} nota(s)</div>`;
+        supplierRow.appendChild(name);
+
+        const right = document.createElement('div');
+        right.className = 'right';
+        right.innerHTML = `<div class="meta">Total</div><div class="value">${fmt(supplierTotal)}</div>`;
+        supplierRow.appendChild(right);
+
+        li.appendChild(supplierRow);
+
+        const notesUl = document.createElement('ul');
+        notesUl.className = 'tree-list hidden';
+        
+        fornec.notas.forEach(n => {
+          totalNFs += n.notasFiscais ? n.notasFiscais.length : 0;
+          const noteLi = document.createElement('li');
+          noteLi.dataset.notaEmpenho = n.id.toLowerCase();
+          
+          const noteRow = document.createElement('div');
+          noteRow.className = 'note-row node';
+
+          const toggleNote = document.createElement('span');
+          toggleNote.className = 'toggle';
+          toggleNote.textContent = n.notasFiscais && n.notasFiscais.length > 0 ? '+' : '';
+          noteRow.appendChild(toggleNote);
+
+          const noteInfo = document.createElement('div');
+          noteInfo.innerHTML = `<strong>NE: ${n.id}</strong> <div class="meta">- Empenhado:</div>`;
+          noteRow.appendChild(noteInfo);
+
+          const noteValue = document.createElement('div');
+          noteValue.className = 'right';
+          noteValue.innerHTML = `<div class="value">${fmt(Number(n.valor) || 0)}</div>`;
+          noteRow.appendChild(noteValue);
+
+          noteLi.appendChild(noteRow);
+          notesUl.appendChild(noteLi);
+
+          if (n.notasFiscais && n.notasFiscais.length > 0) {
+            const nfUl = document.createElement('ul');
+            nfUl.className = 'tree-list hidden';
+            
+            n.notasFiscais.forEach(nf => {
+              const nfLi = document.createElement('li');
+              nfLi.dataset.notaFiscal = nf.id.toLowerCase();
+              
+              const nfRow = document.createElement('div');
+              nfRow.className = 'nf-row node';
+
+              const nfInfo = document.createElement('div');
+              nfInfo.innerHTML = `<strong>NF: ${nf.id}</strong> <div class="meta">- Valor:</div>`;
+              nfRow.appendChild(nfInfo);
+
+              const nfValue = document.createElement('div');
+              nfValue.className = 'right';
+              nfValue.innerHTML = `<div class="value">${fmt(Number(nf.valor) || 0)}</div>`;
+              nfRow.appendChild(nfValue);
+
+              nfLi.appendChild(nfRow);
+              nfUl.appendChild(nfLi);
+            });
+            noteLi.appendChild(nfUl);
+
+            noteRow.addEventListener('click', (e) => {
+              e.stopPropagation();
+              const isHidden = nfUl.classList.toggle('hidden');
+              toggleNote.textContent = isHidden ? '+' : '−';
+            });
+          }
+        });
+
+        li.appendChild(notesUl);
+
+        supplierRow.addEventListener('click', () => {
+          const isHidden = notesUl.classList.toggle('hidden');
+          toggleSupplier.textContent = isHidden ? '+' : '−';
+        });
+
+        ul.appendChild(li);
+      });
+
+      treeEl.appendChild(ul);
+
+      updateSummary();
+    }
+
+    function filterTree() {
+        const filterText = searchInput.value.toLowerCase().trim();
+        let filteredData = [];
+
+        if (filterText === '') {
+            renderTree(originalData);
+            return;
+        }
+
+        originalData.forEach(fornec => {
+            const supplierName = fornec.nome.toLowerCase();
+            const matchingNotes = [];
+
+            fornec.notas.forEach(note => {
+                const noteId = note.id.toLowerCase();
+                const matchingNFs = [];
+
+                note.notasFiscais.forEach(nf => {
+                    const nfId = nf.id.toLowerCase();
+                    if (nfId.includes(filterText)) {
+                        matchingNFs.push(nf);
+                    }
+                });
+
+                if (noteId.includes(filterText) || matchingNFs.length > 0) {
+                    matchingNotes.push({
+                        ...note,
+                        notasFiscais: matchingNFs.length > 0 ? matchingNFs : note.notasFiscais
+                    });
+                }
+            });
+
+            if (supplierName.includes(filterText) || matchingNotes.length > 0) {
+                const notesToDisplay = supplierName.includes(filterText) ? fornec.notas : matchingNotes;
+                
+                filteredData.push({
+                    ...fornec,
+                    notas: notesToDisplay
+                });
+            }
+        });
+
+        renderTree(filteredData);
+        expandAllNodes();
+    }
+    
+    function expandAllNodes() {
+        document.querySelectorAll('.toggle').forEach(toggle => {
+            const parent = toggle.closest('.node');
+            const targetUl = parent.nextElementSibling;
+            if (targetUl && targetUl.classList.contains('hidden')) {
+                targetUl.classList.remove('hidden');
+                toggle.textContent = '−';
+            }
+        });
+    }
+
+    function updateSummary() {
+      const visibleSuppliers = document.querySelectorAll('#tree > .tree-list > li');
+      let visibleNotesCount = 0;
+      let visibleNFsCount = 0;
+      let visibleTotal = 0;
+
+      visibleSuppliers.forEach(supplierLi => {
+        const notesUl = supplierLi.querySelector('ul');
+        if (notesUl) {
+          notesUl.querySelectorAll('li').forEach(noteLi => {
+            const noteRow = noteLi.querySelector('.note-row');
+            if (noteRow) {
+              visibleNotesCount++;
+              const valueEl = noteRow.querySelector('.value');
+              if (valueEl) {
+                visibleTotal += parseFloat(valueEl.textContent.replace('R$', '').replace('.', '').replace(',', '.'));
+              }
+              
+              const nfElements = noteLi.querySelectorAll('.nf-row');
+              nfElements.forEach(nfRow => {
+                visibleNFsCount++;
+              });
+            }
+          });
+        }
+      });
+      
+      const totalChip = summaryEl.querySelector('.chip');
+      totalChip.textContent = 'Valor Total da Contratação: ' + fmt(visibleTotal);
+      
+      const suppliersCount = summaryEl.querySelector('.meta');
+      suppliersCount.textContent = `${visibleSuppliers.length} fornecedor(es) • ${visibleNotesCount} nota(s) de empenho • ${visibleNFsCount} notas fiscais`;
+    }
+    
+    document.getElementById('searchInput').addEventListener('keyup', (event) => {
+        if (event.key === 'Enter') {
+            filterTree();
+        }
+    });
+
+    buildTree(data);
+  </script>
+</body>
+</html>

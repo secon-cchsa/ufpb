@@ -1,0 +1,97 @@
+<style>
+.table-container {
+font-family: Arial, sans-serif;
+max-width: 800px;
+margin: auto;
+padding: 20px;
+border: 1px solid #ddd;
+border-radius: 8px;
+box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+.styled-table {
+width: 100%;
+border-collapse: collapse;
+margin: 25px 0;
+font-size: 0.9em;
+text-align: left;
+}
+.styled-table thead tr {
+background-color: #009879;
+color: #ffffff;
+text-align: left;
+}
+.styled-table th,
+.styled-table td {
+padding: 12px 15px;
+border: 1px solid #dddddd;
+}
+.styled-table tbody tr {
+border-bottom: 1px solid #dddddd;
+}
+.styled-table tbody tr:nth-of-type(even) {
+background-color: #f3f3f3;
+}
+.styled-table tbody tr:last-of-type {
+border-bottom: 2px solid #009879;
+}
+</style>
+
+<div class="table-container">
+<table class="styled-table">
+<thead>
+<tr>
+<th>Setor</th>
+<th>Média de Dias</th>
+</tr>
+</thead>
+<tbody>
+
+<tr>
+  <td>CCHSA - SETOR DE CONTRATOS</td>
+  <td>15.62</td>
+</tr>
+<tr>
+  <td>CCHSA - COORDENAÇÃO DE SEGURANÇA PREVENTIVA</td>
+  <td>14.67</td>
+</tr>
+<tr>
+  <td>CCHSA - SETOR DE CONTABILIDADE E FINANÇAS</td>
+  <td>12.00</td>
+</tr>
+<tr>
+  <td>CCHSA - COMISSÃO PERMANENTE DE LICITAÇÃO</td>
+  <td>10.35</td>
+</tr>
+<tr>
+  <td>CCHSA - PATRIMÔNIO</td>
+  <td>9.00</td>
+</tr>
+<tr>
+  <td>CCHSA - ASSESSORIA ADMINISTRATIVA</td>
+  <td>7.39</td>
+</tr>
+<tr>
+  <td>PROCURADORIA JURÍDICA (11.01.05)</td>
+  <td>6.00</td>
+</tr>
+<tr>
+  <td>CCHSA - CAVN - COLÉGIO AGRÍCOLA VIDAL DE NEGREIROS</td>
+  <td>5.22</td>
+</tr>
+<tr>
+  <td>CCHSA - DIREÇÃO DE CENTRO</td>
+  <td>4.94</td>
+</tr>
+<tr>
+  <td>CCHSA - CAVN - DIREÇÃO DO COLÉGIO</td>
+  <td>4.50</td>
+</tr>
+<tr>
+  <td>CCHSA - LABORATÓRIO PÓS-COLHEITA</td>
+  <td>2.50</td>
+</tr>
+
+    </tbody>
+</table>
+
+</div>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gráfico de Pizza - Tempo Médio por Setor</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: transparent;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      color: #333;
+    }
+    .chart-container {
+      width: 100%;
+      height: 100%;
+      padding: 0;
+      background-color: transparent;
+      box-shadow: none;
+      border-radius: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    h1 {
+      color: white;
+      margin-bottom: 10px;
+      font-size: 1.2em;
+    }
+    canvas {
+        max-width: 100%; /* Escala restaurada para 100% */
+        max-height: calc(100% - 30px); /* Escala restaurada e ajustada para o título */
+    }
+  </style>
+</head>
+<body>
+  <div class="chart-container">
+    <h1>Tempo Médio por Setor</h1>
+    <canvas id="meuGraficoDePizza"></canvas>
+  </div>
+
+  <script>
+    const labels = [
+        'CCHSA - CONTRATOS',
+        'CCHSA - SEGURANÇA',
+        'CCHSA - CONTABILIDADE',
+        'CCHSA - LICITAÇÃO',
+        'CCHSA - PATRIMÔNIO',
+        'CCHSA - ADM',
+        'PROCURADORIA JURÍDICA'
+    ];
+    const valores = [15.62, 14.67, 12.00, 10.35, 9.00, 7.39, 6.00];
+
+    const cores = [
+        '#3182bd', '#6baed6', '#9ecae1', '#c6dbef', '#e6f0ff', '#f7fbff', '#add8e6' 
+    ];
+    
+    let offsets = new Array(labels.length).fill(0);
+    const offsetAmount = 100;
+
+    const dadosGrafico = {
+        labels: labels,
+        datasets: [{
+            label: 'Tempo Médio',
+            data: valores,
+            backgroundColor: cores,
+            borderWidth: 1,
+            borderColor: '#fff',
+            hoverOffset: 10,
+            offset: offsets
+        }]
+    };
+
+    const config = {
+        type: 'pie',
+        data: dadosGrafico,
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            onClick: (e, elements) => {
+                if (elements.length > 0) {
+                    const clickedElementIndex = elements[0].index;
+                    
+                    if (offsets[clickedElementIndex] === 0) {
+                        offsets[clickedElementIndex] = offsetAmount;
+                    } else {
+                        offsets[clickedElementIndex] = 0;
+                    }
+                    meuGraficoDePizza.update();
+                }
+            },
+            plugins: {
+                legend: {
+                    position: 'top',
+                    labels: {
+                        color: 'white'
+                    }
+                },
+                title: {
+                    display: true,
+                    text: '',
+                    font: {
+                        size: 18,
+                        color: 'white'
+                    }
+                }
+            }
+        }
+    };
+
+    const meuGraficoDePizza = new Chart(
+        document.getElementById('meuGraficoDePizza'),
+        config
+    );
+  </script>
+</body>
+</html>

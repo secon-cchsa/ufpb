@@ -1,0 +1,959 @@
+<style>
+.table-container {
+font-family: Arial, sans-serif;
+max-width: 800px;
+margin: auto;
+padding: 20px;
+border: 1px solid #ddd;
+border-radius: 8px;
+box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+.styled-table {
+width: 100%;
+border-collapse: collapse;
+margin: 25px 0;
+font-size: 0.9em;
+text-align: left;
+}
+.styled-table thead tr {
+background-color: #009879;
+color: #ffffff;
+text-align: left;
+}
+.styled-table th,
+.styled-table td {
+padding: 12px 15px;
+border: 1px solid #dddddd;
+}
+.styled-table tbody tr {
+border-bottom: 1px solid #dddddd;
+}
+.styled-table tbody tr:nth-of-type(even) {
+background-color: #f3f3f3;
+}
+.styled-table tbody tr:last-of-type {
+border-bottom: 2px solid #009879;
+}
+</style>
+
+<div class="table-container">
+<table class="styled-table">
+<thead>
+<tr>
+<th>Data de Saída</th>
+<th>Setor de Destino</th>
+<th>Dias</th>
+</tr>
+</thead>
+<tbody>
+
+<tr>
+  <td>2023-05-19</td>
+  <td>CCHSA - DIREÇÃO DE CENTRO</td>
+  <td>2.0</td>
+</tr>
+<tr>
+  <td>2023-05-21</td>
+  <td>CCHSA - SETOR DE CONTABILIDADE E FINANÇAS</td>
+  <td>10.0</td>
+</tr>
+<tr>
+  <td>2023-05-31</td>
+  <td>CCHSA - SETOR DE CONTRATOS</td>
+  <td>21.0</td>
+</tr>
+<tr>
+  <td>2023-06-21</td>
+  <td>CCHSA - DIREÇÃO DE CENTRO</td>
+  <td>0.0</td>
+</tr>
+<tr>
+  <td>2023-06-21</td>
+  <td>CCHSA - SETOR DE CONTABILIDADE E FINANÇAS</td>
+  <td>21.0</td>
+</tr>
+<tr>
+  <td>2023-07-12</td>
+  <td>CCHSA - SETOR DE CONTRATOS</td>
+  <td>27.0</td>
+</tr>
+<tr>
+  <td>2023-08-08</td>
+  <td>CCHSA - DIREÇÃO DE CENTRO</td>
+  <td>1.0</td>
+</tr>
+<tr>
+  <td>2023-08-09</td>
+  <td>CCHSA - SETOR DE CONTABILIDADE E FINANÇAS</td>
+  <td>12.0</td>
+</tr>
+<tr>
+  <td>2023-08-21</td>
+  <td>CCHSA - SETOR DE CONTRATOS</td>
+  <td>14.0</td>
+</tr>
+<tr>
+  <td>2023-09-04</td>
+  <td>CCHSA - DIREÇÃO DE CENTRO</td>
+  <td>1.0</td>
+</tr>
+<tr>
+  <td>2023-09-05</td>
+  <td>CCHSA - SETOR DE CONTABILIDADE E FINANÇAS</td>
+  <td>6.0</td>
+</tr>
+<tr>
+  <td>2023-09-11</td>
+  <td>CCHSA - SETOR DE CONTRATOS</td>
+  <td>0.0</td>
+</tr>
+<tr>
+  <td>2023-09-11</td>
+  <td>CCHSA - SETOR DE CONTABILIDADE E FINANÇAS</td>
+  <td>2.0</td>
+</tr>
+<tr>
+  <td>2023-09-13</td>
+  <td>CCHSA - SETOR DE CONTRATOS</td>
+  <td>1.0</td>
+</tr>
+<tr>
+  <td>2023-09-14</td>
+  <td>CCHSA - DIREÇÃO DE CENTRO</td>
+  <td>4.0</td>
+</tr>
+<tr>
+  <td>2023-09-18</td>
+  <td>CCHSA - SETOR DE CONTABILIDADE E FINANÇAS</td>
+  <td>3.0</td>
+</tr>
+<tr>
+  <td>2023-09-21</td>
+  <td>CCHSA - SETOR DE CONTRATOS</td>
+  <td>7.0</td>
+</tr>
+<tr>
+  <td>2023-09-28</td>
+  <td>CCHSA - SETOR DE CONTABILIDADE E FINANÇAS</td>
+  <td>0.0</td>
+</tr>
+<tr>
+  <td>2023-09-28</td>
+  <td>CCHSA - SETOR DE CONTRATOS</td>
+  <td>1.0</td>
+</tr>
+<tr>
+  <td>2023-09-29</td>
+  <td>CCHSA - DIREÇÃO DE CENTRO</td>
+  <td>0.0</td>
+</tr>
+<tr>
+  <td>2023-09-29</td>
+  <td>CCHSA - SETOR DE CONTABILIDADE E FINANÇAS</td>
+  <td>26.0</td>
+</tr>
+<tr>
+  <td>2023-10-25</td>
+  <td>CCHSA - SETOR DE CONTRATOS</td>
+  <td>2.0</td>
+</tr>
+<tr>
+  <td>2023-10-27</td>
+  <td>CCHSA - DIREÇÃO DE CENTRO</td>
+  <td>0.0</td>
+</tr>
+<tr>
+  <td>2023-10-27</td>
+  <td>CCHSA - SETOR DE CONTABILIDADE E FINANÇAS</td>
+  <td>21.0</td>
+</tr>
+<tr>
+  <td>2023-11-17</td>
+  <td>CCHSA - SETOR DE CONTRATOS</td>
+  <td>11.0</td>
+</tr>
+<tr>
+  <td>2023-11-28</td>
+  <td>CCHSA - DIREÇÃO DE CENTRO</td>
+  <td>2.0</td>
+</tr>
+<tr>
+  <td>2023-11-30</td>
+  <td>CCHSA - SETOR DE CONTABILIDADE E FINANÇAS</td>
+  <td>21.0</td>
+</tr>
+<tr>
+  <td>2023-12-21</td>
+  <td>CCHSA - SETOR DE CONTRATOS</td>
+  <td>0.0</td>
+</tr>
+<tr>
+  <td>2023-12-21</td>
+  <td>CCHSA - DIREÇÃO DE CENTRO</td>
+  <td>0.0</td>
+</tr>
+<tr>
+  <td>2023-12-21</td>
+  <td>CCHSA - SETOR DE CONTABILIDADE E FINANÇAS</td>
+  <td>0.0</td>
+</tr>
+<tr>
+  <td>2023-12-21</td>
+  <td>CCHSA - SETOR DE CONTABILIDADE E FINANÇAS</td>
+  <td>7.0</td>
+</tr>
+<tr>
+  <td>2023-12-28</td>
+  <td>CCHSA - SETOR DE CONTRATOS</td>
+  <td>29.0</td>
+</tr>
+<tr>
+  <td>2024-01-26</td>
+  <td>CCHSA - ASSESSORIA ADMINISTRATIVA</td>
+  <td>5.0</td>
+</tr>
+<tr>
+  <td>2024-01-31</td>
+  <td>CCHSA - SETOR DE CONTRATOS</td>
+  <td>21.0</td>
+</tr>
+<tr>
+  <td>2024-02-21</td>
+  <td>CCHSA - DIREÇÃO DE CENTRO</td>
+  <td>0.0</td>
+</tr>
+<tr>
+  <td>2024-02-21</td>
+  <td>CCHSA - SETOR DE CONTABILIDADE E FINANÇAS</td>
+  <td>15.0</td>
+</tr>
+<tr>
+  <td>2024-03-07</td>
+  <td>CCHSA - SETOR DE CONTRATOS</td>
+  <td>12.0</td>
+</tr>
+<tr>
+  <td>2024-03-19</td>
+  <td>CCHSA - DIREÇÃO DE CENTRO</td>
+  <td>1.0</td>
+</tr>
+<tr>
+  <td>2024-03-20</td>
+  <td>CCHSA - SETOR DE CONTABILIDADE E FINANÇAS</td>
+  <td>27.0</td>
+</tr>
+<tr>
+  <td>2024-04-16</td>
+  <td>CCHSA - SETOR DE CONTRATOS</td>
+  <td>3.0</td>
+</tr>
+<tr>
+  <td>2024-04-19</td>
+  <td>CCHSA - DIREÇÃO DE CENTRO</td>
+  <td>0.0</td>
+</tr>
+<tr>
+  <td>2024-04-19</td>
+  <td>CCHSA - SETOR DE CONTABILIDADE E FINANÇAS</td>
+  <td>18.0</td>
+</tr>
+<tr>
+  <td>2024-05-07</td>
+  <td>CCHSA - SETOR DE CONTRATOS</td>
+  <td>16</td>
+</tr>
+<tr>
+  <td>2023-05-23</td>
+  <td>CCHSA - DIREÇÃO DE CENTRO</td>
+  <td>1.0</td>
+</tr>
+<tr>
+  <td>2023-05-24</td>
+  <td>CCHSA - ASSESSORIA ADMINISTRATIVA</td>
+  <td>4.0</td>
+</tr>
+<tr>
+  <td>2023-05-28</td>
+  <td>CCHSA - DIREÇÃO DE CENTRO</td>
+  <td>2.0</td>
+</tr>
+<tr>
+  <td>2023-05-30</td>
+  <td>CCHSA - COMISSÃO PERMANENTE DE LICITAÇÃO</td>
+  <td>13.0</td>
+</tr>
+<tr>
+  <td>2023-06-12</td>
+  <td>CCHSA - CAVN - COLÉGIO AGRÍCOLA VIDAL DE NEGREIROS</td>
+  <td>8.0</td>
+</tr>
+<tr>
+  <td>2023-06-20</td>
+  <td>CCHSA - ASSESSORIA ADMINISTRATIVA</td>
+  <td>2.0</td>
+</tr>
+<tr>
+  <td>2023-06-22</td>
+  <td>CCHSA - DIREÇÃO DE CENTRO</td>
+  <td>0.0</td>
+</tr>
+<tr>
+  <td>2023-06-22</td>
+  <td>CCHSA - COMISSÃO PERMANENTE DE LICITAÇÃO</td>
+  <td>7.0</td>
+</tr>
+<tr>
+  <td>2023-06-29</td>
+  <td>CCHSA - CAVN - COLÉGIO AGRÍCOLA VIDAL DE NEGREIROS</td>
+  <td>0.0</td>
+</tr>
+<tr>
+  <td>2023-06-29</td>
+  <td>CCHSA - COMISSÃO PERMANENTE DE LICITAÇÃO</td>
+  <td>12.0</td>
+</tr>
+<tr>
+  <td>2023-07-11</td>
+  <td>CCHSA - DIREÇÃO DE CENTRO</td>
+  <td>0.0</td>
+</tr>
+<tr>
+  <td>2023-07-11</td>
+  <td>PROCURADORIA JURÍDICA (11.01.05)</td>
+  <td>2.0</td>
+</tr>
+<tr>
+  <td>2023-07-13</td>
+  <td>CCHSA - DIREÇÃO DE CENTRO</td>
+  <td>1.0</td>
+</tr>
+<tr>
+  <td>2023-07-14</td>
+  <td>CCHSA - COMISSÃO PERMANENTE DE LICITAÇÃO</td>
+  <td>5.0</td>
+</tr>
+<tr>
+  <td>2023-07-19</td>
+  <td>CCHSA - CAVN - COLÉGIO AGRÍCOLA VIDAL DE NEGREIROS</td>
+  <td>15.0</td>
+</tr>
+<tr>
+  <td>2023-08-03</td>
+  <td>CCHSA - COMISSÃO PERMANENTE DE LICITAÇÃO</td>
+  <td>34.0</td>
+</tr>
+<tr>
+  <td>2023-09-06</td>
+  <td>CCHSA - DIREÇÃO DE CENTRO</td>
+  <td>0.0</td>
+</tr>
+<tr>
+  <td>2023-09-06</td>
+  <td>CCHSA - COMISSÃO PERMANENTE DE LICITAÇÃO</td>
+  <td>6.0</td>
+</tr>
+<tr>
+  <td>2023-09-12</td>
+  <td>CCHSA - SETOR DE CONTRATOS</td>
+  <td>0</td>
+</tr>
+<tr>
+  <td>2023-06-19</td>
+  <td>CCHSA - DIREÇÃO DE CENTRO</td>
+  <td>1.0</td>
+</tr>
+<tr>
+  <td>2023-06-20</td>
+  <td>CCHSA - ASSESSORIA ADMINISTRATIVA</td>
+  <td>2.0</td>
+</tr>
+<tr>
+  <td>2023-06-22</td>
+  <td>CCHSA - DIREÇÃO DE CENTRO</td>
+  <td>0.0</td>
+</tr>
+<tr>
+  <td>2023-06-22</td>
+  <td>CCHSA - COMISSÃO PERMANENTE DE LICITAÇÃO</td>
+  <td>5.0</td>
+</tr>
+<tr>
+  <td>2023-06-27</td>
+  <td>CCHSA - CAVN - COLÉGIO AGRÍCOLA VIDAL DE NEGREIROS</td>
+  <td>0.0</td>
+</tr>
+<tr>
+  <td>2023-06-27</td>
+  <td>CCHSA - COMISSÃO PERMANENTE DE LICITAÇÃO</td>
+  <td>27.0</td>
+</tr>
+<tr>
+  <td>2023-07-24</td>
+  <td>CCHSA - CAVN - COLÉGIO AGRÍCOLA VIDAL DE NEGREIROS</td>
+  <td>2.0</td>
+</tr>
+<tr>
+  <td>2023-07-26</td>
+  <td>CCHSA - COMISSÃO PERMANENTE DE LICITAÇÃO</td>
+  <td>6.0</td>
+</tr>
+<tr>
+  <td>2023-08-01</td>
+  <td>CCHSA - DIREÇÃO DE CENTRO</td>
+  <td>1.0</td>
+</tr>
+<tr>
+  <td>2023-08-02</td>
+  <td>PROCURADORIA JURÍDICA (11.01.05)</td>
+  <td>7.0</td>
+</tr>
+<tr>
+  <td>2023-08-09</td>
+  <td>CCHSA - DIREÇÃO DE CENTRO</td>
+  <td>0.0</td>
+</tr>
+<tr>
+  <td>2023-08-09</td>
+  <td>CCHSA - COMISSÃO PERMANENTE DE LICITAÇÃO</td>
+  <td>0.0</td>
+</tr>
+<tr>
+  <td>2023-08-09</td>
+  <td>CCHSA - CAVN - COLÉGIO AGRÍCOLA VIDAL DE NEGREIROS</td>
+  <td>1.0</td>
+</tr>
+<tr>
+  <td>2023-08-10</td>
+  <td>CCHSA - COMISSÃO PERMANENTE DE LICITAÇÃO</td>
+  <td>22.0</td>
+</tr>
+<tr>
+  <td>2023-09-01</td>
+  <td>CCHSA - DIREÇÃO DE CENTRO</td>
+  <td>5.0</td>
+</tr>
+<tr>
+  <td>2023-09-06</td>
+  <td>CCHSA - COMISSÃO PERMANENTE DE LICITAÇÃO</td>
+  <td>6.0</td>
+</tr>
+<tr>
+  <td>2023-09-12</td>
+  <td>CCHSA - SETOR DE CONTRATOS</td>
+  <td>0</td>
+</tr>
+<tr>
+  <td>2022-05-17</td>
+  <td>CCHSA - DIREÇÃO DE CENTRO</td>
+  <td>0.0</td>
+</tr>
+<tr>
+  <td>2022-05-17</td>
+  <td>CCHSA - ASSESSORIA ADMINISTRATIVA</td>
+  <td>2.0</td>
+</tr>
+<tr>
+  <td>2022-05-19</td>
+  <td>CCHSA - COMISSÃO PERMANENTE DE LICITAÇÃO</td>
+  <td>0.0</td>
+</tr>
+<tr>
+  <td>2022-05-19</td>
+  <td>CCHSA - ASSESSORIA ADMINISTRATIVA</td>
+  <td>5.0</td>
+</tr>
+<tr>
+  <td>2022-05-24</td>
+  <td>CCHSA - CAVN - DIREÇÃO DO COLÉGIO</td>
+  <td>6.0</td>
+</tr>
+<tr>
+  <td>2022-05-30</td>
+  <td>CCHSA - COMISSÃO PERMANENTE DE LICITAÇÃO</td>
+  <td>60.0</td>
+</tr>
+<tr>
+  <td>2022-07-29</td>
+  <td>CCHSA - DIREÇÃO DE CENTRO</td>
+  <td>0.0</td>
+</tr>
+<tr>
+  <td>2022-07-29</td>
+  <td>PROCURADORIA JURÍDICA (11.01.05)</td>
+  <td>4.0</td>
+</tr>
+<tr>
+  <td>2022-08-02</td>
+  <td>CCHSA - DIREÇÃO DE CENTRO</td>
+  <td>23.0</td>
+</tr>
+<tr>
+  <td>2022-08-25</td>
+  <td>CCHSA - COMISSÃO PERMANENTE DE LICITAÇÃO</td>
+  <td>1.0</td>
+</tr>
+<tr>
+  <td>2022-08-26</td>
+  <td>CCHSA - CAVN - COLÉGIO AGRÍCOLA VIDAL DE NEGREIROS</td>
+  <td>19.0</td>
+</tr>
+<tr>
+  <td>2022-09-14</td>
+  <td>CCHSA - COMISSÃO PERMANENTE DE LICITAÇÃO</td>
+  <td>5.0</td>
+</tr>
+<tr>
+  <td>2022-09-19</td>
+  <td>CCHSA - CAVN - COLÉGIO AGRÍCOLA VIDAL DE NEGREIROS</td>
+  <td>1.0</td>
+</tr>
+<tr>
+  <td>2022-09-20</td>
+  <td>CCHSA - COMISSÃO PERMANENTE DE LICITAÇÃO</td>
+  <td>1.0</td>
+</tr>
+<tr>
+  <td>2022-09-21</td>
+  <td>CCHSA - DIREÇÃO DE CENTRO</td>
+  <td>5.0</td>
+</tr>
+<tr>
+  <td>2022-09-26</td>
+  <td>CCHSA - COMISSÃO PERMANENTE DE LICITAÇÃO</td>
+  <td>1.0</td>
+</tr>
+<tr>
+  <td>2022-09-27</td>
+  <td>CCHSA - DIREÇÃO DE CENTRO</td>
+  <td>14.0</td>
+</tr>
+<tr>
+  <td>2022-10-11</td>
+  <td>CCHSA - COMISSÃO PERMANENTE DE LICITAÇÃO</td>
+  <td>2.0</td>
+</tr>
+<tr>
+  <td>2022-10-13</td>
+  <td>CCHSA - DIREÇÃO DE CENTRO</td>
+  <td>1.0</td>
+</tr>
+<tr>
+  <td>2022-10-14</td>
+  <td>CCHSA - COMISSÃO PERMANENTE DE LICITAÇÃO</td>
+  <td>0.0</td>
+</tr>
+<tr>
+  <td>2022-10-14</td>
+  <td>CCHSA - DIREÇÃO DE CENTRO</td>
+  <td>105.0</td>
+</tr>
+<tr>
+  <td>2023-01-27</td>
+  <td>CCHSA - CAVN - DIREÇÃO DO COLÉGIO</td>
+  <td>3.0</td>
+</tr>
+<tr>
+  <td>2023-01-30</td>
+  <td>CCHSA - CAVN - COLÉGIO AGRÍCOLA VIDAL DE NEGREIROS</td>
+  <td>1.0</td>
+</tr>
+<tr>
+  <td>2023-01-31</td>
+  <td>CCHSA - DIREÇÃO DE CENTRO</td>
+  <td>0.0</td>
+</tr>
+<tr>
+  <td>2023-01-31</td>
+  <td>CCHSA - COMISSÃO PERMANENTE DE LICITAÇÃO</td>
+  <td>51.0</td>
+</tr>
+<tr>
+  <td>2023-03-23</td>
+  <td>CCHSA - DIREÇÃO DE CENTRO</td>
+  <td>8.0</td>
+</tr>
+<tr>
+  <td>2023-03-31</td>
+  <td>CCHSA - COMISSÃO PERMANENTE DE LICITAÇÃO</td>
+  <td>4.0</td>
+</tr>
+<tr>
+  <td>2023-04-04</td>
+  <td>CCHSA - SETOR DE CONTRATOS</td>
+  <td>21.0</td>
+</tr>
+<tr>
+  <td>2023-04-25</td>
+  <td>CCHSA - ASSESSORIA ADMINISTRATIVA</td>
+  <td>34.0</td>
+</tr>
+<tr>
+  <td>2023-05-29</td>
+  <td>CCHSA - DIREÇÃO DE CENTRO</td>
+  <td>1.0</td>
+</tr>
+<tr>
+  <td>2023-05-30</td>
+  <td>CCHSA - COMISSÃO PERMANENTE DE LICITAÇÃO</td>
+  <td>6.0</td>
+</tr>
+<tr>
+  <td>2023-06-05</td>
+  <td>CCHSA - COORDENAÇÃO DE SEGURANÇA PREVENTIVA</td>
+  <td>2.0</td>
+</tr>
+<tr>
+  <td>2023-06-07</td>
+  <td>CCHSA - ASSESSORIA ADMINISTRATIVA</td>
+  <td>6.0</td>
+</tr>
+<tr>
+  <td>2023-06-13</td>
+  <td>CCHSA - COMISSÃO PERMANENTE DE LICITAÇÃO</td>
+  <td>6.0</td>
+</tr>
+<tr>
+  <td>2023-06-19</td>
+  <td>CCHSA - DIREÇÃO DE CENTRO</td>
+  <td>1.0</td>
+</tr>
+<tr>
+  <td>2023-06-20</td>
+  <td>CCHSA - COMISSÃO PERMANENTE DE LICITAÇÃO</td>
+  <td>1.0</td>
+</tr>
+<tr>
+  <td>2023-06-21</td>
+  <td>CCHSA - COORDENAÇÃO DE SEGURANÇA PREVENTIVA</td>
+  <td>35.0</td>
+</tr>
+<tr>
+  <td>2023-07-26</td>
+  <td>CCHSA - ASSESSORIA ADMINISTRATIVA</td>
+  <td>2.0</td>
+</tr>
+<tr>
+  <td>2023-07-28</td>
+  <td>CCHSA - COMISSÃO PERMANENTE DE LICITAÇÃO</td>
+  <td>17.0</td>
+</tr>
+<tr>
+  <td>2023-08-14</td>
+  <td>CCHSA - DIREÇÃO DE CENTRO</td>
+  <td>0.0</td>
+</tr>
+<tr>
+  <td>2023-08-14</td>
+  <td>PROCURADORIA JURÍDICA (11.01.05)</td>
+  <td>10.0</td>
+</tr>
+<tr>
+  <td>2023-08-24</td>
+  <td>CCHSA - DIREÇÃO DE CENTRO</td>
+  <td>4.0</td>
+</tr>
+<tr>
+  <td>2023-08-28</td>
+  <td>CCHSA - COMISSÃO PERMANENTE DE LICITAÇÃO</td>
+  <td>7.0</td>
+</tr>
+<tr>
+  <td>2023-09-04</td>
+  <td>CCHSA - COORDENAÇÃO DE SEGURANÇA PREVENTIVA</td>
+  <td>7.0</td>
+</tr>
+<tr>
+  <td>2023-09-11</td>
+  <td>CCHSA - COMISSÃO PERMANENTE DE LICITAÇÃO</td>
+  <td>17.0</td>
+</tr>
+<tr>
+  <td>2023-09-28</td>
+  <td>CCHSA - DIREÇÃO DE CENTRO</td>
+  <td>8.0</td>
+</tr>
+<tr>
+  <td>2023-10-06</td>
+  <td>CCHSA - COMISSÃO PERMANENTE DE LICITAÇÃO</td>
+  <td>3.0</td>
+</tr>
+<tr>
+  <td>2023-10-09</td>
+  <td>CCHSA - SETOR DE CONTRATOS</td>
+  <td>78.0</td>
+</tr>
+<tr>
+  <td>2023-12-26</td>
+  <td>CCHSA - SETOR DE CONTABILIDADE E FINANÇAS</td>
+  <td>2.0</td>
+</tr>
+<tr>
+  <td>2023-12-28</td>
+  <td>CCHSA - SETOR DE CONTRATOS</td>
+  <td>29.0</td>
+</tr>
+<tr>
+  <td>2024-01-26</td>
+  <td>CCHSA - ASSESSORIA ADMINISTRATIVA</td>
+  <td>5.0</td>
+</tr>
+<tr>
+  <td>2024-01-31</td>
+  <td>CCHSA - SETOR DE CONTRATOS</td>
+  <td>0</td>
+</tr>
+<tr>
+  <td>2024-11-13</td>
+  <td>CCHSA - PATRIMÔNIO</td>
+  <td>9.0</td>
+</tr>
+<tr>
+  <td>2024-11-22</td>
+  <td>CCHSA - SETOR DE CONTRATOS</td>
+  <td>0</td>
+</tr>
+<tr>
+  <td>2023-09-27</td>
+  <td>CCHSA - ASSESSORIA ADMINISTRATIVA</td>
+  <td>1.0</td>
+</tr>
+<tr>
+  <td>2023-09-28</td>
+  <td>CCHSA - DIREÇÃO DE CENTRO</td>
+  <td>11.0</td>
+</tr>
+<tr>
+  <td>2023-10-09</td>
+  <td>CCHSA - COMISSÃO PERMANENTE DE LICITAÇÃO</td>
+  <td>0.0</td>
+</tr>
+<tr>
+  <td>2023-10-09</td>
+  <td>CCHSA - DIREÇÃO DE CENTRO</td>
+  <td>8.0</td>
+</tr>
+<tr>
+  <td>2023-10-17</td>
+  <td>CCHSA - LABORATÓRIO PÓS-COLHEITA</td>
+  <td>3.0</td>
+</tr>
+<tr>
+  <td>2023-10-20</td>
+  <td>CCHSA - DIREÇÃO DE CENTRO</td>
+  <td>20.0</td>
+</tr>
+<tr>
+  <td>2023-11-09</td>
+  <td>CCHSA - COMISSÃO PERMANENTE DE LICITAÇÃO</td>
+  <td>1.0</td>
+</tr>
+<tr>
+  <td>2023-11-10</td>
+  <td>CCHSA - DIREÇÃO DE CENTRO</td>
+  <td>6.0</td>
+</tr>
+<tr>
+  <td>2023-11-16</td>
+  <td>CCHSA - COMISSÃO PERMANENTE DE LICITAÇÃO</td>
+  <td>5.0</td>
+</tr>
+<tr>
+  <td>2023-11-21</td>
+  <td>CCHSA - DIREÇÃO DE CENTRO</td>
+  <td>0.0</td>
+</tr>
+<tr>
+  <td>2023-11-21</td>
+  <td>PROCURADORIA JURÍDICA (11.01.05)</td>
+  <td>7.0</td>
+</tr>
+<tr>
+  <td>2023-11-28</td>
+  <td>CCHSA - LABORATÓRIO PÓS-COLHEITA</td>
+  <td>2.0</td>
+</tr>
+<tr>
+  <td>2023-11-30</td>
+  <td>CCHSA - DIREÇÃO DE CENTRO</td>
+  <td>0.0</td>
+</tr>
+<tr>
+  <td>2023-11-30</td>
+  <td>CCHSA - COMISSÃO PERMANENTE DE LICITAÇÃO</td>
+  <td>21.0</td>
+</tr>
+<tr>
+  <td>2023-12-21</td>
+  <td>CCHSA - DIREÇÃO DE CENTRO</td>
+  <td>1.0</td>
+</tr>
+<tr>
+  <td>2023-12-22</td>
+  <td>CCHSA - COMISSÃO PERMANENTE DE LICITAÇÃO</td>
+  <td>0</td>
+</tr>
+<tr>
+  <td>2023-05-10</td>
+  <td>CCHSA - ASSESSORIA ADMINISTRATIVA</td>
+  <td>54.0</td>
+</tr>
+<tr>
+  <td>2023-07-03</td>
+  <td>CCHSA - DIREÇÃO DE CENTRO</td>
+  <td>4.0</td>
+</tr>
+<tr>
+  <td>2023-07-07</td>
+  <td>CCHSA - SETOR DE CONTABILIDADE E FINANÇAS</td>
+  <td>5.0</td>
+</tr>
+<tr>
+  <td>2023-07-12</td>
+  <td>CCHSA - SETOR DE CONTRATOS</td>
+  <td>37.0</td>
+</tr>
+<tr>
+  <td>2023-08-18</td>
+  <td>CCHSA - DIREÇÃO DE CENTRO</td>
+  <td>0.0</td>
+</tr>
+<tr>
+  <td>2023-08-18</td>
+  <td>CCHSA - SETOR DE CONTABILIDADE E FINANÇAS</td>
+  <td>33.0</td>
+</tr>
+<tr>
+  <td>2023-09-20</td>
+  <td>CCHSA - SETOR DE CONTRATOS</td>
+  <td>42.0</td>
+</tr>
+<tr>
+  <td>2023-11-01</td>
+  <td>CCHSA - ASSESSORIA ADMINISTRATIVA</td>
+  <td>0.0</td>
+</tr>
+<tr>
+  <td>2023-11-01</td>
+  <td>CCHSA - DIREÇÃO DE CENTRO</td>
+  <td>5.0</td>
+</tr>
+<tr>
+  <td>2023-11-06</td>
+  <td>CCHSA - SETOR DE CONTABILIDADE E FINANÇAS</td>
+  <td>3.0</td>
+</tr>
+<tr>
+  <td>2023-11-09</td>
+  <td>CCHSA - SETOR DE CONTRATOS</td>
+  <td>18.0</td>
+</tr>
+<tr>
+  <td>2023-11-27</td>
+  <td>CCHSA - ASSESSORIA ADMINISTRATIVA</td>
+  <td>0.0</td>
+</tr>
+<tr>
+  <td>2023-11-27</td>
+  <td>CCHSA - DIREÇÃO DE CENTRO</td>
+  <td>10.0</td>
+</tr>
+<tr>
+  <td>2023-12-07</td>
+  <td>CCHSA - SETOR DE CONTRATOS</td>
+  <td>0.0</td>
+</tr>
+<tr>
+  <td>2023-12-07</td>
+  <td>CCHSA - ASSESSORIA ADMINISTRATIVA</td>
+  <td>0.0</td>
+</tr>
+<tr>
+  <td>2023-12-07</td>
+  <td>CCHSA - SETOR DE CONTRATOS</td>
+  <td>4.0</td>
+</tr>
+<tr>
+  <td>2023-12-11</td>
+  <td>CCHSA - ASSESSORIA ADMINISTRATIVA</td>
+  <td>0.0</td>
+</tr>
+<tr>
+  <td>2023-12-11</td>
+  <td>CCHSA - DIREÇÃO DE CENTRO</td>
+  <td>0.0</td>
+</tr>
+<tr>
+  <td>2023-12-11</td>
+  <td>CCHSA - SETOR DE CONTABILIDADE E FINANÇAS</td>
+  <td>3.0</td>
+</tr>
+<tr>
+  <td>2023-12-14</td>
+  <td>CCHSA - SETOR DE CONTRATOS</td>
+  <td>5.0</td>
+</tr>
+<tr>
+  <td>2023-12-19</td>
+  <td>CCHSA - DIREÇÃO DE CENTRO</td>
+  <td>0.0</td>
+</tr>
+<tr>
+  <td>2023-12-19</td>
+  <td>CCHSA - SETOR DE CONTABILIDADE E FINANÇAS</td>
+  <td>9.0</td>
+</tr>
+<tr>
+  <td>2023-12-28</td>
+  <td>CCHSA - SETOR DE CONTRATOS</td>
+  <td>29.0</td>
+</tr>
+<tr>
+  <td>2024-01-26</td>
+  <td>CCHSA - ASSESSORIA ADMINISTRATIVA</td>
+  <td>5.0</td>
+</tr>
+<tr>
+  <td>2024-01-31</td>
+  <td>CCHSA - SETOR DE CONTRATOS</td>
+  <td>63.0</td>
+</tr>
+<tr>
+  <td>2024-04-03</td>
+  <td>CCHSA - ASSESSORIA ADMINISTRATIVA</td>
+  <td>6.0</td>
+</tr>
+<tr>
+  <td>2024-04-09</td>
+  <td>CCHSA - DIREÇÃO DE CENTRO</td>
+  <td>0.0</td>
+</tr>
+<tr>
+  <td>2024-04-09</td>
+  <td>CCHSA - SETOR DE CONTABILIDADE E FINANÇAS</td>
+  <td>15.0</td>
+</tr>
+<tr>
+  <td>2024-04-24</td>
+  <td>CCHSA - SETOR DE CONTRATOS</td>
+  <td>9.0</td>
+</tr>
+<tr>
+  <td>2024-05-03</td>
+  <td>CCHSA - DIREÇÃO DE CENTRO</td>
+  <td>0.0</td>
+</tr>
+<tr>
+  <td>2024-05-03</td>
+  <td>CCHSA - SETOR DE CONTABILIDADE E FINANÇAS</td>
+  <td>17.0</td>
+</tr>
+<tr>
+  <td>2024-05-20</td>
+  <td>CCHSA - SETOR DE CONTRATOS</td>
+  <td>0.0</td>
+</tr>
+
+    </tbody>
+</table>
+
+</div>
