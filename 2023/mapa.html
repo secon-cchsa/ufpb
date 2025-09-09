@@ -226,190 +226,2069 @@
 $(document).ready(function() {
     
     const dadosEstados = {
-        ac: { nome: 'Acre', totalARP: 0, totalAdquirido: 0, empresas: [] },
-        al: { nome: 'Alagoas', totalARP: 0, totalAdquirido: 0, empresas: [] },
-        ap: { nome: 'Amapá', totalARP: 0, totalAdquirido: 0, empresas: [] },
-        am: { nome: 'Amazonas', totalARP: 0, totalAdquirido: 0, empresas: [] },
-        ba: { nome: 'Bahia', totalARP: 161618.49, totalAdquirido: 66907.6, empresas: [
-            { nome: 'A.M.S. RIOS FABRICACAO E COMERCIO DE BOLSAS LTDA.', cnpj: '05.411.554/0001-03', arp: 98400, empenhado: 38400, adquirido: 38400, contracts: { 'Pregão': ['01/2023'], 'IRP': [] }},
-            { nome: 'BBC COMERCIAL DISTRIBUIDORA E SERVICOS LTDA', cnpj: '17.177.467/0001-04', arp: 77600, empenhado: 65960, adquirido: 65960, contracts: { 'Pregão': ['01/2023'], 'IRP': [] }},
-            { nome: 'J&A SOLUÇÕES E-COMMERCE LTDA', cnpj: '24.608.949/0001-37', arp: 4537.5, empenhado: 2887.5, adquirido: 2887.5, contracts: { 'Pregão': [], 'IRP': ['01/2023'] }},
-            { nome: 'LUGATH COMÉRCIO LTDA.', cnpj: '27.912.769/0001-32', arp: 10400, empenhado: 0, adquirido: 0, contracts: { 'Pregão': [], 'IRP': ['14/2023'] }},
-            { nome: 'SORELLE COMERCIO DE ELETROS E EQUIPAMENTOS LTDA', cnpj: '36.045.363/0001-90', arp: 51729.3, empenhado: 0, adquirido: 0, contracts: { 'Pregão': [], 'IRP': ['16/2023'] }}
-        ]},
-        ce: { nome: 'Ceará', totalARP: 270322.24, totalAdquirido: 246699.35, empresas: [
-            { nome: 'GALLUS INDUSTRIA E COMERCIO DE ALIMENTOS LTDA', cnpj: '07.737.878/0001-53', arp: 270322.24, empenhado: 246699.35, adquirido: 246699.35, contracts: { 'Pregão': ['04/2023'], 'IRP': [] }}
-        ]},
-        df: { nome: 'Distrito Federal', totalARP: 254247.3, totalAdquirido: 181971.86, empresas: [
-            { nome: 'REI TECH EIRELI', cnpj: '16.778.654/0001-80', arp: 75548, empenhado: 32219, adquirido: 32219, contracts: { 'Pregão': [], 'IRP': ['01/2023'] }},
-            { nome: 'DF MÁQUINAS E FERRAMENTAS LTDA', cnpj: '21.793.208/0001-85', arp: 3237.6, empenhado: 809.4, adquirido: 809.4, contracts: { 'Pregão': [], 'IRP': ['01/2023'] }},
-            { nome: 'WELCOME SERVIÇOS E EVENTOS LTDA.', cnpj: '11.654.689/0001-94', arp: 53331.49, empenhado: 46131.46, adquirido: 43587.66, contracts: { 'Pregão': [], 'IRP': ['09/2023'] }},
-            { nome: 'N.S.S COMERCIAL E CONSTRUTORA EIRELI', cnpj: '28.634.818/0001-85', arp: 10853.52, empenhado: 10853.52, adquirido: 7576.8, contracts: { 'Pregão': ['07/2023'], 'IRP': [] }},
-            { nome: 'A ECONÔMICA COMÉRCIO LTDA', cnpj: '44.854.551/0001-98', arp: 57400, empenhado: 57400, adquirido: 57400, contracts: { 'Pregão': ['12/2023'], 'IRP': [] }},
-            { nome: 'PIRES & SANTOS COMERCIO LTDA', cnpj: '52.087.237/0001-55', arp: 10036, empenhado: 10036, adquirido: 10036, contracts: { 'Pregão': ['12/2023'], 'IRP': [] }},
-            { nome: 'J & L – PROMOÇÃO DE VENDAS EM INFORMÁTICA LTDA.', cnpj: '13.418.193/0001-47', arp: 5040, empenhado: 5040, adquirido: 5040, contracts: { 'Pregão': [], 'IRP': ['13/2023'] }},
-            { nome: 'M. A. DISTRIBUIDORA COMÉRCIO E SERVIÇO LTDA.', cnpj: '37.725.824/0001-39', arp: 75140, empenhado: 71383, adquirido: 71383, contracts: { 'Pregão': [], 'IRP': ['14/2023'] }},
-            { nome: 'JP Comércio e Serviços', cnpj: '39.874.744/0001-70', arp: 24000, empenhado: 0, adquirido: 0, contracts: { 'Pregão': [], 'IRP': ['16/2023'] }},
-            { nome: 'ELITE TECH SUPRIMENTOS LTDA', cnpj: '52.390.100/0001-75', arp: 30066.42, empenhado: 0, adquirido: 0, contracts: { 'Pregão': [], 'IRP': ['16/2023'] }},
-            { nome: 'XD CONSTRUCOES LTDA', cnpj: '53.795.947/0001-00', arp: 20940, empenhado: 0, adquirido: 0, contracts: { 'Pregão': [], 'IRP': ['16/2023'] }}
-        ]},
-        es: { nome: 'Espírito Santo', totalARP: 261768.14, totalAdquirido: 37478.91, empresas: [
-            { nome: 'IMPERIAL CAFE COMERCIO EXPORTACAO E IMPORTACAO LTDA.', cnpj: '07.638.718/0001-57', arp: 26000, empenhado: 16250, adquirido: 16250, contracts: { 'Pregão': ['02/2023'], 'IRP': [] }},
-            { nome: 'G2B COMERCIO E REPRESENTACOES LTDA', cnpj: '36.668.854/0001-98', arp: 680, empenhado: 0, adquirido: 0, contracts: { 'Pregão': [], 'IRP': ['07/2023', '08/2023'] }},
-            { nome: 'REPREMIG – REPRESENTAÇÃO E COMÉRCIO DE MINAS GERAIS LTDA', cnpj: '65.149.197/0002-51', arp: 62472, empenhado: 0, adquirido: 0, contracts: { 'Pregão': [], 'IRP': ['16/2023'] }},
-            { nome: 'BT COMÉRCIO INTELIGENTE LTDA', cnpj: '45.329.312/0001-81', arp: 30308.55, empenhado: 0, adquirido: 0, contracts: { 'Pregão': [], 'IRP': ['16/2023'] }},
-            { nome: 'MA COMERCIO DE REFRIGERACAO LTDA', cnpj: '37.673.034/0001-57', arp: 174028.59, empenhado: 0, adquirido: 0, contracts: { 'Pregão': [], 'IRP': ['16/2023'] }}
-        ]},
-        go: { nome: 'Goiás', totalARP: 310118.06, totalAdquirido: 228224.21, empresas: [
-            { nome: 'CALIBRY METROLOGIA COMERCIO E CALIBRACAO LTDA.', cnpj: '11.227.424/0001-00', arp: 15003.39, empenhado: 15003.39, adquirido: 15003.39, contracts: { 'Pregão': ['10/2023'], 'IRP': [] }},
-            { nome: 'NOVA ERA TECNOLOGIA LTDA', cnpj: '97.328.306/0001-03', arp: 166260, empenhado: 14460, adquirido: 14460, contracts: { 'Pregão': [], 'IRP': ['01/2023'] }},
-            { nome: 'PREMIER COMERCIO LTDA', cnpj: '13.308.204/0001-36', arp: 481800, empenhado: 481800, adquirido: 481800, contracts: { 'Pregão': [], 'IRP': ['05/2023'] }},
-            { nome: 'VALNEIDES ARAUJO DA COSTA', cnpj: '17.410.769/0001-80', arp: 2100, empenhado: 0, adquirido: 0, contracts: { 'Pregão': [], 'IRP': ['08/2023'] }},
-            { nome: 'FLEXIBASE INDUSTRIA E COMERCIO DE MOVEIS, IMPORTACAO E EXPORTACAO LTDA', cnpj: '04.869.711/0001-58', arp: 104313, empenhado: 0, adquirido: 0, contracts: { 'Pregão': [], 'IRP': ['15/2023'] }},
-            { nome: 'X-OFFICE SERVI LTDA-ME', cnpj: '15.362.598/0001-36', arp: 165717.47, empenhado: 0, adquirido: 0, contracts: { 'Pregão': [], 'IRP': ['15/2023'] }},
-            { nome: 'Nova Mix Ltda', cnpj: '49.949.246/0001-01', arp: 13987.32, empenhado: 13987.32, adquirido: 13987.32, contracts: { 'Pregão': ['12/2023'], 'IRP': [] }}
-        ]},
-        ma: { nome: 'Maranhão', totalARP: 2000, totalAdquirido: 0, empresas: [
-            { nome: 'MAXXI LAGO COMERCIAL E SERVICOS LTDA', cnpj: '02.114.152/0001-40', arp: 2000, empenhado: 0, adquirido: 0, contracts: { 'Pregão': [], 'IRP': ['07/2023'] }}
-        ]},
-        mt: { nome: 'Mato Grosso', totalARP: 0, totalAdquirido: 0, empresas: [] },
-        ms: { nome: 'Mato Grosso do Sul', totalARP: 0, totalAdquirido: 0, empresas: [] },
-        mg: { nome: 'Minas Gerais', totalARP: 1530932.75, totalAdquirido: 396865.26, empresas: [
-            { nome: 'MALTA INDUSTRIA E COMERCIO DE PRODUTOS LTDA.', cnpj: '29.045.645/0001-22', arp: 41620, empenhado: 20950, adquirido: 20950, contracts: { 'Pregão': ['01/2023'], 'IRP': [] }},
-            { nome: 'EDWINEY SEBASTIAO CUPERTINO LTDA.', cnpj: '27.120.416/0001-08', arp: 285215, empenhado: 122434, adquirido: 286439, contracts: { 'Pregão': ['04/2023'], 'IRP': [] }},
-            { nome: 'FASTLABOR COMERCIAL LTDA', cnpj: '21.707.794/0001-06', arp: 39201.86, empenhado: 5191.33, adquirido: 5191.33, contracts: { 'Pregão': ['09/2023'], 'IRP': [] }},
-            { nome: 'GERAES DIAGNOSTICA LTDA.', cnpj: '13.430.441/0001-75', arp: 2027.91, empenhado: 2027.91, adquirido: 2027.91, contracts: { 'Pregão': ['10/2023'], 'IRP': [] }},
-            { nome: 'SCIAVICCO COMERCIO INDUSTRIA LTDA.', cnpj: '23.747.090/0001-84', arp: 1298.4, empenhado: 1298.4, adquirido: 1298.4, contracts: { 'Pregão': ['10/2023'], 'IRP': [] }},
-            { nome: 'ORBITAL PRODUTOS PARA LABORATORIOS LTDA.', cnpj: '71.443.667/0001-07', arp: 850, empenhado: 850, adquirido: 850, contracts: { 'Pregão': ['10/2023'], 'IRP': [] }},
-            { nome: 'MAX QUALITY COMÉRCIO LTDA', cnpj: '42.810.782/0001-74', arp: 468.3, empenhado: 0, adquirido: 0, contracts: { 'Pregão': ['12/2023'], 'IRP': [] }},
-            { nome: 'RC RAMOS COMERCIO LTDA', cnpj: '07.048.323/0001-02', arp: 33127.4, empenhado: 11345, adquirido: 11345, contracts: { 'Pregão': [], 'IRP': ['06/2023'] }},
-            { nome: 'PRATICA EDITORA GRAFICA LTDA', cnpj: '71.031.637/0001-93', arp: 603876.2, empenhado: 0, adquirido: 0, contracts: { 'Pregão': [], 'IRP': ['06/2023'] }},
-            { nome: 'RB FLEXO LTDA', cnpj: '50.447.623/0001-85', arp: 27643.95, empenhado: 0, adquirido: 0, contracts: { 'Pregão': [], 'IRP': ['06/2023'] }},
-            { nome: 'PRENSAR MOVEIS LTDA EPP', cnpj: '17.756.197/0001-96', arp: 69300, empenhado: 16500, adquirido: 16500, contracts: { 'Pregão': [], 'IRP': ['15/2023'] }},
-            { nome: 'MULTIFLUXO COMERCIO DE MATERIAIS ISOLAMENTOS LTDA', cnpj: '15.181.901/0001-02', arp: 61536, empenhado: 6410, adquirido: 6410, contracts: { 'Pregão': [], 'IRP': ['06/2023'] }},
-            { nome: 'VENDGO LTDA.', cnpj: '41.255.596/0001-58', arp: 73.89, empenhado: 0, adquirido: 0, contracts: { 'Pregão': [], 'IRP': ['13/2023'] }},
-            { nome: 'ALL IN-SOLUCOES TECNOLOGICAS', cnpj: '20.721.030/0001-02', arp: 8420, empenhado: 0, adquirido: 0, contracts: { 'Pregão': [], 'IRP': ['19/2023'] }},
-            { nome: 'Produtos Salinas LTDA', cnpj: '50.278.029/0001-08', arp: 78300, empenhado: 0, adquirido: 0, contracts: { 'Pregão': [], 'IRP': ['19/2023'] }},
-            { nome: 'BACKUP MANUTENÇÃO E DISTRIBUIÇÃO DE PRODUTOS DE INFORMÁTICA LTDA', cnpj: '40.224.243/0001-28', arp: 900, empenhado: 300, adquirido: 0, contracts: { 'Pregão': [], 'IRP': ['01/2023'] }}
-        ]},
-        pa: { nome: 'Pará', totalARP: 121465.22, totalAdquirido: 52557.6, empresas: [
-            { nome: 'MARIANA MOREIRA ANDRASCHKO LTDA.', cnpj: '19.588.170/0001-67', arp: 115798.14, empenhado: 52557.6, adquirido: 52557.6, contracts: { 'Pregão': ['04/2023'], 'IRP': [] }},
-            { nome: 'LUXPLACAS INDÚSTRIA, COMÉRCIO E SERVIÇOS LTDA.', cnpj: '40.787.494/0001-10', arp: 2562.08, empenhado: 2562.08, adquirido: 0, contracts: { 'Pregão': [], 'IRP': ['04/2023'] }}
-        ]},
-        pb: { nome: 'Paraíba', totalARP: 607997.17, totalAdquirido: 457873.35, empresas: [
-            { nome: 'MOUNT CONFECCAO LTDA.', cnpj: '46.471.479/0001-45', arp: 84700, empenhado: 48096, adquirido: 34100, contracts: { 'Pregão': ['01/2023'], 'IRP': [] }},
-            { nome: 'MARIA DO SOCORRO SANTOS BASILIO', cnpj: '00.799.421/0001-24', arp: 7040, empenhado: 7040, adquirido: 7040, contracts: { 'Pregão': ['02/2023'], 'IRP': [] }},
-            { nome: 'INDUSTRIA E COMERCIO DE PRODUTOS DE LIMPEZA CAMPINENSE LTDA.', cnpj: '08.158.664/0001-95', arp: 7328.25, empenhado: 7328.25, adquirido: 7328.25, contracts: { 'Pregão': ['02/2023', '06/2023'], 'IRP': [] }},
-            { nome: 'MAXXI COMERCIAL DE ALIMENTOS LTDA.', cnpj: '41.602.860/0001-82', arp: 97688, empenhado: 67126.65, adquirido: 67126.65, contracts: { 'Pregão': ['02/2023'], 'IRP': [] }},
-            { nome: 'SUPRIMAIS COMERCIO E SERVICOS DE INFORMATICA LTDA', cnpj: '09.004.901/0001-26', arp: 22469.23, empenhado: 22469.23, adquirido: 22469.23, contracts: { 'Pregão': ['06/2023'], 'IRP': [] }},
-            { nome: 'MEDS COMERCIO DE MEDICAMENTOS, PRODUTOS E EQUIPAMENTOS HOSPITALARES LTDA.', cnpj: '40.256.200/0001-24', arp: 11295, empenhado: 11295, adquirido: 11295, contracts: { 'Pregão': ['07/2023'], 'IRP': [] }},
-            { nome: 'JONATHAS DE ARAUJO LEITE ME', cnpj: '12.670.936/0001-09', arp: 5786.45, empenhado: 5786.45, adquirido: 5786.45, contracts: { 'Pregão': ['08/2023'], 'IRP': [] }},
-            { nome: 'DANTAS ELETROMOVEIS E EQUIPAMENTOS LTDA', cnpj: '49.140.067/0001-10', arp: 13997.7, empenhado: 13997.7, adquirido: 13997.7, contracts: { 'Pregão': ['12/2023'], 'IRP': [] }},
-            { nome: 'GWC INDUSTRIA, IMPORTACAO E DISTRIBUICAO DE ELETRONICOS LTDA', cnpj: '49.329.140/0001-05', arp: 36408.7, empenhado: 36408.7, adquirido: 0, contracts: { 'Pregão': ['12/2023'], 'IRP': [] }},
-            { nome: 'ANDRÉ FELIPE', cnpj: '40.979.684/0001-30', arp: 16800, empenhado: 16800, adquirido: 16800, contracts: { 'Pregão': [], 'IRP': ['00/2023'] }},
-            { nome: 'SOS GÁS LTDA - EPP', cnpj: '09.266.128/0001-76', arp: 176664, empenhado: 25980, adquirido: 11258, contracts: { 'Pregão': [], 'IRP': ['00/2023', '11/2023'] }},
-            { nome: 'HOT DIGITAL COMÉRCIO E SERVIÇO DE IMPRESSÃO LTDA.', cnpj: '07.220.883/0001-94', arp: 6498.1, empenhado: 2399.2, adquirido: 2399.2, contracts: { 'Pregão': [], 'IRP': ['04/2023'] }},
-            { nome: 'MULTIMÍDIA IMPRESSÃO E COMÉRCIO DE MATERIAL PUBLICITÁRIO LTDA.', cnpj: '09.368.621/0001-05', arp: 1700, empenhado: 1700, adquirido: 1700, contracts: { 'Pregão': [], 'IRP': ['04/2023'] }},
-            { nome: 'ALEXANDRE LAURENTINO DA SILVA LTDA.', cnpj: '11.500.957/0001-13', arp: 13160, empenhado: 13160, adquirido: 13160, contracts: { 'Pregão': [], 'IRP': ['09/2023'] }},
-            { nome: 'PADARIA PONTES LTDA.', cnpj: '05.672.519/0001-30', arp: 122850, empenhado: 122850, adquirido: 107061.7, contracts: { 'Pregão': [], 'IRP': ['09/2023'] }},
-            { nome: 'ANDRÉ AUGUSTO TRUTA FELIPE', cnpj: '18.474.659/0001-45', arp: 145637, empenhado: 40908, adquirido: 9357.5, contracts: { 'Pregão': [], 'IRP': ['11/2023'] }},
-            { nome: 'FORMATO DIGITAL COMÉRCIO & COMUNICAÇÃO MULTIMÍDIA LTDA.', cnpj: '31.070.939/0001-56', arp: 56735.4, empenhado: 19646, adquirido: 19646, contracts: { 'Pregão': [], 'IRP': ['08/2023', '14/2023'] }},
-            { nome: 'PLUGNET COMÉRCIO E REPRESENTAÇÕES LTDA.', cnpj: '02.213.325/0002-69', arp: 155640, empenhado: 0, adquirido: 0, contracts: { 'Pregão': [], 'IRP': ['19/2023'] }},
-            { nome: 'Shine Soluções', cnpj: '35.576.748/0001-11', arp: 6350, empenhado: 0, adquirido: 0, contracts: { 'Pregão': [], 'IRP': ['16/2023'] }},
-            { nome: 'FORLIMP COMÉRCIO E DISTRIBUIÇÃO DE PRODUTOS DE PERFUMARIA E LIMPEZA LTDA.', cnpj: '19.750.069/0001-60', arp: 14300, empenhado: 0, adquirido: 0, contracts: { 'Pregão': [], 'IRP': ['10/2023'] }}
-        ]},
-        pr: { nome: 'Paraná', totalARP: 1716382.44, totalAdquirido: 253069.41, empresas: [
-            { nome: 'SANIGRAN LTDA.', cnpj: '15.153.524/0001-90', arp: 29274.96, empenhado: 15474.96, adquirido: 15474.96, contracts: { 'Pregão': ['02/2023'], 'IRP': ['03/2023'] }},
-            { nome: 'LAB VISION - COMERCIO DE PRODUTOS LABORATORIAIS LTDA', cnpj: '35.257.760/0001-63', arp: 2637.41, empenhado: 2637.41, adquirido: 2637.41, contracts: { 'Pregão': ['09/2023'], 'IRP': [] }},
-            { nome: 'OLIVEIRA & ALMEIDA INFORMÁTICA', cnpj: '13.218.025/0001-08', arp: 15102, empenhado: 2498, adquirido: 2852, contracts: { 'Pregão': [], 'IRP': ['01/2023'] }},
-            { nome: 'SERGIO DOMINGUES & CIA LTDA', cnpj: '30.996.156/0001-35', arp: 403481.6, empenhado: 189132, adquirido: 189132, contracts: { 'Pregão': [], 'IRP': ['01/2023'] }},
-            { nome: 'ADRIANO HALAMA', cnpj: '47.326.646/0001-27', arp: 5145, empenhado: 670, adquirido: 670, contracts: { 'Pregão': [], 'IRP': ['01/2023'] }},
-            { nome: 'R JUAREZ DE ALMEIDA', cnpj: '27.996.382/0001-01', arp: 5669, empenhado: 5669, adquirido: 5669, contracts: { 'Pregão': [], 'IRP': ['07/2023', '14/2023'] }},
-            { nome: 'IMPRESSOART EDITORA GRAFICA LTDA', cnpj: '13.704.494/0001-37', arp: 1227369.75, empenhado: 0, adquirido: 0, contracts: { 'Pregão': [], 'IRP': ['06/2023'] }},
-            { nome: 'AMBARLAB PRODUTOS LABORATORIAIS', cnpj: '80.243.769/0001-70', arp: 74826.92, empenhado: 38882.7, adquirido: 37682.7, contracts: { 'Pregão': ['12/2023'], 'IRP': [] }},
-            { nome: 'PLANEJE TECNOLOGIA E SERVIÇOS LTDA.', cnpj: '28.482.916/0001-44', arp: 130500, empenhado: 130500, adquirido: 0, contracts: { 'Pregão': [], 'IRP': ['13/2023'] }},
-            { nome: 'RUBENS DANTAS NETO', cnpj: '10.417.609/0001-14', arp: 1033436, empenhado: 117500, adquirido: 9600, contracts: { 'Pregão': [], 'IRP': ['06/2023'] }}
-        ]},
-        pe: { nome: 'Pernambuco', totalARP: 78151.72, totalAdquirido: 73804.82, empresas: [
-            { nome: 'MC LINS SERVICOS, DISTRIBUICAO E COMERCIO LTDA.', cnpj: '49.125.295/0001-11', arp: 46988, empenhado: 42588, adquirido: 0, contracts: { 'Pregão': ['01/2023'], 'IRP': [] }},
-            { nome: 'HMGK COMERCIO E SERVICOS LTDA.', cnpj: '36.193.120/0001-08', arp: 55019.13, empenhado: 52019.13, adquirido: 52019.13, contracts: { 'Pregão': ['02/2023', '06/2023'], 'IRP': [] }},
-            { nome: 'MARIA EFIGENIA ALMEIDA DA SILVA', cnpj: '50.002.164/0001-26', arp: 1803.5, empenhado: 1803.5, adquirido: 1803.5, contracts: { 'Pregão': ['06/2023'], 'IRP': [] }},
-            { nome: 'FONTES E ARAUJO LTDA', cnpj: '05.030.339/0001-54', arp: 47500, empenhado: 24250, adquirido: 24250, contracts: { 'Pregão': ['12/2023'], 'IRP': [] }},
-            { nome: 'LRF DISTRIBUIDORA LTDA.', cnpj: '49.464.926/0001-27', arp: 9472.66, empenhado: 0, adquirido: 0, contracts: { 'Pregão': [], 'IRP': ['14/2023'] }},
-            { nome: 'ARKHAGGELOS COMERCIO LTDA', cnpj: '50.002.164/0001-26', arp: 3560.8, empenhado: 0, adquirido: 0, contracts: { 'Pregão': [], 'IRP': ['19/2023'] }}
-        ]},
-        pi: { nome: 'Piauí', totalARP: 0, totalAdquirido: 0, empresas: [] },
-        rj: { nome: 'Rio de Janeiro', totalARP: 771314.41, totalAdquirido: 63583.46, empresas: [
-            { nome: 'FOX SCIENCE COMERCIO & PRODUTOS LTDA.', cnpj: '34.075.789/0001-61', arp: 2000, empenhado: 2000, adquirido: 2000, contracts: { 'Pregão': ['10/2023'], 'IRP': [] }},
-            { nome: 'SUNSHINE ARTES LTDA', cnpj: '33.633.305/0001-90', arp: 9890, empenhado: 9890, adquirido: 9890, contracts: { 'Pregão': [], 'IRP': ['04/2023'] }},
-            { nome: 'JRB COMERCIO, LOCACOES E SERVICOS DE IMPRESSÃO LTDA', cnpj: '04.205.619/0001-93', arp: 8687, empenhado: 0, adquirido: 0, contracts: { 'Pregão': [], 'IRP': ['06/2023'] }},
-            { nome: 'GRAFICA BORGES DE CAMPO GRANDE LTDA', cnpj: '07.072.293/0001-61', arp: 21240, empenhado: 6780, adquirido: 0, contracts: { 'Pregão': [], 'IRP': ['06/2023'] }},
-            { nome: 'META EMPREEDIMENTOS E SERVIÇOS LTDA', cnpj: '10.581.468/0001-70', arp: 665052.02, empenhado: 89008.2, adquirido: 3611.2, contracts: { 'Pregão': [], 'IRP': ['06/2023'] }},
-            { nome: 'BILACORP Viagens e Turismo LTDA', cnpj: '27.829.511/0001-77', arp: 166443.99, empenhado: 292998.45, adquirido: 181715.84, contracts: { 'Pregão': [], 'IRP': ['02/2023'] }}
-        ]},
-        rn: { nome: 'Rio Grande do Norte', totalARP: 68357, totalAdquirido: 65925, empresas: [
-            { nome: 'TC DISTRIBUIDORA LTDA.', cnpj: '30.306.389/0001-69', arp: 13727, empenhado: 0, adquirido: 0, contracts: { 'Pregão': ['01/2023'], 'IRP': [] }},
-            { nome: 'K J DE M ANDRADE LTDA', cnpj: '49.385.374/0001-61', arp: 54630, empenhado: 54630, adquirido: 54630, contracts: { 'Pregão': ['12/2023'], 'IRP': [] }}
-        ]},
-        rs: { nome: 'Rio Grande do Sul', totalARP: 563533.7, totalAdquirido: 26277, empresas: [
-            { nome: 'MASTERSUL EQUIPAMENTOS DE SEGURANCA LTDA.', cnpj: '18.274.923/0001-05', arp: 24000, empenhado: 24000, adquirido: 24000, contracts: { 'Pregão': ['01/2023'], 'IRP': [] }},
-            { nome: 'PROC9 INDUSTRIA QUIMICA LTDA.', cnpj: '07.944.100/0001-15', arp: 6695.7, empenhado: 0, adquirido: 0, contracts: { 'Pregão': ['10/2023'], 'IRP': [] }},
-            { nome: 'RAUL MUELLER SCHRAMM', cnpj: '33.456.016/0001-62', arp: 9995.99, empenhado: 0, adquirido: 0, contracts: { 'Pregão': [], 'IRP': ['08/2023'] }},
-            { nome: 'A.N.D CAPELLI LTDA', cnpj: '45.874.714/0001-67', arp: 271746.01, empenhado: 52218, adquirido: 0, contracts: { 'Pregão': [], 'IRP': ['15/2023'] }}
-        ]},
-        ro: { nome: 'Rondônia', totalARP: 31909.53, totalAdquirido: 14138.7, empresas: [
-            { nome: 'DLB COMÉRCIO DE PRODUTOS DE INFORMÁTICA LTDA', cnpj: '40.708.647/0001-97', arp: 31909.53, empenhado: 14138.7, adquirido: 14138.7, contracts: { 'Pregão': [], 'IRP': ['01/2023'] }}
-        ]},
-        rr: { nome: 'Roraima', totalARP: 0, totalAdquirido: 0, empresas: [] },
-        sc: { nome: 'Santa Catarina', totalARP: 170942.28, totalAdquirido: 98175.78, empresas: [
-            { nome: 'SANTA ORANNA INDUSTRIA E COMERCIO LTDA.', cnpj: '42.746.467/0001-25', arp: 3105, empenhado: 2277, adquirido: 2277, contracts: { 'Pregão': ['01/2023'], 'IRP': [] }},
-            { nome: 'INFANTARIA COMERCIAL EIRELI', cnpj: '20.795.155/0001-79', arp: 1259.7, empenhado: 1259.7, adquirido: 1259.7, contracts: { 'Pregão': ['08/2023'], 'IRP': [] }},
-            { nome: 'SIS COMÉRCIO DE MATERIAIS E EQUIPAMENTOS LTDA.', cnpj: '29.926.189/0001-20', arp: 595.68, empenhado: 595.68, adquirido: 595.68, contracts: { 'Pregão': ['08/2023'], 'IRP': [] }},
-            { nome: 'PABLO LUIS MARTINS', cnpj: '09.138.326/0001-54', arp: 1192, empenhado: 1192, adquirido: 1192, contracts: { 'Pregão': ['06/2023'], 'IRP': [] }},
-            { nome: 'REDNOV FERRAMENTAS LTDA', cnpj: '45.769.285/0001-68', arp: 80909.9, empenhado: 80909.9, adquirido: 80909.9, contracts: { 'Pregão': ['12/2023'], 'IRP': [] }},
-            { nome: 'Comercial Vanguardeira Eireli', cnpj: '10.942.831/0001-36', arp: 482.28, empenhado: 482.28, adquirido: 482.28, contracts: { 'Pregão': ['12/2023'], 'IRP': [] }},
-            { nome: 'PACIFIC FLOWERS INDUSTRIA E COMERCIO LTDA', cnpj: '03.772.965/0001-90', arp: 11257, empenhado: 0, adquirido: 0, contracts: { 'Pregão': [], 'IRP': ['06/2023'] }},
-            { nome: 'CLAVES E NOTAS COMERCIO DE INSTRUMENTOS MUSICAIS LTDA', cnpj: '09.450.715/0001-10', arp: 880, empenhado: 880, adquirido: 880, contracts: { 'Pregão': [], 'IRP': ['07/2023'] }},
-            { nome: 'SUL AGUA EQUIPAMENTOS LTDA', cnpj: '46.344.050/0001-97', arp: 63942, empenhado: 0, adquirido: 0, contracts: { 'Pregão': [], 'IRP': ['16/2023'] }}
-        ]},
-        sp: { nome: 'São Paulo', totalARP: 260570.8, totalAdquirido: 104523.53, empresas: [
-            { nome: 'REY-GLASS COMERCIAL E SERVICOS', cnpj: '04.345.762/0001-80', arp: 659.94, empenhado: 659.94, adquirido: 659.94, contracts: { 'Pregão': ['09/2023'], 'IRP': [] }},
-            { nome: 'LILIANE ALARCAO DIAS CORREA RAMANZINI', cnpj: '06.153.182/0001-17', arp: 990, empenhado: 990, adquirido: 990, contracts: { 'Pregão': ['09/2023'], 'IRP': [] }},
-            { nome: 'ADONEX COMERCIO DE PRODUTOS PARA LABORATORIO', cnpj: '08.238.866/0001-47', arp: 2035.82, empenhado: 2035.82, adquirido: 2035.82, contracts: { 'Pregão': [], 'IRP': ['09/2023'] }},
-            { nome: 'OBAH PRODUTOS E SERVICOS ANALITICOS LTDA.', cnpj: '09.134.068/0001-38', arp: 11527.93, empenhado: 11527.93, adquirido: 11527.93, contracts: { 'Pregão': ['10/2023'], 'IRP': ['09/2023'] }},
-            { nome: 'XLABOR TECNOLOGIA LTDA', cnpj: '12.127.236/0001-72', arp: 2380.1, empenhado: 2380.1, adquirido: 2380.1, contracts: { 'Pregão': ['09/2023'], 'IRP': [] }},
-            { nome: 'TPL TAMIS PRODUTOS LABORATORIAIS', cnpj: '13.670.648/0001-17', arp: 244, empenhado: 244, adquirido: 244, contracts: { 'Pregão': ['09/2023'], 'IRP': [] }},
-            { nome: 'M A 2 COMERCIAL LTDA. - ME', cnpj: '30.420.630/0001-86', arp: 14806.01, empenhado: 14806.01, adquirido: 14806.01, contracts: { 'Pregão': ['10/2023'], 'IRP': [] }},
-            { nome: 'HALOGENN PRODUTOS CIENTIFICOS LTDA.', cnpj: '49.506.242/0001-40', arp: 19387.9, empenhado: 19387.9, adquirido: 19387.9, contracts: { 'Pregão': ['10/2023'], 'IRP': [] }},
-            { nome: 'K.C.R.S. COMERCIO DE EQUIPAMENTOS LTDA', cnpj: '21.971.041/0001-03', arp: 7980, empenhado: 6780, adquirido: 6780, contracts: { 'Pregão': ['12/2023'], 'IRP': [] }},
-            { nome: 'F C Nicolau Equipamentos para Laboratório Ltda – ME', cnpj: '13.158.576/0001-23', arp: 5908, empenhado: 5908, adquirido: 5908, contracts: { 'Pregão': ['12/2023'], 'IRP': [] }},
-            { nome: 'AUTOMX SOLUCOES LTDA', cnpj: '19.031.878/0001-12', arp: 1737, empenhado: 0, adquirido: 0, contracts: { 'Pregão': ['12/2023'], 'IRP': [] }},
-            { nome: 'ACARVE COMERCIO E LICITAÇÕES LTDA', cnpj: '35.764.167/0001-03', arp: 9795.9, empenhado: 9795.9, adquirido: 9795.9, contracts: { 'Pregão': ['12/2023'], 'IRP': [] }},
-            { nome: 'Quartz Indústria e Comércio de Equipamentos Para Laboratório LTDA EPP', cnpj: '39.157.266/0001-88', arp: 2920.89, empenhado: 2920.89, adquirido: 2920.89, contracts: { 'Pregão': ['12/2023'], 'IRP': [] }},
-            { nome: 'Mundial Científica Ltda', cnpj: '41.086.624/0001-50', arp: 13500, empenhado: 13500, adquirido: 13500, contracts: { 'Pregão': ['12/2023'], 'IRP': [] }},
-            { nome: 'Betaquimica Equipamentos para Laboratório LTDA', cnpj: '48.706.431/0001-02', arp: 41561.02, empenhado: 41561.02, adquirido: 41561.02, contracts: { 'Pregão': ['12/2023'], 'IRP': [] }},
-            { nome: 'MELI SHOP LTDA', cnpj: '48.878.071/0001-18', arp: 3000, empenhado: 3000, adquirido: 3000, contracts: { 'Pregão': ['12/2023'], 'IRP': [] }},
-            { nome: 'VINCITA - Comércio de Implementos Agrícolas LTDA - EPP', cnpj: '49.461.961/0001-92', arp: 17000, empenhado: 17000, adquirido: 17000, contracts: { 'Pregão': ['12/2023'], 'IRP': [] }},
-            { nome: 'Marte Equipamentos para Laboratório LTDA', cnpj: '68.886.605/0001-65', arp: 15888.2, empenhado: 15888.2, adquirido: 15888.2, contracts: { 'Pregão': ['12/2023'], 'IRP': [] }},
-            { nome: 'Noroeste Comércio e Prestação De Serviços ltda.', cnpj: '05.933.341/0001-33', arp: 3980, empenhado: 3980, adquirido: 3980, contracts: { 'Pregão': ['12/2023'], 'IRP': [] }},
-            { nome: 'BILACORP Viagens e Turismo LTDA', cnpj: '27.829.511/0001-77', arp: 166443.99, empenhado: 292998.45, adquirido: 181715.84, contracts: { 'Pregão': [], 'IRP': ['02/2023'] }},
-            { nome: 'MÁRCIO SANDRO MALLET PEZARIM', cnpj: '04.743.532/0001-70', arp: 5900, empenhado: 0, adquirido: 0, contracts: { 'Pregão': [], 'IRP': ['04/2023'] }},
-            { nome: 'A.M. TELECOM E SUPRIMENTOS DE INFORMÁTICA LTDA', cnpj: '37.490.381/0001-44', arp: 47540, empenhado: 14320, adquirido: 14320, contracts: { 'Pregão': [], 'IRP': ['01/2023'] }},
-            { nome: 'ISALTEC COMERCIO DE INSTRUMENTOS DE MEDICAO LTDA', cnpj: '01.682.745/0001-40', arp: 3796.47, empenhado: 3437.47, adquirido: 3437.47, contracts: { 'Pregão': [], 'IRP': ['07/2023'] }},
-            { nome: 'HS-CPQ TECNOLOGIA LTDA', cnpj: '49.287.841/0001-10', arp: 677, empenhado: 677, adquirido: 677, contracts: { 'Pregão': [], 'IRP': ['07/2023'] }},
-            { nome: 'TRC COMERCIO E SERVICOS LTDA', cnpj: '32.699.271/0001-73', arp: 22190, empenhado: 22190, adquirido: 22190, contracts: { 'Pregão': [], 'IRP': ['07/2023'] }},
-            { nome: 'INFRAEASY SOLUÇÕES LTDA', cnpj: '14.553.228/0001-13', arp: 7800, empenhado: 0, adquirido: 0, contracts: { 'Pregão': [], 'IRP': ['08/2023'] }},
-            { nome: 'ELETROQUIP COMÉRCIO E LICITAÇÕES LTDA', cnpj: '05.854.663/0001-97', arp: 3157.5, empenhado: 0, adquirido: 0, contracts: { 'Pregão': [], 'IRP': ['08/2023'] }},
-            { nome: 'EMGESA - EMPRESA DE GERENCIAMENTO DE SOBRESSALENTES', cnpj: '32.005.178/0001-11', arp: 11800, empenhado: 0, adquirido: 0, contracts: { 'Pregão': [], 'IRP': ['08/2023'] }},
-            { nome: 'Vale Comercio de Materiais Ltda', cnpj: '49.287.699/0001-01', arp: 148419.7, empenhado: 0, adquirido: 0, contracts: { 'Pregão': [], 'IRP': ['16/2023'] }},
-            { nome: 'CITASP DISTRIBUIDOR DE EQUIPAMENTOS SOCIEDADE UNIPESSOAL LTDA', cnpj: '48.277.417/0001-22', arp: 13637.85, empenhado: 0, adquirido: 0, contracts: { 'Pregão': [], 'IRP': ['16/2023'] }}
-        ]},
-        se: { nome: 'Sergipe', totalARP: 177414.5, totalAdquirido: 143544, empresas: [
-            { nome: 'BBC COMERCIAL DISTRIBUIDORA E SERVICOS LTDA', cnpj: '17.177.467/0001-04', arp: 77600, empenhado: 65960, adquirido: 65960, contracts: { 'Pregão': ['01/2023'], 'IRP': [] }},
-            { nome: 'MEL DISTRIBUIDORA LTDA.', cnpj: '50.911.223/0001-89', arp: 99726.4, empenhado: 96626.4, adquirido: 76284, contracts: { 'Pregão': [], 'IRP': ['04/2023', '10/2023'] }}
-        ]},
-        to: { nome: 'Tocantins', totalARP: 0, totalAdquirido: 0, empresas: [] }
-    };
+    ac: {
+        nome: "Acre",
+        totalARP: 0,
+        totalAdquirido: 0,
+        empresas: []
+    },
+    al: {
+        nome: "Alagoas",
+        totalARP: 0,
+        totalAdquirido: 0,
+        empresas: []
+    },
+    ap: {
+        nome: "Amapá",
+        totalARP: 0,
+        totalAdquirido: 0,
+        empresas: []
+    },
+    am: {
+        nome: "Amazonas",
+        totalARP: 0,
+        totalAdquirido: 0,
+        empresas: []
+    },
+    ba: {
+        nome: "Bahia",
+        totalARP: 165066.8,
+        totalAdquirido: 41287.5,
+        empresas: [
+            {
+                nome: "A.M.S. RIOS FABRICACAO E COMERCIO DE BOLSAS LTDA.",
+                cnpj: "05.411.554/0001-03",
+                arp: 98400.0,
+                empenhado: 38400.0,
+                adquirido: 38400.0,
+                contracts: {
+                    Pregão: [
+                        "01/2023"
+                    ],
+                    IRP: []
+                }
+            },
+            {
+                nome: "J&A SOLUÇÕES E-COMMERCE LTDA",
+                cnpj: "24.608.949/0001-37",
+                arp: 4537.5,
+                empenhado: 2887.5,
+                adquirido: 2887.5,
+                contracts: {
+                    Pregão: [],
+                    IRP: [
+                        "01/2023"
+                    ]
+                }
+            },
+            {
+                nome: "LUGATH COMÉRCIO LTDA.",
+                cnpj: "27.912.769/001-32",
+                arp: 10400.0,
+                empenhado: 0.0,
+                adquirido: 0.0,
+                contracts: {
+                    Pregão: [],
+                    IRP: [
+                        "14/2023"
+                    ]
+                }
+            },
+            {
+                nome: "SORELLE COMERCIO DE ELETROS E EQUIPAMENTOS LTDA",
+                cnpj: "36.045.363/0001-90",
+                arp: 51729.3,
+                empenhado: 0.0,
+                adquirido: 0.0,
+                contracts: {
+                    Pregão: [],
+                    IRP: [
+                        "16/2023"
+                    ]
+                }
+            }
+        ]
+    },
+    ce: {
+        nome: "Ceará",
+        totalARP: 270322.24,
+        totalAdquirido: 246699.35,
+        empresas: [
+            {
+                nome: "GALLUS INDUSTRIA E COMERCIO DE ALIMENTOS LTDA",
+                cnpj: "07.737.878/0001-53",
+                arp: 270322.24,
+                empenhado: 246699.35,
+                adquirido: 246699.35,
+                contracts: {
+                    Pregão: [
+                        "04/2023"
+                    ],
+                    IRP: []
+                }
+            }
+        ]
+    },
+    df: {
+        nome: "Distrito Federal",
+        totalARP: 478678.42,
+        totalAdquirido: 251293.25999999998,
+        empresas: [
+            {
+                nome: "ADVANCED COMERCIO DE EQUIPAMENTOS LTDA",
+                cnpj: "08.331.877/0001-77",
+                arp: 20100.0,
+                empenhado: 0.0,
+                adquirido: 0.0,
+                contracts: {
+                    Pregão: [],
+                    IRP: [
+                        "15/2023"
+                    ]
+                }
+            },
+            {
+                nome: "WELCOME SERVIÇOS E EVENTOS LTDA.",
+                cnpj: "11.654.689/0001-94",
+                arp: 53331.49,
+                empenhado: 43587.66,
+                adquirido: 43587.66,
+                contracts: {
+                    Pregão: [],
+                    IRP: [
+                        "09/2023"
+                    ]
+                }
+            },
+            {
+                nome: "J & L – PROMOÇÃO DE VENDAS EM INFORMÁTICA LTDA.",
+                cnpj: "13.418.193/0001-47",
+                arp: 5040.0,
+                empenhado: 5040.0,
+                adquirido: 5040.0,
+                contracts: {
+                    Pregão: [],
+                    IRP: [
+                        "13/2023"
+                    ]
+                }
+            },
+            {
+                nome: "REI TECH EIRELI",
+                cnpj: "16.778.654/0001-80",
+                arp: 75548.0,
+                empenhado: 32219.0,
+                adquirido: 32219.0,
+                contracts: {
+                    Pregão: [],
+                    IRP: [
+                        "01/2023"
+                    ]
+                }
+            },
+            {
+                nome: "DF MÁQUINAS E FERRAMENTAS LTDA",
+                cnpj: "21.793.208/0001-85",
+                arp: 3237.6,
+                empenhado: 809.4,
+                adquirido: 809.4,
+                contracts: {
+                    Pregão: [],
+                    IRP: [
+                        "01/2023"
+                    ]
+                }
+            },
+            {
+                nome: "N.S.S COMERCIAL E CONSTRUTORA EIRELI",
+                cnpj: "28.634.818/0001-85",
+                arp: 10853.52,
+                empenhado: 10853.52,
+                adquirido: 7576.8,
+                contracts: {
+                    Pregão: [
+                        "07/2023"
+                    ],
+                    IRP: []
+                }
+            },
+            {
+                nome: "M. A. DISTRIBUIDORA COMÉRCIO E SERVIÇO LTDA.",
+                cnpj: "37.725.824/0001-39",
+                arp: 75140.0,
+                empenhado: 71383.0,
+                adquirido: 71383.0,
+                contracts: {
+                    Pregão: [],
+                    IRP: [
+                        "14/2023"
+                    ]
+                }
+            },
+            {
+                nome: "JP Comércio e Serviços",
+                cnpj: "39.874.744/0001-70",
+                arp: 24000.0,
+                empenhado: 0.0,
+                adquirido: 0.0,
+                contracts: {
+                    Pregão: [],
+                    IRP: [
+                        "16/2023"
+                    ]
+                }
+            },
+            {
+                nome: "AR6 LICITAÇÕES LTDA",
+                cnpj: "43.727.845/0001-96",
+                arp: 92985.39,
+                empenhado: 23241.4,
+                adquirido: 23241.4,
+                contracts: {
+                    Pregão: [],
+                    IRP: [
+                        "01/2023"
+                    ]
+                }
+            },
+            {
+                nome: "A ECONÔMICA COMÉRCIO LTDA",
+                cnpj: "44.854.551/0001-98",
+                arp: 57400.0,
+                empenhado: 57400.0,
+                adquirido: 57400.0,
+                contracts: {
+                    Pregão: [
+                        "12/2023"
+                    ],
+                    IRP: []
+                }
+            },
+            {
+                nome: "PIRES & SANTOS COMERCIO LTDA",
+                cnpj: "52.087.237/0001-55",
+                arp: 10036.0,
+                empenhado: 10036.0,
+                adquirido: 10036.0,
+                contracts: {
+                    Pregão: [
+                        "12/2023"
+                    ],
+                    IRP: []
+                }
+            },
+            {
+                nome: "ELITE TECH SUPRIMENTOS LTDA",
+                cnpj: "52.390.100/0001-75",
+                arp: 30066.42,
+                empenhado: 0.0,
+                adquirido: 0.0,
+                contracts: {
+                    Pregão: [],
+                    IRP: [
+                        "16/2023"
+                    ]
+                }
+            },
+            {
+                nome: "XD CONSTRUCOES LTDA",
+                cnpj: "53.795.947/0001-00",
+                arp: 20940.0,
+                empenhado: 0.0,
+                adquirido: 0.0,
+                contracts: {
+                    Pregão: [],
+                    IRP: [
+                        "16/2023"
+                    ]
+                }
+            }
+        ]
+    },
+    es: {
+        nome: "Espírito Santo",
+        totalARP: 293489.14,
+        totalAdquirido: 16250.0,
+        empresas: [
+            {
+                nome: "IMPERIAL CAFE COMERCIO EXPORTACAO E IMPORTACAO LTDA.",
+                cnpj: "07.638.718/0001-57",
+                arp: 26000.0,
+                empenhado: 16250.0,
+                adquirido: 16250.0,
+                contracts: {
+                    Pregão: [
+                        "02/2023"
+                    ],
+                    IRP: []
+                }
+            },
+            {
+                nome: "G2B COMERCIO E REPRESENTACOES LTDA",
+                cnpj: "36.668.854/0001-98",
+                arp: 680.0,
+                empenhado: 0.0,
+                adquirido: 0.0,
+                contracts: {
+                    Pregão: [],
+                    IRP: [
+                        "07/2023"
+                    ]
+                }
+            },
+            {
+                nome: "MA COMERCIO DE REFRIGERACAO LTDA",
+                cnpj: "37.673.034/0001-57",
+                arp: 174028.59,
+                empenhado: 0.0,
+                adquirido: 0.0,
+                contracts: {
+                    Pregão: [],
+                    IRP: [
+                        "16/2023"
+                    ]
+                }
+            },
+            {
+                nome: "BT COMÉRCIO INTELIGENTE LTDA",
+                cnpj: "45.329.312/0001-81",
+                arp: 30308.55,
+                empenhado: 0.0,
+                adquirido: 0.0,
+                contracts: {
+                    Pregão: [],
+                    IRP: [
+                        "16/2023"
+                    ]
+                }
+            },
+            {
+                nome: "REPREMIG – REPRESENTAÇÃO E COMÉRCIO DE MINAS GERAIS LTDA",
+                cnpj: "65.149.197/0002-51",
+                arp: 62472.0,
+                empenhado: 0.0,
+                adquirido: 0.0,
+                contracts: {
+                    Pregão: [],
+                    IRP: [
+                        "16/2023"
+                    ]
+                }
+            }
+        ]
+    },
+    go: {
+        nome: "Goiás",
+        totalARP: 949181.1799999999,
+        totalAdquirido: 525250.71,
+        empresas: [
+            {
+                nome: "FLEXIBASE INDUSTRIA E COMERCIO DE MOVEIS, IMPORTACAO E EXPORTACAO LTDA",
+                cnpj: "04.869.711/0001-58",
+                arp: 104313.0,
+                empenhado: 0.0,
+                adquirido: 0.0,
+                contracts: {
+                    Pregão: [],
+                    IRP: [
+                        "15/2023"
+                    ]
+                }
+            },
+            {
+                nome: "CALIBRY METROLOGIA COMERCIO E CALIBRACAO LTDA.",
+                cnpj: "11.227.424/0001-00",
+                arp: 15003.39,
+                empenhado: 15003.39,
+                adquirido: 15003.39,
+                contracts: {
+                    Pregão: [
+                        "10/2023"
+                    ],
+                    IRP: []
+                }
+            },
+            {
+                nome: "PREMIER COMERCIO LTDA",
+                cnpj: "13.308.204/0001-36",
+                arp: 481800.0,
+                empenhado: 481800.0,
+                adquirido: 481800.0,
+                contracts: {
+                    Pregão: [],
+                    IRP: [
+                        "05/2023"
+                    ]
+                }
+            },
+            {
+                nome: "X-OFFICE SERVI LTDA-ME",
+                cnpj: "15.362.598/0001-36",
+                arp: 165717.47,
+                empenhado: 0.0,
+                adquirido: 0.0,
+                contracts: {
+                    Pregão: [],
+                    IRP: [
+                        "15/2023"
+                    ]
+                }
+            },
+            {
+                nome: "VALNEIDES ARAUJO DA COSTA",
+                cnpj: "17.410.769/0001-80",
+                arp: 2100.0,
+                empenhado: 0.0,
+                adquirido: 0.0,
+                contracts: {
+                    Pregão: [],
+                    IRP: [
+                        "08/2023"
+                    ]
+                }
+            },
+            {
+                nome: "Nova Mix Ltda",
+                cnpj: "49.949.246/0001-01",
+                arp: 13987.32,
+                empenhado: 13987.32,
+                adquirido: 13987.32,
+                contracts: {
+                    Pregão: [
+                        "12/2023"
+                    ],
+                    IRP: []
+                }
+            },
+            {
+                nome: "NOVA ERA TECNOLOGIA LTDA",
+                cnpj: "97.328.306/0001-03",
+                arp: 166260.0,
+                empenhado: 14460.0,
+                adquirido: 14460.0,
+                contracts: {
+                    Pregão: [],
+                    IRP: [
+                        "01/2023"
+                    ]
+                }
+            }
+        ]
+    },
+    ma: {
+        nome: "Maranhão",
+        totalARP: 2000.0,
+        totalAdquirido: 0.0,
+        empresas: [
+            {
+                nome: "MAXXI LAGO COMERCIAL E SERVICOS LTDA",
+                cnpj: "02.114.152/0001-40",
+                arp: 2000.0,
+                empenhado: 0.0,
+                adquirido: 0.0,
+                contracts: {
+                    Pregão: [],
+                    IRP: [
+                        "07/2023"
+                    ]
+                }
+            }
+        ]
+    },
+    mt: {
+        nome: "Mato Grosso",
+        totalARP: 0,
+        totalAdquirido: 0,
+        empresas: []
+    },
+    ms: {
+        nome: "Mato Grosso do Sul",
+        totalARP: 0,
+        totalAdquirido: 0,
+        empresas: []
+    },
+    mg: {
+        nome: "Minas Gerais",
+        totalARP: 1282100.91,
+        totalAdquirido: 351011.64,
+        empresas: [
+            {
+                nome: "RC RAMOS COMERCIO LTDA",
+                cnpj: "07.048.323/0001-02",
+                arp: 33127.4,
+                empenhado: 11345.0,
+                adquirido: 11345.0,
+                contracts: {
+                    Pregão: [],
+                    IRP: [
+                        "06/2023"
+                    ]
+                }
+            },
+            {
+                nome: "GERAES DIAGNOSTICA LTDA.",
+                cnpj: "13.430.441/0001-75",
+                arp: 2027.91,
+                empenhado: 2027.91,
+                adquirido: 2027.91,
+                contracts: {
+                    Pregão: [
+                        "10/2023"
+                    ],
+                    IRP: []
+                }
+            },
+            {
+                nome: "MULTIFLUXO COMERCIO DE MATERIAIS ISOLAMENTOS LTDA",
+                cnpj: "15.181.901/0001-02",
+                arp: 61536.0,
+                empenhado: 6410.0,
+                adquirido: 6410.0,
+                contracts: {
+                    Pregão: [],
+                    IRP: [
+                        "06/2023"
+                    ]
+                }
+            },
+            {
+                nome: "PRENSAR MOVEIS LTDA EPP",
+                cnpj: "17.756.197/0001-96",
+                arp: 69300.0,
+                empenhado: 16500.0,
+                adquirido: 16500.0,
+                contracts: {
+                    Pregão: [],
+                    IRP: [
+                        "15/2023"
+                    ]
+                }
+            },
+            {
+                nome: "ALL IN-SOLUCOES TECNOLOGICAS",
+                cnpj: "20.721.030/0001-02",
+                arp: 8420.0,
+                empenhado: 0.0,
+                adquirido: 0.0,
+                contracts: {
+                    Pregão: [],
+                    IRP: [
+                        "19/2023"
+                    ]
+                }
+            },
+            {
+                nome: "FASTLABOR COMERCIAL LTDA",
+                cnpj: "21.707.794/0001-06",
+                arp: 39201.86,
+                empenhado: 5191.33,
+                adquirido: 5191.33,
+                contracts: {
+                    Pregão: [
+                        "09/2023"
+                    ],
+                    IRP: []
+                }
+            },
+            {
+                nome: "SCIAVICCO COMERCIO INDUSTRIA LTDA.",
+                cnpj: "23.747.090/0001-84",
+                arp: 1298.4,
+                empenhado: 1298.4,
+                adquirido: 1298.4,
+                contracts: {
+                    Pregão: [
+                        "10/2023"
+                    ],
+                    IRP: []
+                }
+            },
+            {
+                nome: "EDWINEY SEBASTIAO CUPERTINO LTDA.",
+                cnpj: "27.120.416/0001-08",
+                arp: 285215.0,
+                empenhado: 107036.0,
+                adquirido: 286439.0,
+                contracts: {
+                    Pregão: [
+                        "04/2023"
+                    ],
+                    IRP: []
+                }
+            },
+            {
+                nome: "MALTA INDUSTRIA E COMERCIO DE PRODUTOS LTDA.",
+                cnpj: "29.045.645/0001-22",
+                arp: 41620.0,
+                empenhado: 20950.0,
+                adquirido: 20950.0,
+                contracts: {
+                    Pregão: [
+                        "01/2023"
+                    ],
+                    IRP: []
+                }
+            },
+            {
+                nome: "BACKUP MANUTENÇÃO E DISTRIBUIÇÃO DE PRODUTOS DE INFORMÁTICA LTDA",
+                cnpj: "40.224.243/0001-28",
+                arp: 900.0,
+                empenhado: 300.0,
+                adquirido: 0.0,
+                contracts: {
+                    Pregão: [],
+                    IRP: [
+                        "01/2023"
+                    ]
+                }
+            },
+            {
+                nome: "VENDGO LTDA.",
+                cnpj: "41.255.596/0001-58",
+                arp: 73.89,
+                empenhado: 0.0,
+                adquirido: 0.0,
+                contracts: {
+                    Pregão: [],
+                    IRP: [
+                        "13/2023"
+                    ]
+                }
+            },
+            {
+                nome: "MAX QUALITY COMÉRCIO LTDA",
+                cnpj: "42.810.782/0001-74",
+                arp: 468.3,
+                empenhado: 0.0,
+                adquirido: 0.0,
+                contracts: {
+                    Pregão: [
+                        "12/2023"
+                    ],
+                    IRP: []
+                }
+            },
+            {
+                nome: "Produtos Salinas LTDA",
+                cnpj: "50.278.029/0001-08",
+                arp: 78300.0,
+                empenhado: 0.0,
+                adquirido: 0.0,
+                contracts: {
+                    Pregão: [],
+                    IRP: [
+                        "19/2023"
+                    ]
+                }
+            },
+            {
+                nome: "ERIKA BARBERINO MARTINS BORGES",
+                cnpj: "50.278.584/0001-30",
+                arp: 28242.0,
+                empenhado: 0.0,
+                adquirido: 0.0,
+                contracts: {
+                    Pregão: [],
+                    IRP: [
+                        "06/2023"
+                    ]
+                }
+            },
+            {
+                nome: "RB FLEXO LTDA",
+                cnpj: "50.447.623/0001-85",
+                arp: 27643.95,
+                empenhado: 0.0,
+                adquirido: 0.0,
+                contracts: {
+                    Pregão: [],
+                    IRP: [
+                        "06/2023"
+                    ]
+                }
+            },
+            {
+                nome: "PRATICA EDITORA GRAFICA LTDA",
+                cnpj: "71.031.637/0001-93",
+                arp: 603876.2,
+                empenhado: 0.0,
+                adquirido: 0.0,
+                contracts: {
+                    Pregão: [],
+                    IRP: [
+                        "06/2023"
+                    ]
+                }
+            },
+            {
+                nome: "ORBITAL PRODUTOS PARA LABORATORIOS LTDA.",
+                cnpj: "71.443.667/0001-07",
+                arp: 850.0,
+                empenhado: 850.0,
+                adquirido: 850.0,
+                contracts: {
+                    Pregão: [
+                        "10/2023"
+                    ],
+                    IRP: []
+                }
+            }
+        ]
+    },
+    pa: {
+        nome: "Pará",
+        totalARP: 118360.22,
+        totalAdquirido: 52557.6,
+        empresas: [
+            {
+                nome: "MARIANA MOREIRA ANDRASCHKO LTDA.",
+                cnpj: "19.588.170/0001-67",
+                arp: 115798.14,
+                empenhado: 52557.6,
+                adquirido: 52557.6,
+                contracts: {
+                    Pregão: [
+                        "04/2023"
+                    ],
+                    IRP: []
+                }
+            },
+            {
+                nome: "LUXPLACAS INDÚSTRIA, COMÉRCIO E SERVIÇOS LTDA.",
+                cnpj: "40.787.494/0001-10",
+                arp: 2562.08,
+                empenhado: 2562.08,
+                adquirido: 0.0,
+                contracts: {
+                    Pregão: [],
+                    IRP: [
+                        "04/2023"
+                    ]
+                }
+            }
+        ]
+    },
+    pb: {
+        nome: "Paraíba",
+        totalARP: 1231536.17,
+        totalAdquirido: 425224.82,
+        empresas: [
+            {
+                nome: "MARIA DO SOCORRO SANTOS BASILIO",
+                cnpj: "00.799.421/0001-24",
+                arp: 7040.0,
+                empenhado: 7040.0,
+                adquirido: 7040.0,
+                contracts: {
+                    Pregão: [
+                        "02/2023"
+                    ],
+                    IRP: []
+                }
+            },
+            {
+                nome: "PLUGNET COMÉRCIO E REPRESENTAÇÕES LTDA.",
+                cnpj: "02.213.325/0002-69",
+                arp: 155640.0,
+                empenhado: 0.0,
+                adquirido: 0.0,
+                contracts: {
+                    Pregão: [],
+                    IRP: [
+                        "19/2023"
+                    ]
+                }
+            },
+            {
+                nome: "PADARIA PONTES LTDA.",
+                cnpj: "05.672.519/0001-30",
+                arp: 122850.0,
+                empenhado: 115000.0,
+                adquirido: 107061.7,
+                contracts: {
+                    Pregão: [],
+                    IRP: [
+                        "09/2023"
+                    ]
+                }
+            },
+            {
+                nome: "HOT DIGITAL COMÉRCIO E SERVIÇO DE IMPRESSÃO LTDA.",
+                cnpj: "07.220.883/0001-94",
+                arp: 6498.1,
+                empenhado: 2399.2,
+                adquirido: 2399.2,
+                contracts: {
+                    Pregão: [],
+                    IRP: [
+                        "04/2023"
+                    ]
+                }
+            },
+            {
+                nome: "INDUSTRIA E COMERCIO DE PRODUTOS CAMPINENSE LTDA",
+                cnpj: "08.158.664/0001-95",
+                arp: 7328.25,
+                empenhado: 7328.25,
+                adquirido: 7328.25,
+                contracts: {
+                    Pregão: [
+                        "06/2023",
+                        "02/2023"
+                    ],
+                    IRP: []
+                }
+            },
+            {
+                nome: "SUPRIMAIS COMERCIO E SERVICOS DE INFORMATICA LTDA",
+                cnpj: "09.004.901/0001-26",
+                arp: 22469.23,
+                empenhado: 22469.23,
+                adquirido: 22469.23,
+                contracts: {
+                    Pregão: [
+                        "06/2023"
+                    ],
+                    IRP: []
+                }
+            },
+            {
+                nome: "SOS GÁS LTDA - EPP",
+                cnpj: "09.266.128/0001-76",
+                arp: 258004.0,
+                empenhado: 25980.0,
+                adquirido: 11258.0,
+                contracts: {
+                    Pregão: [],
+                    IRP: [
+                        "00/2023",
+                        "11/2023"
+                    ]
+                }
+            },
+            {
+                nome: "MULTIMÍDIA IMPRESSÃO E COMÉRCIO DE MATERIAL PUBLICITÁRIO LTDA.",
+                cnpj: "09.368.621/0001-05",
+                arp: 1700.0,
+                empenhado: 1700.0,
+                adquirido: 1700.0,
+                contracts: {
+                    Pregão: [],
+                    IRP: [
+                        "04/2023"
+                    ]
+                }
+            },
+            {
+                nome: "ALEXANDRE LAURENTINO DA SILVA LTDA.",
+                cnpj: "11.500.957/0001-13",
+                arp: 13160.0,
+                empenhado: 13160.0,
+                adquirido: 13160.0,
+                contracts: {
+                    Pregão: [],
+                    IRP: [
+                        "09/2023"
+                    ]
+                }
+            },
+            {
+                nome: "JONATHAS DE ARAUJO LEITE ME",
+                cnpj: "12.670.936/0001-09",
+                arp: 5786.45,
+                empenhado: 5786.45,
+                adquirido: 5786.45,
+                contracts: {
+                    Pregão: [
+                        "08/2023"
+                    ],
+                    IRP: []
+                }
+            },
+            {
+                nome: "ANDRÉ AUGUSTO TRUTA FELIPE",
+                cnpj: "18.474.659/0001-45",
+                arp: 145637.0,
+                empenhado: 24428.0,
+                adquirido: 9357.5,
+                contracts: {
+                    Pregão: [],
+                    IRP: [
+                        "11/2023"
+                    ]
+                }
+            },
+            {
+                nome: "FORLIMP COMERCIO E DISTRIBUICAO DE PRODUTOS DE PERFUMARIA E LIMPEZA LTDA.",
+                cnpj: "19.750.069/0001-60",
+                arp: 161448.34,
+                empenhado: 117778.0,
+                adquirido: 74699.14,
+                contracts: {
+                    Pregão: [
+                        "02/2023"
+                    ],
+                    IRP: [
+                        "10/2023"
+                    ]
+                }
+            },
+            {
+                nome: "FORMATO DIGITAL COMÉRCIO & COMUNICAÇÃO MULTIMÍDIA LTDA",
+                cnpj: "31.070.939/0001-56",
+                arp: 56735.4,
+                empenhado: 19646.0,
+                adquirido: 19646.0,
+                contracts: {
+                    Pregão: [],
+                    IRP: [
+                        "08/2023",
+                        "14/2023"
+                    ]
+                }
+            },
+            {
+                nome: "Shine Soluções",
+                cnpj: "35.576.748/0001-11",
+                arp: 6350.0,
+                empenhado: 0.0,
+                adquirido: 0.0,
+                contracts: {
+                    Pregão: [],
+                    IRP: [
+                        "16/2023"
+                    ]
+                }
+            },
+            {
+                nome: "MEDS COMERCIO DE MEDICAMENTOS, PRODUTOS E EQUIPAMENTOS HOSPITALARES LTDA.",
+                cnpj: "40.256.200/0001-24",
+                arp: 11295.0,
+                empenhado: 11295.0,
+                adquirido: 11295.0,
+                contracts: {
+                    Pregão: [
+                        "07/2023"
+                    ],
+                    IRP: []
+                }
+            },
+            {
+                nome: "ANDRÉ FELIPE",
+                cnpj: "40.979.684/0001-30",
+                arp: 16800.0,
+                empenhado: 16800.0,
+                adquirido: 16800.0,
+                contracts: {
+                    Pregão: [],
+                    IRP: [
+                        "00/2023"
+                    ]
+                }
+            },
+            {
+                nome: "MAXXI COMERCIAL DE ALIMENTOS LTDA.",
+                cnpj: "41.602.860/0001-82",
+                arp: 97688.0,
+                empenhado: 67126.65,
+                adquirido: 67126.65,
+                contracts: {
+                    Pregão: [
+                        "02/2023"
+                    ],
+                    IRP: []
+                }
+            },
+            {
+                nome: "MOUNT CONFECCAO LTDA.",
+                cnpj: "46.471.479/0001-45",
+                arp: 84700.0,
+                empenhado: 48296.0,
+                adquirido: 34100.0,
+                contracts: {
+                    Pregão: [
+                        "01/2023"
+                    ],
+                    IRP: []
+                }
+            },
+            {
+                nome: "DANTAS ELETROMOVEIS E EQUIPAMENTOS LTDA",
+                cnpj: "49.140.067/0001-10",
+                arp: 13997.7,
+                empenhado: 13997.7,
+                adquirido: 13997.7,
+                contracts: {
+                    Pregão: [
+                        "12/2023"
+                    ],
+                    IRP: []
+                }
+            },
+            {
+                nome: "GWC INDUSTRIA, IMPORTACAO E DISTRIBUICAO DE ELETRONICOS LTDA",
+                cnpj: "49.329.140/0001-05",
+                arp: 36408.7,
+                empenhado: 36408.7,
+                adquirido: 0.0,
+                contracts: {
+                    Pregão: [
+                        "12/2023"
+                    ],
+                    IRP: []
+                }
+            }
+        ]
+    },
+    pr: {
+        nome: "Paraná",
+        totalARP: 3050126.77,
+        totalAdquirido: 261714.07,
+        empresas: [
+            {
+                nome: "RUBENS DANTAS NETO",
+                cnpj: "10.417.609/0001-14",
+                arp: 1033436.0,
+                empenhado: 117500.0,
+                adquirido: 9600.0,
+                contracts: {
+                    Pregão: [],
+                    IRP: [
+                        "06/2023"
+                    ]
+                }
+            },
+            {
+                nome: "OLIVEIRA & ALMEIDA INFORMÁTICA",
+                cnpj: "13.218.025/0001-08",
+                arp: 15102.0,
+                empenhado: 2498.0,
+                adquirido: 2852.0,
+                contracts: {
+                    Pregão: [],
+                    IRP: [
+                        "01/2023"
+                    ]
+                }
+            },
+            {
+                nome: "IMPRESSOART EDITORA GRAFICA LTDA",
+                cnpj: "13.704.494/0001-37",
+                arp: 1227369.75,
+                empenhado: 0.0,
+                adquirido: 0.0,
+                contracts: {
+                    Pregão: [],
+                    IRP: [
+                        "06/2023"
+                    ]
+                }
+            },
+            {
+                nome: "SANIGRAN LTDA.",
+                cnpj: "15.153.524/0001-90",
+                arp: 13470.96,
+                empenhado: 13470.96,
+                adquirido: 13470.96,
+                contracts: {
+                    Pregão: [],
+                    IRP: [
+                        "03/2023"
+                    ]
+                }
+            },
+            {
+                nome: "R JUAREZ DE ALMEIDA",
+                cnpj: "27.996.382/0001-01",
+                arp: 5669.0,
+                empenhado: 5669.0,
+                adquirido: 5669.0,
+                contracts: {
+                    Pregão: [],
+                    IRP: [
+                        "07/2023",
+                        "14/2023"
+                    ]
+                }
+            },
+            {
+                nome: "PLANEJE TECNOLOGIA E SERVIÇOS LTDA.",
+                cnpj: "28.482.916/0001-44",
+                arp: 130500.0,
+                empenhado: 130500.0,
+                adquirido: 0.0,
+                contracts: {
+                    Pregão: [],
+                    IRP: [
+                        "13/2023"
+                    ]
+                }
+            },
+            {
+                nome: "SERGIO DOMINGUES & CIA LTDA",
+                cnpj: "30.996.156/0001-35",
+                arp: 403481.6,
+                empenhado: 189132.0,
+                adquirido: 189132.0,
+                contracts: {
+                    Pregão: [],
+                    IRP: [
+                        "01/2023"
+                    ]
+                }
+            },
+            {
+                nome: "LAB VISION - COMERCIO DE PRODUTOS LABORATORIAIS LTDA",
+                cnpj: "35.257.760/0001-63",
+                arp: 2637.41,
+                empenhado: 2637.41,
+                adquirido: 2637.41,
+                contracts: {
+                    Pregão: [
+                        "09/2023"
+                    ],
+                    IRP: []
+                }
+            },
+            {
+                nome: "ADRIANO HALAMA",
+                cnpj: "47.326.646/0001-27",
+                arp: 5145.0,
+                empenhado: 670.0,
+                adquirido: 670.0,
+                contracts: {
+                    Pregão: [],
+                    IRP: [
+                        "01/2023"
+                    ]
+                }
+            },
+            {
+                nome: "EDIR SUSSEL & CIA LTDA",
+                cnpj: "54.719.745/0001-34",
+                arp: 138488.13,
+                empenhado: 0.0,
+                adquirido: 0.0,
+                contracts: {
+                    Pregão: [],
+                    IRP: [
+                        "06/2023"
+                    ]
+                }
+            },
+            {
+                nome: "AMBARLAB PRODUTOS LABORATORIAIS",
+                cnpj: "80.243.769/0001-70",
+                arp: 74826.92,
+                empenhado: 37682.7,
+                adquirido: 37682.7,
+                contracts: {
+                    Pregão: [
+                        "12/2023"
+                    ],
+                    IRP: []
+                }
+            }
+        ]
+    },
+    pe: {
+        nome: "Pernambuco",
+        totalARP: 155683.44999999998,
+        totalAdquirido: 72411.98999999999,
+        empresas: [
+            {
+                nome: "FONTES E ARAUJO LTDA",
+                cnpj: "05.030.339/0001-54",
+                arp: 47500.0,
+                empenhado: 24250.0,
+                adquirido: 24250.0,
+                contracts: {
+                    Pregão: [
+                        "12/2023"
+                    ],
+                    IRP: []
+                }
+            },
+            {
+                nome: "HMGK COMERCIO E SERVICOS LTDA.",
+                cnpj: "36.193.120/0001-08",
+                arp: 46358.49,
+                empenhado: 15900.0,
+                adquirido: 46358.49,
+                contracts: {
+                    Pregão: [
+                        "02/2023"
+                    ],
+                    IRP: []
+                }
+            },
+            {
+                nome: "MC LINS SERVICOS, DISTRIBUICAO E COMERCIO LTDA.",
+                cnpj: "49.125.295/0001-11",
+                arp: 46988.0,
+                empenhado: 0.0,
+                adquirido: 0.0,
+                contracts: {
+                    Pregão: [
+                        "01/2023"
+                    ],
+                    IRP: []
+                }
+            },
+            {
+                nome: "LRF DISTRIBUIDORA LTDA.",
+                cnpj: "49.464.926/0001-27",
+                arp: 9472.66,
+                empenhado: 0.0,
+                adquirido: 0.0,
+                contracts: {
+                    Pregão: [],
+                    IRP: [
+                        "14/2023"
+                    ]
+                }
+            },
+            {
+                nome: "ARKHAGGELOS COMERCIO LTDA",
+                cnpj: "50.002.164/0001-26",
+                arp: 5364.3,
+                empenhado: 1803.5,
+                adquirido: 1803.5,
+                contracts: {
+                    Pregão: [
+                        "06/2023"
+                    ],
+                    IRP: [
+                        "19/2023"
+                    ]
+                }
+            }
+        ]
+    },
+    pi: {
+        nome: "Piauí",
+        totalARP: 0,
+        totalAdquirido: 0,
+        empresas: []
+    },
+    rj: {
+        nome: "Rio de Janeiro",
+        totalARP: 873313.01,
+        totalAdquirido: 197217.04,
+        empresas: [
+            {
+                nome: "JRB COMERCIO, LOCACOES E SERVICOS DE IMPRESSÃO LTDA",
+                cnpj: "04.205.619/0001-93",
+                arp: 8687.0,
+                empenhado: 0.0,
+                adquirido: 0.0,
+                contracts: {
+                    Pregão: [],
+                    IRP: [
+                        "06/2023"
+                    ]
+                }
+            },
+            {
+                nome: "GRAFICA BORGES DE CAMPO GRANDE LTDA",
+                cnpj: "07.072.293/0001-61",
+                arp: 21240.0,
+                empenhado: 6780.0,
+                adquirido: 0.0,
+                contracts: {
+                    Pregão: [],
+                    IRP: [
+                        "06/2023"
+                    ]
+                }
+            },
+            {
+                nome: "META EMPREEDIMENTOS E SERVIÇOS LTDA",
+                cnpj: "10.581.468/0001-70",
+                arp: 665052.02,
+                empenhado: 92652.3,
+                adquirido: 3611.2,
+                contracts: {
+                    Pregão: [],
+                    IRP: [
+                        "06/2023"
+                    ]
+                }
+            },
+            {
+                nome: "BILACORP Viagens e Turismo LTDA",
+                cnpj: "27.829.511/0001-77",
+                arp: 166443.99,
+                empenhado: 292998.45,
+                adquirido: 181715.84,
+                contracts: {
+                    Pregão: [],
+                    IRP: [
+                        "02/2023"
+                    ]
+                }
+            },
+            {
+                nome: "SUNSHINE ARTES LTDA",
+                cnpj: "33.633.305/0001-90",
+                arp: 9890.0,
+                empenhado: 9890.0,
+                adquirido: 9890.0,
+                contracts: {
+                    Pregão: [],
+                    IRP: [
+                        "04/2023"
+                    ]
+                }
+            },
+            {
+                nome: "FOX SCIENCE COMERCIO & PRODUTOS LTDA.",
+                cnpj: "34.075.789/0001-61",
+                arp: 2000.0,
+                empenhado: 2000.0,
+                adquirido: 2000.0,
+                contracts: {
+                    Pregão: [
+                        "10/2023"
+                    ],
+                    IRP: []
+                }
+            }
+        ]
+    },
+    rn: {
+        nome: "Rio Grande do Norte",
+        totalARP: 54630.0,
+        totalAdquirido: 54630.0,
+        empresas: [
+            {
+                nome: "K J DE M ANDRADE LTDA",
+                cnpj: "49.385.374/0001-61",
+                arp: 54630.0,
+                empenhado: 54630.0,
+                adquirido: 54630.0,
+                contracts: {
+                    Pregão: [
+                        "12/2023"
+                    ],
+                    IRP: []
+                }
+            }
+        ]
+    },
+    rs: {
+        nome: "Rio Grande do Sul",
+        totalARP: 40691.69,
+        totalAdquirido: 24000.0,
+        empresas: [
+            {
+                nome: "PROC9 INDUSTRIA QUIMICA LTDA.",
+                cnpj: "07.944.100/0001-15",
+                arp: 6695.7,
+                empenhado: 0.0,
+                adquirido: 0.0,
+                contracts: {
+                    Pregão: [
+                        "10/2023"
+                    ],
+                    IRP: []
+                }
+            },
+            {
+                nome: "MASTERSUL EQUIPAMENTOS DE SEGURANCA LTDA.",
+                cnpj: "18.274.923/0001-05",
+                arp: 24000.0,
+                empenhado: 24000.0,
+                adquirido: 24000.0,
+                contracts: {
+                    Pregão: [
+                        "01/2023"
+                    ],
+                    IRP: []
+                }
+            },
+            {
+                nome: "RAUL MUELLER SCHRAMM",
+                cnpj: "33.456.016/0001-62",
+                arp: 9995.99,
+                empenhado: 0.0,
+                adquirido: 0.0,
+                contracts: {
+                    Pregão: [],
+                    IRP: [
+                        "08/2023"
+                    ]
+                }
+            }
+        ]
+    },
+    ro: {
+        nome: "Rondônia",
+        totalARP: 31909.53,
+        totalAdquirido: 14138.7,
+        empresas: [
+            {
+                nome: "DLB COMÉRCIO DE PRODUTOS DE INFORMÁTICA LTDA",
+                cnpj: "40.708.647/0001-97",
+                arp: 31909.53,
+                empenhado: 14138.7,
+                adquirido: 14138.7,
+                contracts: {
+                    Pregão: [],
+                    IRP: [
+                        "01/2023"
+                    ]
+                }
+            }
+        ]
+    },
+    rr: {
+        nome: "Roraima",
+        totalARP: 0,
+        totalAdquirido: 0,
+        empresas: []
+    },
+    sc: {
+        nome: "Santa Catarina",
+        totalARP: 164641.56,
+        totalAdquirido: 87596.56,
+        empresas: [
+            {
+                nome: "PACIFIC FLOWERS INDUSTRIA E COMERCIO LTDA",
+                cnpj: "03.772.965/0001-90",
+                arp: 11257.0,
+                empenhado: 0.0,
+                adquirido: 0.0,
+                contracts: {
+                    Pregão: [],
+                    IRP: [
+                        "06/2023"
+                    ]
+                }
+            },
+            {
+                nome: "PABLO LUIS MARTINS",
+                cnpj: "09.138.326/0001-54",
+                arp: 1192.0,
+                empenhado: 1192.0,
+                adquirido: 1192.0,
+                contracts: {
+                    Pregão: [
+                        "06/2023"
+                    ],
+                    IRP: []
+                }
+            },
+            {
+                nome: "CLAVES E NOTAS COMERCIO DE INSTRUMENTOS MUSICAIS LTDA",
+                cnpj: "09.450.715/0001-10",
+                arp: 880.0,
+                empenhado: 880.0,
+                adquirido: 880.0,
+                contracts: {
+                    Pregão: [],
+                    IRP: [
+                        "07/2023"
+                    ]
+                }
+            },
+            {
+                nome: "Comercial Vanguardeira Eireli",
+                cnpj: "10.942.831/0001-36",
+                arp: 482.28,
+                empenhado: 482.28,
+                adquirido: 482.28,
+                contracts: {
+                    Pregão: [
+                        "12/2023"
+                    ],
+                    IRP: []
+                }
+            },
+            {
+                nome: "INFANTARIA COMERCIAL EIRELI",
+                cnpj: "20.795.155/0001-79",
+                arp: 1259.7,
+                empenhado: 1259.7,
+                adquirido: 1259.7,
+                contracts: {
+                    Pregão: [
+                        "08/2023"
+                    ],
+                    IRP: []
+                }
+            },
+            {
+                nome: "SIS COMÉRCIO DE MATERIAIS E EQUIPAMENTOS LTDA.",
+                cnpj: "29.926.189/0001-20",
+                arp: 595.68,
+                empenhado: 595.68,
+                adquirido: 595.68,
+                contracts: {
+                    Pregão: [
+                        "08/2023"
+                    ],
+                    IRP: []
+                }
+            },
+            {
+                nome: "SANTA ORANNA INDUSTRIA E COMERCIO LTDA.",
+                cnpj: "42.746.467/0001-25",
+                arp: 3105.0,
+                empenhado: 2277.0,
+                adquirido: 2277.0,
+                contracts: {
+                    Pregão: [
+                        "01/2023"
+                    ],
+                    IRP: []
+                }
+            },
+            {
+                nome: "REDNOV FERRAMENTAS LTDA",
+                cnpj: "45.769.285/0001-68",
+                arp: 80909.9,
+                empenhado: 80909.9,
+                adquirido: 80909.9,
+                contracts: {
+                    Pregão: [
+                        "12/2023"
+                    ],
+                    IRP: []
+                }
+            },
+            {
+                nome: "EDELSON MILTON DE SOUZA",
+                cnpj: "46.228.161/0001-38",
+                arp: 1018.0,
+                empenhado: 0.0,
+                adquirido: 0.0,
+                contracts: {
+                    Pregão: [],
+                    IRP: [
+                        "08/2023"
+                    ]
+                }
+            },
+            {
+                nome: "SUL AGUA EQUIPAMENTOS LTDA",
+                cnpj: "46.344.050/0001-97",
+                arp: 63942.0,
+                empenhado: 0.0,
+                adquirido: 0.0,
+                contracts: {
+                    Pregão: [],
+                    IRP: [
+                        "16/2023"
+                    ]
+                }
+            }
+        ]
+    },
+    sp: {
+        nome: "São Paulo",
+        totalARP: 436320.81,
+        totalAdquirido: 266878.86,
+        empresas: [
+            {
+                nome: "ISALTEC COMERCIO DE INSTRUMENTOS DE MEDICAO LTDA",
+                cnpj: "01.682.745/0001-40",
+                arp: 3796.47,
+                empenhado: 3437.47,
+                adquirido: 3437.47,
+                contracts: {
+                    Pregão: [],
+                    IRP: [
+                        "07/2023"
+                    ]
+                }
+            },
+            {
+                nome: "REY-GLASS COMERCIAL E SERVICOS",
+                cnpj: "04.345.762/0001-80",
+                arp: 659.94,
+                empenhado: 659.94,
+                adquirido: 659.94,
+                contracts: {
+                    Pregão: [
+                        "09/2023"
+                    ],
+                    IRP: []
+                }
+            },
+            {
+                nome: "MÁRCIO SANDRO MALLET PEZARIM",
+                cnpj: "04.743.532/0001-70",
+                arp: 5900.0,
+                empenhado: 0.0,
+                adquirido: 0.0,
+                contracts: {
+                    Pregão: [],
+                    IRP: [
+                        "04/2023"
+                    ]
+                }
+            },
+            {
+                nome: "ELETROQUIP COMÉRCIO E LICITAÇÕES LTDA",
+                cnpj: "05.854.663/0001-97",
+                arp: 3157.5,
+                empenhado: 0.0,
+                adquirido: 0.0,
+                contracts: {
+                    Pregão: [],
+                    IRP: [
+                        "08/2023"
+                    ]
+                }
+            },
+            {
+                nome: "Noroeste Comércio e Prestação De Serviços ltda.",
+                cnpj: "05.933.341/0001-33",
+                arp: 3980.0,
+                empenhado: 3980.0,
+                adquirido: 3980.0,
+                contracts: {
+                    Pregão: [
+                        "12/2023"
+                    ],
+                    IRP: []
+                }
+            },
+            {
+                nome: "LILIANE ALARCAO DIAS CORREA RAMANZINI",
+                cnpj: "06.153.182/0001-17",
+                arp: 990.0,
+                empenhado: 990.0,
+                adquirido: 990.0,
+                contracts: {
+                    Pregão: [
+                        "09/2023"
+                    ],
+                    IRP: []
+                }
+            },
+            {
+                nome: "ADONEX COMERCIO DE PRODUTOS PARA LABORATORIO",
+                cnpj: "08.238.866/0001-47",
+                arp: 2035.82,
+                empenhado: 2035.82,
+                adquirido: 2035.82,
+                contracts: {
+                    Pregão: [
+                        "09/2023"
+                    ],
+                    IRP: []
+                }
+            },
+            {
+                nome: "OBAH PRODUTOS E SERVICOS ANALITICOS",
+                cnpj: "09.134.068/0001-38",
+                arp: 22226.53,
+                empenhado: 18523.93,
+                adquirido: 18523.93,
+                contracts: {
+                    Pregão: [
+                        "09/2023",
+                        "10/2023",
+                        "12/2023"
+                    ],
+                    IRP: []
+                }
+            },
+            {
+                nome: "XLABOR TECNOLOGIA LTDA",
+                cnpj: "12.127.236/0001-72",
+                arp: 2380.1,
+                empenhado: 2380.1,
+                adquirido: 2380.1,
+                contracts: {
+                    Pregão: [
+                        "09/2023"
+                    ],
+                    IRP: []
+                }
+            },
+            {
+                nome: "F C Nicolau Equipamentos para Laboratório Ltda – ME",
+                cnpj: "13.158.576/0001-23",
+                arp: 5908.0,
+                empenhado: 5908.0,
+                adquirido: 5908.0,
+                contracts: {
+                    Pregão: [
+                        "12/2023"
+                    ],
+                    IRP: []
+                }
+            },
+            {
+                nome: "TPL TAMIS PRODUTOS LABORATORIAIS",
+                cnpj: "13.670.648/0001-17",
+                arp: 244.0,
+                empenhado: 244.0,
+                adquirido: 244.0,
+                contracts: {
+                    Pregão: [
+                        "09/2023"
+                    ],
+                    IRP: []
+                }
+            },
+            {
+                nome: "INFRAEASY SOLUÇÕES LTDA",
+                cnpj: "14.553.228/0001-13",
+                arp: 7800.0,
+                empenhado: 0.0,
+                adquirido: 0.0,
+                contracts: {
+                    Pregão: [],
+                    IRP: [
+                        "08/2023"
+                    ]
+                }
+            },
+            {
+                nome: "J A F DORNELLES FILHO COMÉRCIO DE INFORMÁTICA",
+                cnpj: "15.675.029/0001-40",
+                arp: 69200.0,
+                empenhado: 34600.0,
+                adquirido: 0.0,
+                contracts: {
+                    Pregão: [],
+                    IRP: [
+                        "14/2023"
+                    ]
+                }
+            },
+            {
+                nome: "SUARES DISTRIBUIDORA DE PRODUTOS DE LIMPEZA LTDA.",
+                cnpj: "18.202.203/0001-26",
+                arp: 4822.56,
+                empenhado: 4822.56,
+                adquirido: 4822.56,
+                contracts: {
+                    Pregão: [],
+                    IRP: [
+                        "03/2023"
+                    ]
+                }
+            },
+            {
+                nome: "AUTOMX SOLUCOES LTDA",
+                cnpj: "19.031.878/0001-12",
+                arp: 1737.0,
+                empenhado: 0.0,
+                adquirido: 0.0,
+                contracts: {
+                    Pregão: [
+                        "12/2023"
+                    ],
+                    IRP: []
+                }
+            },
+            {
+                nome: "K.C.R.S. COMERCIO DE EQUIPAMENTOS LTDA",
+                cnpj: "21.971.041/0001-03",
+                arp: 7980.0,
+                empenhado: 6780.0,
+                adquirido: 6780.0,
+                contracts: {
+                    Pregão: [
+                        "12/2023"
+                    ],
+                    IRP: []
+                }
+            },
+            {
+                nome: "JEAN ALEXANDRE WENDLER DE MORAIS",
+                cnpj: "27.130.609/0001-31",
+                arp: 2466.0,
+                empenhado: 548.0,
+                adquirido: 548.0,
+                contracts: {
+                    Pregão: [],
+                    IRP: [
+                        "01/2023"
+                    ]
+                }
+            },
+            {
+                nome: "M A 2 COMERCIAL LTDA. - ME",
+                cnpj: "30.420.630/0001-86",
+                arp: 14806.01,
+                empenhado: 14806.01,
+                adquirido: 14806.01,
+                contracts: {
+                    Pregão: [
+                        "10/2023"
+                    ],
+                    IRP: []
+                }
+            },
+            {
+                nome: "EMGESA - EMPRESA DE GERENCIAMENTO DE SOBRESSALENTES",
+                cnpj: "32.005.178/0001-11",
+                arp: 11800.0,
+                empenhado: 0.0,
+                adquirido: 0.0,
+                contracts: {
+                    Pregão: [],
+                    IRP: [
+                        "08/2023"
+                    ]
+                }
+            },
+            {
+                nome: "TRC COMERCIO E SERVICOS LTDA",
+                cnpj: "32.699.271/0001-73",
+                arp: 22190.0,
+                empenhado: 22190.0,
+                adquirido: 22190.0,
+                contracts: {
+                    Pregão: [],
+                    IRP: [
+                        "07/2023"
+                    ]
+                }
+            },
+            {
+                nome: "JOELSON DA SILVA GONÇALVES",
+                cnpj: "35.271.461/0001-83",
+                arp: 14790.0,
+                empenhado: 14790.0,
+                adquirido: 14790.0,
+                contracts: {
+                    Pregão: [],
+                    IRP: [
+                        "04/2023"
+                    ]
+                }
+            },
+            {
+                nome: "ACARVE COMERCIO E LICITAÇÕES LTDA",
+                cnpj: "35.764.167/0001-03",
+                arp: 9795.9,
+                empenhado: 9795.9,
+                adquirido: 9795.9,
+                contracts: {
+                    Pregão: [
+                        "12/2023"
+                    ],
+                    IRP: []
+                }
+            },
+            {
+                nome: "A.M. TELECOM E SUPRIMENTOS DE INFORMÁTICA LTDA",
+                cnpj: "37.490.381/0001-44",
+                arp: 47540.0,
+                empenhado: 14320.0,
+                adquirido: 14320.0,
+                contracts: {
+                    Pregão: [],
+                    IRP: [
+                        "01/2023"
+                    ]
+                }
+            },
+            {
+                nome: "GUISOTECH COMERCIO DE EQUIPAMENTOS LTDA",
+                cnpj: "38.010.273/0001-90",
+                arp: 3018.5,
+                empenhado: 3018.5,
+                adquirido: 3018.5,
+                contracts: {
+                    Pregão: [
+                        "09/2023"
+                    ],
+                    IRP: []
+                }
+            },
+            {
+                nome: "Quartz Indústria e Comércio de Equipamentos Para Laboratório LTDA EPP",
+                cnpj: "39.157.266/0001-88",
+                arp: 2920.89,
+                empenhado: 2920.89,
+                adquirido: 2920.89,
+                contracts: {
+                    Pregão: [
+                        "12/2023"
+                    ],
+                    IRP: []
+                }
+            },
+            {
+                nome: "Mundial Científica Ltda",
+                cnpj: "41.086.624/0001-50",
+                arp: 13500.0,
+                empenhado: 13500.0,
+                adquirido: 13500.0,
+                contracts: {
+                    Pregão: [
+                        "12/2023"
+                    ],
+                    IRP: []
+                }
+            },
+            {
+                nome: "SA CONSUMIVEIS PRODUTOS DE LABORATORIO LTDA",
+                cnpj: "47.756.053/0001-09",
+                arp: 24390.62,
+                empenhado: 24390.62,
+                adquirido: 24390.62,
+                contracts: {
+                    Pregão: [
+                        "09/2023"
+                    ],
+                    IRP: []
+                }
+            },
+            {
+                nome: "CITASP DISTRIBUIDOR DE EQUIPAMENTOS SOCIEDADE UNIPESSOAL LTDA",
+                cnpj: "48.277.417/0001-22",
+                arp: 13637.85,
+                empenhado: 0.0,
+                adquirido: 0.0,
+                contracts: {
+                    Pregão: [],
+                    IRP: [
+                        "16/2023"
+                    ]
+                }
+            },
+            {
+                nome: "Betaquimica Equipamentos para Laboratório LTDA",
+                cnpj: "48.706.431/0001-02",
+                arp: 41561.02,
+                empenhado: 41561.02,
+                adquirido: 41561.02,
+                contracts: {
+                    Pregão: [
+                        "12/2023"
+                    ],
+                    IRP: []
+                }
+            },
+            {
+                nome: "MELI SHOP LTDA",
+                cnpj: "48.878.071/0001-18",
+                arp: 3000.0,
+                empenhado: 3000.0,
+                adquirido: 3000.0,
+                contracts: {
+                    Pregão: [
+                        "12/2023"
+                    ],
+                    IRP: []
+                }
+            },
+            {
+                nome: "DISTRIBUIDORA PHG LTDA.",
+                cnpj: "49.347.070/0001-00",
+                arp: 15810.0,
+                empenhado: 0.0,
+                adquirido: 0.0,
+                contracts: {
+                    Pregão: [],
+                    IRP: [
+                        "16/2023"
+                    ]
+                }
+            },
+            {
+                nome: "VINCITA - Comércio de Implementos Agrícolas LTDA - EPP",
+                cnpj: "49.461.961/0001-92",
+                arp: 17000.0,
+                empenhado: 17000.0,
+                adquirido: 17000.0,
+                contracts: {
+                    Pregão: [
+                        "12/2023"
+                    ],
+                    IRP: []
+                }
+            },
+            {
+                nome: "HALOGENN PRODUTOS CIENTIFICOS LTDA.",
+                cnpj: "49.506.242/0001-40",
+                arp: 19387.9,
+                empenhado: 19387.9,
+                adquirido: 19387.9,
+                contracts: {
+                    Pregão: [
+                        "10/2023"
+                    ],
+                    IRP: []
+                }
+            },
+            {
+                nome: "Marte Equipamentos para Laboratório LTDA",
+                cnpj: "68.886.605/0001-65",
+                arp: 15888.2,
+                empenhado: 15888.2,
+                adquirido: 15888.2,
+                contracts: {
+                    Pregão: [
+                        "12/2023"
+                    ],
+                    IRP: []
+                }
+            },
+            {
+                nome: "Não informado",
+                cnpj: "Não informado",
+                arp: 0.0,
+                empenhado: 0.0,
+                adquirido: 0.0,
+                contracts: {
+                    Pregão: [],
+                    IRP: [
+                        "17/2023"
+                    ]
+                }
+            }
+        ]
+    },
+    se: {
+        nome: "Sergipe",
+        totalARP: 80700.0,
+        totalAdquirido: 65960.0,
+        empresas: [
+            {
+                nome: "BBC COMERCIAL DISTRIBUIDORA E SERVICOS LTDA",
+                cnpj: "17.177.467/0001-04",
+                arp: 77600.0,
+                empenhado: 65960.0,
+                adquirido: 65960.0,
+                contracts: {
+                    Pregão: [
+                        "01/2023"
+                    ],
+                    IRP: []
+                }
+            },
+            {
+                nome: "MEL DISTRIBUIDORA LTDA.",
+                cnpj: "50.911.223/0001-89",
+                arp: 3100.0,
+                empenhado: 0.0,
+                adquirido: 0.0,
+                contracts: {
+                    Pregão: [],
+                    IRP: [
+                        "04/2023"
+                    ]
+                }
+            }
+        ]
+    },
+    to: {
+        nome: "Tocantins",
+        totalARP: 0,
+        totalAdquirido: 0,
+        empresas: []
+    }
+};
     
     const nomeParaAbbr = { 'acre': 'ac', 'alagoas': 'al', 'amapa': 'ap', 'amazonas': 'am', 'bahia': 'ba', 'ceara': 'ce', 'distritofederal': 'df', 'espiritosanto': 'es', 'goias': 'go', 'maranhao': 'ma', 'matogrosso': 'mt', 'matogrossodosul': 'ms', 'minasgerais': 'mg', 'para': 'pa', 'paraiba': 'pb', 'parana': 'pr', 'pernambuco': 'pe', 'piaui': 'pi', 'riodejaneiro': 'rj', 'riograndedonorte': 'rn', 'riograndedosul': 'rs', 'rondonia': 'ro', 'roraima': 'rr', 'santacatarina': 'sc', 'saopaulo': 'sp', 'sergipe': 'se', 'tocantins': 'to' };
     
