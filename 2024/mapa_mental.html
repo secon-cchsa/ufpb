@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Mapa Mental - Fornecedores</title>
+  <style>
+    /* Estilos atualizados para se adequar ao dashboard principal */
+    :root {
+      --bg: transparent; /* Fundo transparente */
+      --card: transparent; /* Fundo do card 100% transparente */
+      --accent: #4dd0e1; /* Cor de destaque do seu dashboard */
+      --text-color: #f0f0f0; /* Cor do texto principal (branco) */
+      --muted: #d0d0d0; /* Cor de texto secundário */
+    }
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: var(--bg);
+      margin: 24px;
+      color: var(--text-color);
+    }
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .card {
+      background: var(--card);
+      border-radius: 12px;
+      padding: 18px;
+      box-shadow: none; /* Remove a sombra */
+      border: none; /* Remove a borda */
+      /* Remove o filtro de desfoque */
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+    }
+    h1 {
+      font-size: 20px;
+      margin: 0 0 8px;
+      color: var(--text-color);
+    }
+    p.small {
+      color: var(--muted);
+      margin: 0 0 16px;
+    }
+    .search-container {
+      margin-bottom: 20px;
+      display: flex;
+      gap: 10px;
+    }
+    .search-container input[type="text"] {
+      flex-grow: 1;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid var(--muted);
+      background: transparent;
+      color: var(--text-color);
+    }
+    .search-container button {
+      padding: 10px 15px;
+      border-radius: 8px;
+      border: 1px solid var(--accent);
+      background: var(--accent);
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .tree {
+      margin-top: 12px;
+      max-height: 400px; /* Define uma altura máxima */
+      overflow-y: auto; /* Adiciona a barra de rolagem vertical */
+    }
+    ul.tree-list {
+      list-style: none;
+      padding-left: 20px;
+      margin: 0;
+    }
+    .node {
+      padding: 6px 10px;
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      color: var(--text-color);
+    }
+    .node:hover {
+      background: rgba(77, 208, 225, 0.2); /* Cor de destaque semi-transparente no hover */
+    }
+    .toggle {
+      width: 14px;
+      height: 14px;
+      display: inline-grid;
+      place-items: center;
+      border-radius: 3px;
+      background: rgba(77, 208, 225, 0.5);
+      color: var(--text-color);
+      font-weight: 700;
+      font-size: 11px;
+    }
+    .meta {
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .value {
+      font-weight: 600;
+      color: var(--accent);
+    }
+    .supplier-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .right {
+      margin-left: auto;
+      text-align: right;
+    }
+    .summary {
+      margin-top: 14px;
+      border-top: 1px dashed var(--muted);
+      padding-top: 12px;
+      display: flex;
+      gap: 18px;
+      align-items: center;
+      color: var(--text-color);
+    }
+    .chip {
+      background: var(--accent);
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-weight: 600;
+      color: var(--text-color);
+    }
+    .note-row {
+      margin-left: 24px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .nf-row {
+      margin-left: 48px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .hidden {
+      display: none;
+    }
+    @media (max-width: 600px) {
+      .container {
+        margin: 12px;
+      }
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <h1>Mapa mental: Fornecedores → Notas de Empenho → Notas Fiscais</h1>
+      <p class="small">Clique em um nó para expandir/contrair.</p>
+
+      <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Pesquisar por fornecedor, NE ou NF...">
+        <button onclick="filterTree()">Pesquisar</button>
+      </div>
+
+      <div id="tree" class="tree"></div>
+      <div id="summary" class="summary"></div>
+    </div>
+  </div>
+
+  <script>
+    const data = [
+      {
+        "nome": "COPY LINE COMERCIO SERVIÇOS LTDA.",
+        "notas": [
+          {
+            "id": "2023NE000091",
+            "valor": 33211.2,
+            "notasFiscais": [
+              { "id": "042453", "valor": 2383.88 },
+              { "id": "042852", "valor": 2373.38 },
+              { "id": "043309", "valor": 2335.26 },
+              { "id": "043579", "valor": 2267.18 },
+              { "id": "043920", "valor": 2303.28 },
+              { "id": "044272", "valor": 2577.2 },
+              { "id": "044667", "valor": 2389.0 },
+              { "id": "045061", "valor": 2526.06 },
+              { "id": "045503", "valor": 2456.9 }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "FARELO JP IND. E COM. DE RACOES LTDA",
+        "notas": [
+          {
+            "id": "2024NE000127",
+            "valor": 264720.07,
+            "notasFiscais": [
+              { "id": "28648", "valor": 60607.46 },
+              { "id": "29154", "valor": 9911.0 },
+              { "id": "29481", "valor": 5000.0 },
+              { "id": "30733", "valor": 27608.96 },
+              { "id": "30815", "valor": 12996.0 },
+              { "id": "30839", "valor": 11595.0 },
+              { "id": "31203", "valor": 5000.0 },
+              { "id": "31335", "valor": 6394.0 },
+              { "id": "32011", "valor": 39511.82 }
+            ]
+          },
+          {
+            "id": "2025NE000026",
+            "valor": 27694.82,
+            "notasFiscais": [
+              { "id": "32011", "valor": 39511.82 }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "PISCIS INDÚSTRIA E COMÉRCIO DE ALIMENTOS LTDA",
+        "notas": [
+          {
+            "id": "2024NE000126",
+            "valor": 100124.7,
+            "notasFiscais": [
+              { "id": "711", "valor": 25783.4 },
+              { "id": "714", "valor": 18621.9 },
+              { "id": "743", "valor": 12093.75 }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "N MAYARA DO CARMO DE OLIVEIRANOME DE FANTASIA",
+        "notas": [
+          {
+            "id": "2024NE000125",
+            "valor": 62950.0,
+            "notasFiscais": [
+              { "id": "N/A", "valor": 0.0 }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "ECOLIFE SAUDE AMBINTAL LTDA",
+        "notas": [
+          {
+            "id": "2025NE000011",
+            "valor": 23658.02,
+            "notasFiscais": [
+              { "id": "1721", "valor": 11829.01 }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "ALEXANDRE LAURENTINO DA SILVA LTDA",
+        "notas": [
+          {
+            "id": "2025NE000014",
+            "valor": 18976.6,
+            "notasFiscais": [
+              { "id": "N/A", "valor": 0.0 }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "A.P.A. PROMOCOES E EVENTOS LTDA.",
+        "notas": [
+          {
+            "id": "N/A",
+            "valor": 0.0,
+            "notasFiscais": [
+              { "id": "N/A", "valor": 0.0 }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "ARAÚJO PRODUÇÕES, LOCAÇÕES E EVENTOS LTDA",
+        "notas": [
+          {
+            "id": "N/A",
+            "valor": 0.0,
+            "notasFiscais": [
+              { "id": "N/A", "valor": 0.0 }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "AREA 4 EVENTOS LTDA",
+        "notas": [
+          {
+            "id": "N/A",
+            "valor": 0.0,
+            "notasFiscais": [
+              { "id": "N/A", "valor": 0.0 }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "M N DE O RIBEIRO CONSULTORIA ME",
+        "notas": [
+          {
+            "id": "N/A",
+            "valor": 0.0,
+            "notasFiscais": [
+              { "id": "N/A", "valor": 0.0 }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "MARGARETH CRISTINA QUEIROZ RAMALHO ALENCAR",
+        "notas": [
+          {
+            "id": "N/A",
+            "valor": 0.0,
+            "notasFiscais": [
+              { "id": "N/A", "valor": 0.0 }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "VJL COMÉRCIO VAREJISTA DE MULTI UTILIDADES LTDA.",
+        "notas": [
+          {
+            "id": "N/A",
+            "valor": 0.0,
+            "notasFiscais": [
+              { "id": "N/A", "valor": 0.0 }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "SANTA CANECA – COMÉRCIO DE CANECAS LTDA.",
+        "notas": [
+          {
+            "id": "N/A",
+            "valor": 0.0,
+            "notasFiscais": [
+              { "id": "N/A", "valor": 0.0 }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "T C DISTRIBUIDORA LTDA.",
+        "notas": [
+          {
+            "id": "N/A",
+            "valor": 0.0,
+            "notasFiscais": [
+              { "id": "N/A", "valor": 0.0 }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "JOÃO C. P. RODRIGUES",
+        "notas": [
+          {
+            "id": "N/A",
+            "valor": 0.0,
+            "notasFiscais": [
+              { "id": "N/A", "valor": 0.0 }
+            ]
+          }
+        ]
+      }
+    ];
+
+    const fmt = v => v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+
+    const treeEl = document.getElementById('tree');
+    const summaryEl = document.getElementById('summary');
+    const searchInput = document.getElementById('searchInput');
+    let originalData = [];
+
+    function buildTree(dataset) {
+      originalData = JSON.parse(JSON.stringify(dataset)); // Salva uma cópia dos dados originais
+      renderTree(dataset);
+    }
+    
+    function renderTree(dataset) {
+      treeEl.innerHTML = '';
+      const ul = document.createElement('ul');
+      ul.className = 'tree-list';
+
+      let grandTotal = 0;
+      let totalNotes = 0;
+      let totalNFs = 0;
+
+      dataset.forEach(fornec => {
+        const supplierTotal = fornec.notas.reduce((s, n) => s + (Number(n.valor) || 0), 0);
+        grandTotal += supplierTotal;
+        totalNotes += fornec.notas.length;
+        
+        const li = document.createElement('li');
+        li.dataset.fornecedor = fornec.nome.toLowerCase();
+        
+        const supplierRow = document.createElement('div');
+        supplierRow.className = 'supplier-row node';
+        
+        const toggleSupplier = document.createElement('span');
+        toggleSupplier.className = 'toggle';
+        toggleSupplier.textContent = fornec.notas.length > 0 ? '+' : '';
+        supplierRow.appendChild(toggleSupplier);
+
+        const name = document.createElement('div');
+        name.innerHTML = `<strong>${fornec.nome}</strong> <div class="meta">${fornec.notas.length} nota(s)</div>`;
+        supplierRow.appendChild(name);
+
+        const right = document.createElement('div');
+        right.className = 'right';
+        right.innerHTML = `<div class="meta">Total</div><div class="value">${fmt(supplierTotal)}</div>`;
+        supplierRow.appendChild(right);
+
+        li.appendChild(supplierRow);
+
+        const notesUl = document.createElement('ul');
+        notesUl.className = 'tree-list hidden';
+        
+        fornec.notas.forEach(n => {
+          totalNFs += n.notasFiscais ? n.notasFiscais.length : 0;
+          const noteLi = document.createElement('li');
+          noteLi.dataset.notaEmpenho = n.id.toLowerCase();
+          
+          const noteRow = document.createElement('div');
+          noteRow.className = 'note-row node';
+
+          const toggleNote = document.createElement('span');
+          toggleNote.className = 'toggle';
+          toggleNote.textContent = n.notasFiscais && n.notasFiscais.length > 0 ? '+' : '';
+          noteRow.appendChild(toggleNote);
+
+          const noteInfo = document.createElement('div');
+          noteInfo.innerHTML = `<strong>NE: ${n.id}</strong> <div class="meta">- Empenhado:</div>`;
+          noteRow.appendChild(noteInfo);
+
+          const noteValue = document.createElement('div');
+          noteValue.className = 'right';
+          noteValue.innerHTML = `<div class="value">${fmt(Number(n.valor) || 0)}</div>`;
+          noteRow.appendChild(noteValue);
+
+          noteLi.appendChild(noteRow);
+          notesUl.appendChild(noteLi);
+
+          if (n.notasFiscais && n.notasFiscais.length > 0) {
+            const nfUl = document.createElement('ul');
+            nfUl.className = 'tree-list hidden';
+            
+            n.notasFiscais.forEach(nf => {
+              const nfLi = document.createElement('li');
+              nfLi.dataset.notaFiscal = nf.id.toLowerCase();
+              
+              const nfRow = document.createElement('div');
+              nfRow.className = 'nf-row node';
+
+              const nfInfo = document.createElement('div');
+              nfInfo.innerHTML = `<strong>NF: ${nf.id}</strong> <div class="meta">- Valor:</div>`;
+              nfRow.appendChild(nfInfo);
+
+              const nfValue = document.createElement('div');
+              nfValue.className = 'right';
+              nfValue.innerHTML = `<div class="value">${fmt(Number(nf.valor) || 0)}</div>`;
+              nfRow.appendChild(nfValue);
+
+              nfLi.appendChild(nfRow);
+              nfUl.appendChild(nfLi);
+            });
+            noteLi.appendChild(nfUl);
+
+            noteRow.addEventListener('click', (e) => {
+              e.stopPropagation();
+              const isHidden = nfUl.classList.toggle('hidden');
+              toggleNote.textContent = isHidden ? '+' : '−';
+            });
+          }
+        });
+
+        li.appendChild(notesUl);
+
+        supplierRow.addEventListener('click', () => {
+          const isHidden = notesUl.classList.toggle('hidden');
+          toggleSupplier.textContent = isHidden ? '+' : '−';
+        });
+
+        ul.appendChild(li);
+      });
+
+      treeEl.appendChild(ul);
+
+      updateSummary(grandTotal, totalNotes, totalNFs);
+    }
+
+    function filterTree() {
+        const filterText = searchInput.value.toLowerCase().trim();
+        let filteredData = [];
+
+        if (filterText === '') {
+            renderTree(originalData);
+            return;
+        }
+
+        originalData.forEach(fornec => {
+            const supplierName = fornec.nome.toLowerCase();
+            const matchingNotes = [];
+
+            fornec.notas.forEach(note => {
+                const noteId = note.id.toLowerCase();
+                const matchingNFs = [];
+
+                note.notasFiscais.forEach(nf => {
+                    const nfId = nf.id.toLowerCase();
+                    if (nfId.includes(filterText)) {
+                        matchingNFs.push(nf);
+                    }
+                });
+
+                if (noteId.includes(filterText) || matchingNFs.length > 0) {
+                    matchingNotes.push({
+                        ...note,
+                        notasFiscais: matchingNFs.length > 0 ? matchingNFs : note.notasFiscais
+                    });
+                }
+            });
+
+            if (supplierName.includes(filterText) || matchingNotes.length > 0) {
+                const notesToDisplay = supplierName.includes(filterText) ? fornec.notas : matchingNotes;
+                
+                filteredData.push({
+                    ...fornec,
+                    notas: notesToDisplay
+                });
+            }
+        });
+
+        renderTree(filteredData);
+        expandAllNodes();
+    }
+    
+    function expandAllNodes() {
+        document.querySelectorAll('.toggle').forEach(toggle => {
+            const parent = toggle.closest('.node');
+            const targetUl = parent.nextElementSibling;
+            if (targetUl && targetUl.classList.contains('hidden')) {
+                targetUl.classList.remove('hidden');
+                toggle.textContent = '−';
+            }
+        });
+    }
+
+    function updateSummary(grandTotal, totalNotes, totalNFs) {
+      summaryEl.innerHTML = '';
+      const totalChip = document.createElement('div');
+      totalChip.className = 'chip';
+      totalChip.textContent = 'Valor Total da Contratação: ' + fmt(grandTotal);
+      
+      const detailsP = document.createElement('p');
+      detailsP.className = 'meta';
+      detailsP.textContent = `${data.length} fornecedor(es) • ${totalNotes} nota(s) de empenho • ${totalNFs} notas fiscais`;
+      
+      summaryEl.appendChild(totalChip);
+      summaryEl.appendChild(detailsP);
+    }
+    
+    document.getElementById('searchInput').addEventListener('keyup', (event) => {
+        if (event.key === 'Enter') {
+            filterTree();
+        }
+    });
+
+    buildTree(data);
+  </script>
+</body>
+</html>
