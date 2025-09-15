@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Gráfico de Barras Empilhadas</title>
+    <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.20.1"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+    <style>
+        body {
+            background-color: transparent;
+        }
+        .vega-embed .vega-tooltip {
+            color: #ffffff;
+            background-color: rgba(0, 0, 0, 0.7);
+            border: 1px solid #4dd0e1;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div id="vis"></div>
+    <script type="text/javascript">
+        var spec = {
+            "$schema": "https://vega.github.io/schema/vega-lite/v5.20.1.json",
+            "config": {
+                "background": null,
+                "title": { "color": "#ffffff" },
+                "axis": {
+                    "titleColor": "#ffffff",
+                    "labelColor": "#ffffff"
+                },
+                "legend": {
+                    "titleColor": "#ffffff",
+                    "labelColor": "#ffffff"
+                },
+                "view": {
+                    "continuousHeight": 350,
+                    "continuousWidth": 500
+                }
+            },
+            "data": {
+                "values": [
+                    { "Empresa": "PREMIER COMERCIO LTDA", "Empresa Curta": "PREMIER", "Tipo": "Valor Total Adquirido", "Valor": 481800 },
+                    { "Empresa": "EDWINEY SEBASTIAO CUPERTINO LTDA.", "Empresa Curta": "EDWINEY", "Tipo": "Valor Total Adquirido", "Valor": 286439 },
+                    { "Empresa": "GALLUS INDUSTRIA E COMERCIO DE ALIMENTOS LTDA", "Empresa Curta": "GALLUS", "Tipo": "Valor Total Adquirido", "Valor": 246699.35 },
+                    { "Empresa": "SERGIO DOMINGUES & CIA LTDA", "Empresa Curta": "SERGIO", "Tipo": "Valor Total Adquirido", "Valor": 189132 },
+                    { "Empresa": "BILACORP Viagens e Turismo LTDA", "Empresa Curta": "BILACORP", "Tipo": "Valor Total Adquirido", "Valor": 181715.84 },
+                    { "Empresa": "PADARIA PONTES LTDA.", "Empresa Curta": "PADARIA", "Tipo": "Valor Total Adquirido", "Valor": 107061.7 },
+                    { "Empresa": "REDNOV FERRAMENTAS LTDA", "Empresa Curta": "REDNOV", "Tipo": "Valor Total Adquirido", "Valor": 80909.9 },
+                    { "Empresa": "PLANEJE TECNOLOGIA E SERVIÇOS LTDA.", "Empresa Curta": "PLANEJE", "Tipo": "Valor Total Adquirido", "Valor": 0 },
+                    { "Empresa": "META EMPREEDIMENTOS E SERVIÇOS LTDA", "Empresa Curta": "META", "Tipo": "Valor Total Adquirido", "Valor": 3611.2 },
+                    { "Empresa": "RUBENS DANTAS NETO", "Empresa Curta": "RUBENS", "Tipo": "Valor Total Adquirido", "Valor": 9600 },
+                    { "Empresa": "A.N.D CAPELLI LTDA", "Empresa Curta": "AND CAPELLI", "Tipo": "Valor Total Adquirido", "Valor": 0 },
+                    { "Empresa": "MEL DISTRIBUIDORA LTDA.", "Empresa Curta": "MEL DISTR.", "Tipo": "Valor Total Adquirido", "Valor": 0 },
+                    { "Empresa": "ANDRÉ AUGUSTO TRUTA FELIPE", "Empresa Curta": "ANDRÉ", "Tipo": "Valor Total Adquirido", "Valor": 9357.5 },
+                    { "Empresa": "M. A. DISTRIBUIDORA COMÉRCIO E SERVIÇO LTDA.", "Empresa Curta": "M.A. DISTR.", "Tipo": "Valor Total Adquirido", "Valor": 71383 },
+                    { "Empresa": "PREMIER COMERCIO LTDA", "Empresa Curta": "PREMIER", "Tipo": "Saldo a Empenhar", "Valor": 0 },
+                    { "Empresa": "EDWINEY SEBASTIAO CUPERTINO LTDA.", "Empresa Curta": "EDWINEY", "Tipo": "Saldo a Empenhar", "Valor": 6127 },
+                    { "Empresa": "GALLUS INDUSTRIA E COMERCIO DE ALIMENTOS LTDA", "Empresa Curta": "GALLUS", "Tipo": "Saldo a Empenhar", "Valor": -3832.03 },
+                    { "Empresa": "SERGIO DOMINGUES & CIA LTDA", "Empresa Curta": "SERGIO", "Tipo": "Saldo a Empenhar", "Valor": 0 },
+                    { "Empresa": "BILACORP Viagens e Turismo LTDA", "Empresa Curta": "BILACORP", "Tipo": "Saldo a Empenhar", "Valor": 111282.61 },
+                    { "Empresa": "PADARIA PONTES LTDA.", "Empresa Curta": "PADARIA", "Tipo": "Saldo a Empenhar", "Valor": 20666.6 },
+                    { "Empresa": "REDNOV FERRAMENTAS LTDA", "Empresa Curta": "REDNOV", "Tipo": "Saldo a Empenhar", "Valor": 0 },
+                    { "Empresa": "PLANEJE TECNOLOGIA E SERVIÇOS LTDA.", "Empresa Curta": "PLANEJE", "Tipo": "Saldo a Empenhar", "Valor": 261000 },
+                    { "Empresa": "META EMPREEDIMENTOS E SERVIÇOS LTDA", "Empresa Curta": "META", "Tipo": "Saldo a Empenhar", "Valor": 109282.8 },
+                    { "Empresa": "RUBENS DANTAS NETO", "Empresa Curta": "RUBENS", "Tipo": "Saldo a Empenhar", "Valor": 107900 },
+                    { "Empresa": "A.N.D CAPELLI LTDA", "Empresa Curta": "AND CAPELLI", "Tipo": "Saldo a Empenhar", "Valor": 104436 },
+                    { "Empresa": "MEL DISTRIBUIDORA LTDA.", "Empresa Curta": "MEL DISTR.", "Tipo": "Saldo a Empenhar", "Valor": 96626.4 },
+                    { "Empresa": "ANDRÉ AUGUSTO TRUTA FELIPE", "Empresa Curta": "ANDRÉ", "Tipo": "Saldo a Empenhar", "Valor": 72458.5 },
+                    { "Empresa": "M. A. DISTRIBUIDORA COMÉRCIO E SERVIÇO LTDA.", "Empresa Curta": "M.A. DISTR.", "Tipo": "Saldo a Empenhar", "Valor": 71383 }
+                ]
+            },
+            "encoding": {
+                "color": { "field": "Tipo", "scale": { "domain": ["Valor Total Adquirido", "Saldo a Empenhar"], "range": ["#bdd7e7", "#6baed6"] }, "title": "Tipo de Valor", "type": "nominal" },
+                "tooltip": [
+                    { "field": "Empresa", "title": "Empresa", "type": "nominal" },
+                    { "field": "Valor", "format": ",.2f", "title": "Valor (R$)", "type": "quantitative" },
+                    { "field": "Tipo", "title": "Tipo de Valor", "type": "nominal" }
+                ],
+                "x": { "axis": { "labelAngle": -45 }, "field": "Empresa Curta", "sort": "-y", "title": "Empresa", "type": "nominal" },
+                "y": { "field": "Valor", "title": "Valor (R$)", "type": "quantitative" }
+            },
+            "mark": { "type": "bar" },
+            "params": [{ "bind": "scales", "name": "param_1", "select": { "encodings": ["x", "y"], "type": "interval" } }],
+            "title": "Ranking das principais empresas de 2023"
+        };
+        var embedOpt = { "actions": false, "renderer": "svg" };
+        vegaEmbed("#vis", spec, embedOpt).catch(console.warn);
+    </script>
+</body>
+</html>

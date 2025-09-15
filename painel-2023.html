@@ -96,7 +96,7 @@
             margin: 0 auto;
             width: fit-content;
             grid-template-columns: 200px 200px 200px 200px;
-            grid-template-rows: 150px 150px 300px 150px 150px 150px 150px 150px 250px 100px 310px 150px 200px 150px 200px 150px 150px 150px 450px 650px;
+            grid-template-rows: 150px 150px 300px 150px 150px 150px 150px 150px 250px 100px 310px 150px 200px 150px 200px 150px 150px 150px 450px 650px 500px;
             gap: 25px;
             grid-template-areas: 
                 "box-1 box-2 box-3 box-4"
@@ -118,7 +118,8 @@
                 "box-16 box-16 box-16 box-16"
                 "box-17 box-17 box-17 box-17"
 		"box-17 box-17 box-17 box-17"
-                "box-18 box-18 box-18 box-18";
+                "box-18 box-18 box-18 box-18"
+                "box-19 box-19 box-19 box-20";
         }
         .card {
             background: var(--card-bg-color); 
@@ -153,6 +154,7 @@
         .box-16 { grid-area: box-16; }
         .box-17 { grid-area: box-17; }
         .box-18 { grid-area: box-18; }
+        .box-19 { grid-area: box-19; }
         .chart-container {
             position: relative;
             flex-grow: 1; 
@@ -201,7 +203,8 @@
                     "box-15 box-15"
                     "box-16 box-16"
                     "box-17 box-17"
-                    "box-18 box-18";
+                    "box-18 box-18"
+                    "box-19 box-19";
             }
         }
     </style>
@@ -284,6 +287,9 @@
             <div class="card box-18">
                  <h2 class="card-title">Mapa Mental</h2>
                  <iframe src="2023/mapa_mental.html" style="width: 100%; height: 100%; border: none; flex-grow: 1; overflow: hidden;" scrolling="no"></iframe>
+            </div>
+            <div class="card box-19">
+                                <iframe src="2023/principais empresas.html" style="width: 100%; height: 100%; border: none; flex-grow: 1; overflow: hidden;" scrolling="no"></iframe>
             </div>
         </div>
     </div>
