@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gráfico de Pizza - Tempo Médio por Setor</title>
+  <title>Gráfico de Pizza - Valor Adquirido Total</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     body {
@@ -30,36 +30,50 @@
       align-items: center;
     }
     h1 {
-      color: white;
+      color: white; /* Mantido como 'white' do seu original */
       margin-bottom: 10px;
       font-size: 1.2em;
+      text-align: center;
     }
     canvas {
-        max-width: 100%; /* Escala restaurada para 100% */
-        max-height: calc(100% - 30px); /* Escala restaurada e ajustada para o título */
+      max-width: 100%;
+      max-height: calc(100% - 30px);
     }
   </style>
 </head>
 <body>
   <div class="chart-container">
-    <h1>Tempo Médio por Setor</h1>
+    <h1>Principais itens adquiridos</h1>
     <canvas id="meuGraficoDePizza"></canvas>
   </div>
 
   <script>
+    // --- NOVOS DADOS ---
+    // Rótulos baseados na coluna "Descrição"
     const labels = [
-        'CCHSA - CONTRATOS',
-        'CCHSA - SEGURANÇA',
-        'CCHSA - CONTABILIDADE',
-        'CCHSA - LICITAÇÃO',
-        'CCHSA - PATRIMÔNIO',
-        'CCHSA - ADM',
-        'PROCURADORIA JURÍDICA'
+        'Nissan Frontier SE 2023',
+        'Impressora',
+        'Ovinos Crescimento Master, 40 kg',
+        'Ração Suino, fase reprodução',
+        'Master Leite 22, 40kg',
+        'Agua mineral, 20 Litros'
     ];
-    const valores = [15.62, 14.67, 12.00, 10.35, 9.00, 7.39, 6.00];
+    
+    // Valores numéricos baseados na coluna "Valor Adquirido Total"
+    // (Convertidos de 'R$189.132,00' para 189132.00)
+    const valores = [
+        481800.00,
+        189132.00,
+        112288.00,
+        85297.50,
+        84960.00,
+        76284.00
+    ];
+    // --- FIM DOS NOVOS DADOS ---
 
+    // Paleta de cores ajustada para 6 itens (baseada na sua paleta original)
     const cores = [
-        '#3182bd', '#6baed6', '#9ecae1', '#c6dbef', '#e6f0ff', '#f7fbff', '#add8e6' 
+        '#3182bd', '#6baed6', '#9ecae1', '#c6dbef', '#e6f0ff', '#f7fbff'
     ];
     
     let offsets = new Array(labels.length).fill(0);
@@ -68,7 +82,7 @@
     const dadosGrafico = {
         labels: labels,
         datasets: [{
-            label: 'Tempo Médio',
+            label: 'Valor Adquirido Total', // Label do dataset atualizado
             data: valores,
             backgroundColor: cores,
             borderWidth: 1,
@@ -88,24 +102,47 @@
                 if (elements.length > 0) {
                     const clickedElementIndex = elements[0].index;
                     
-                    if (offsets[clickedElementIndex] === 0) {
+                    // Reseta todos os offsets antes de aplicar o novo
+                    const currentOffset = offsets[clickedElementIndex];
+                    offsets.fill(0); // Reseta todos
+                    
+                    if (currentOffset === 0) {
                         offsets[clickedElementIndex] = offsetAmount;
-                    } else {
-                        offsets[clickedElementIndex] = 0;
                     }
+                    // Se já estava clicado (currentOffset !== 0), ele já foi resetado para 0
+                    
                     meuGraficoDePizza.update();
                 }
             },
             plugins: {
+                // Adicionado para formatar o valor como R$
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            let label = context.label || '';
+                            if (label) {
+                                label += ': ';
+                            }
+                            if (context.parsed !== null) {
+                                // Formata o valor como moeda BRL
+                                label += new Intl.NumberFormat('pt-BR', {
+                                    style: 'currency',
+                                    currency: 'BRL'
+                                }).format(context.parsed);
+                            }
+                            return label;
+                        }
+                    }
+                },
                 legend: {
                     position: 'top',
                     labels: {
-                        color: 'white'
+                        color: 'white' // Mantido como 'white' do seu original
                     }
                 },
                 title: {
                     display: true,
-                    text: '',
+                    text: '', // Título principal já está no H1
                     font: {
                         size: 18,
                         color: 'white'
