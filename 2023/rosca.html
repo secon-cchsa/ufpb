@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!-- Autor: Judson Praxedes da Silva -->
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
@@ -33,15 +32,30 @@
     <div class="chart-container">
         <canvas id="doughnutChart"></canvas>
     </div>
+
 <script>
 document.addEventListener('DOMContentLoaded', () => {
     function formatCurrency(value) {
         return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(value);
     }
-<!-- Autor: Judson Praxedes da Silva -->
-    const doughnutLabels = ['CAVN - DIRECAO DO COLEGIO', 'DEP. CIENCIA ANIMAL', 'CCHSA - DIRECAO DE CENTRO', 'CCHSA - COORD. GERAL DOS LAB.', 'CCHSA - LAB. INFORMATICA', 'CCHSA - LAB. POS-COLHEITA', 'CCHSA - LAB. POS COLHEITA', 'CCHSA - DEP. CIENCIA ANIMAL', 'CCHSA - COORD. SEGURANCA PREV.'];
-    const doughnutData = [1023982.56, 585695.95, 487516.36, 329005.13, 257897.9, 65702.55, 42746.71, 34637.770000000004, 7641.83];
-    const backgroundColors = ['#3182bd', '#6baed6', '#9ecae1', '#c6dbef', '#e6f0ff', '#f7fbff'];
+const doughnutLabels = [
+'CAVN - DIRECAO DO COLEGIO',
+'CCHSA - DEP. CIENCIA ANIMAL',
+'CCHSA - DIRECAO DE CENTRO',
+'CCHSA - COORD. GERAL DOS LAB.',
+'CCHSA - LAB. INFORMATICA',
+'CCHSA - LAB. POS-COLHEITA'
+    ];
+    const doughnutData = [
+1023982.56,
+620333.7200000001,
+487516.36,
+329005.13,
+257897.9,
+108449.26000000001
+    ];
+    // Lista de cores mantida, será aplicada na ordem dos dados classificados.
+    const backgroundColors = ['#3182bd', '#6baed6', '#9ecae1', '#c6dbef', '#e6f0ff', '#f7fbff']; 
     const textColorSecondary = '#d0d0d0';
 
     const doughnutCtx = document.getElementById('doughnutChart')?.getContext('2d');
@@ -66,9 +80,9 @@ document.addEventListener('DOMContentLoaded', () => {
                         labels: {
                             color: textColorSecondary,
                             /* ALTERAÇÃO 2: Propriedades da legenda ajustadas */
-                            font: { size: 9 }, 
-                            boxWidth: 12,      
-                            padding: 8          
+                            font: { size: 9 },
+                            boxWidth: 12,
+                            padding: 8
                         }
                     },
                     tooltip: { callbacks: { label: (c) => ` ${c.label}: ${formatCurrency(c.raw)}` } }
@@ -78,6 +92,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 </script>
+
 </body>
 </html>
-<!-- Autor: Judson Praxedes da Silva -->
